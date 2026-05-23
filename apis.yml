@@ -1,0 +1,185 @@
+aid: eightfold-ai
+name: Eightfold AI
+url: https://raw.githubusercontent.com/api-evangelist/eightfold-ai/refs/heads/main/apis.yml
+description: >-
+  Eightfold AI is an agentic Talent Intelligence Platform that combines
+  enterprise HR data with insights from more than a billion career profiles to
+  power talent acquisition, talent management, workforce planning, internal
+  mobility, resource management, and AI-driven interviewing. The platform is
+  delivered as enterprise SaaS with sales-led onboarding; APIs and ATS/HRIS
+  integrations are exposed to customers and certified partners (e.g. Oracle
+  Fusion Cloud Recruiting) under contract rather than via a public, self-serve
+  developer portal.
+kind: company
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Talent Intelligence
+  - Talent Acquisition
+  - Talent Management
+  - AI Interviewing
+  - HR Tech
+  - Workforce Planning
+  - Agentic AI
+created: '2026-05-23'
+modified: '2026-05-23'
+specificationVersion: '0.19'
+apis:
+  - aid: eightfold-ai:talent-intelligence
+    name: Eightfold Talent Intelligence Platform
+    description: >-
+      Core AI platform that powers candidate matching, skills inference,
+      career-path recommendations, and internal mobility decisions across the
+      Eightfold suite. Customer-facing APIs are made available to enterprise
+      customers and certified ATS/HRIS partners under contract; no public,
+      self-serve developer portal is published.
+    humanURL: https://eightfold.ai/products/
+    baseURL: https://app.eightfold.ai
+    tags:
+      - Talent Intelligence
+      - Matching
+      - Skills
+    properties:
+      - type: Documentation
+        url: https://eightfold.ai/products/
+  - aid: eightfold-ai:talent-acquisition
+    name: Eightfold Talent Acquisition
+    description: >-
+      Recruiting product that surfaces candidates by skills, potential, and fit
+      rather than resumes alone, with agentic workflows for sourcing, screening,
+      and pipelining. Integrated with the customer ATS over partner connectors.
+    humanURL: https://eightfold.ai/products/
+    baseURL: https://app.eightfold.ai
+    tags:
+      - Talent Acquisition
+      - Recruiting
+      - Sourcing
+    properties:
+      - type: Documentation
+        url: https://eightfold.ai/products/
+  - aid: eightfold-ai:talent-management
+    name: Eightfold Talent Management
+    description: >-
+      Single view of internal talent for retention, skills development, career
+      planning, and succession. Powers manager and employee experiences against
+      the same Talent Intelligence model used for hiring.
+    humanURL: https://eightfold.ai/products/
+    baseURL: https://app.eightfold.ai
+    tags:
+      - Talent Management
+      - Retention
+      - Skills Development
+    properties:
+      - type: Documentation
+        url: https://eightfold.ai/products/
+  - aid: eightfold-ai:workforce-exchange
+    name: Eightfold Workforce Exchange
+    description: >-
+      Internal mobility marketplace that lets employees discover roles, gigs,
+      mentors, and learning paths matched to their skills and aspirations.
+    humanURL: https://eightfold.ai/products/
+    baseURL: https://app.eightfold.ai
+    tags:
+      - Internal Mobility
+      - Career Marketplace
+    properties:
+      - type: Documentation
+        url: https://eightfold.ai/products/
+  - aid: eightfold-ai:resource-management
+    name: Eightfold Resource Management
+    description: >-
+      Project staffing product that matches consultants and employees to billable
+      work using AI-driven skills matching, primarily used by professional
+      services and consulting organisations.
+    humanURL: https://eightfold.ai/products/
+    baseURL: https://app.eightfold.ai
+    tags:
+      - Resource Management
+      - Project Staffing
+      - Services
+    properties:
+      - type: Documentation
+        url: https://eightfold.ai/products/
+  - aid: eightfold-ai:ai-interviewer
+    name: Eightfold AI Interviewer
+    description: >-
+      Autonomous agentic interviewer that conducts structured candidate
+      interviews end-to-end and returns scored, skills-anchored evaluations.
+      Embedded into customer workflows directly and via partner platforms such
+      as Oracle Fusion Cloud Recruiting.
+    humanURL: https://eightfold.ai/products/
+    baseURL: https://app.eightfold.ai
+    tags:
+      - AI Interviewing
+      - Agentic AI
+      - Assessment
+    properties:
+      - type: Documentation
+        url: https://eightfold.ai/products/
+  - aid: eightfold-ai:ai-interview-companion
+    name: Eightfold AI Interview Companion
+    description: >-
+      Real-time copilot for human-led interviews, providing skills-based
+      prompts, structured note-taking, and consistent evaluation across the
+      interview loop.
+    humanURL: https://eightfold.ai/products/
+    baseURL: https://app.eightfold.ai
+    tags:
+      - AI Interviewing
+      - Copilot
+      - Assessment
+    properties:
+      - type: Documentation
+        url: https://eightfold.ai/products/
+  - aid: eightfold-ai:talentforge
+    name: Eightfold TalentForge
+    description: >-
+      Build-it-yourself layer that lets customers compose custom talent
+      applications on top of the Talent Intelligence Platform without long
+      engineering cycles.
+    humanURL: https://eightfold.ai/products/
+    baseURL: https://app.eightfold.ai
+    tags:
+      - Low Code
+      - Builder
+      - Platform
+    properties:
+      - type: Documentation
+        url: https://eightfold.ai/products/
+  - aid: eightfold-ai:app-marketplace
+    name: Eightfold App Marketplace
+    description: >-
+      Marketplace of certified partner and customer-built applications that
+      extend the Eightfold Talent Intelligence Platform.
+    humanURL: https://app.eightfold.ai/app_marketplace/
+    baseURL: https://app.eightfold.ai/app_marketplace/
+    tags:
+      - Marketplace
+      - Apps
+      - Integrations
+    properties:
+      - type: Documentation
+        url: https://app.eightfold.ai/app_marketplace/
+common:
+  - type: Website
+    url: https://eightfold.ai
+  - type: Products
+    url: https://eightfold.ai/products/
+  - type: Marketplace
+    url: https://app.eightfold.ai/app_marketplace/
+  - type: Community
+    url: https://community.eightfold.ai/
+  - type: Blog
+    url: https://eightfold.ai/engineering-blog/
+  - type: Contact
+    url: https://eightfold.ai/company/contact-us/
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/eightfold-ai/
+integrations:
+  - name: Oracle Fusion Cloud Recruiting
+  - name: Workday
+  - name: SAP SuccessFactors
+  - name: iCIMS
+  - name: Greenhouse
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
