@@ -174,7 +174,7 @@ common:
     url: https://eightfold.ai/company/contact-us/
   - type: LinkedIn
     url: https://www.linkedin.com/company/eightfold-ai/
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://eightfold.ai/llms.txt
 integrations:
   - name: Oracle Fusion Cloud Recruiting
