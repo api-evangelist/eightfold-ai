@@ -160,6 +160,10 @@ apis:
       - type: Documentation
         url: https://app.eightfold.ai/app_marketplace/
 common:
+  - type: TrustCenter
+    url: security/eightfold-ai-trust-center.yml
+  - type: DomainSecurity
+    url: security/eightfold-ai-domain-security.yml
   - type: Website
     url: https://eightfold.ai
   - type: Products
