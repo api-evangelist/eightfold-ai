@@ -1,0 +1,20 @@
+generated: '2026-07-19'
+method: searched
+source: https://apidocs.eightfold.ai/changelog/eightfold-api-release-notes
+scheme: dated-release-notes
+current_version: v2
+notes: >-
+  Eightfold publishes API release notes as dated changelog entries in the developer
+  portal. The most recent publicly dated changelog page captured is the August 2022
+  release; newer changes are communicated to contracted customers/partners.
+entries:
+- date: '2022-08-17'
+  version: v2
+  breaking: false
+  additions:
+  - New Organization Info endpoint capturing organization pipeline diversity data
+    (gender diversity, ethnic diversity, pipelines with leaders, pipelines with women,
+    pipelines with diverse ethnicity, superstar, roles with successors ready), expressed
+    as percentages.
+  new_schemas: [BinaryDistribution, OrganizationInfoSchema]
+  highlights: Added org-wide diversity insight surface to API v2.

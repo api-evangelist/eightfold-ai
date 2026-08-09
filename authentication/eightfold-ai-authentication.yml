@@ -1,0 +1,44 @@
+generated: '2026-07-19'
+method: searched
+source: https://apidocs.eightfold.ai/docs/oauth-configuration
+docs: https://apidocs.eightfold.ai/docs/eightfold-api-authorization-guide
+summary:
+  types: [oauth2, http]
+  oauth2_flows: [password]
+  api_key_in: [header]
+  notes: >-
+    OAuth 2.0 resource-owner-password-grant. The API-key credentials (email as user_id,
+    generated API key as password) are presented via HTTP Basic auth to the regional
+    token endpoint to mint a bearer access_token, which is then sent on every API call.
+    Per-key READ/WRITE permission scopes gate each endpoint (see scopes artifact).
+schemes:
+- name: OAuth2Password
+  type: oauth2
+  flow: password
+  token_endpoint: https://apiv2.eightfold.ai/oauth/v1/authenticate
+  request:
+    method: POST
+    content_type: application/json
+    fields: [grantType, username, password]
+    grantType_value: password
+  response_token_field: data.access_token
+  token_type: bearer
+  bearer_header: 'Authorization: Bearer <access_token>'
+  token_ttl_seconds: 8640
+- name: BasicAuthClientCredentials
+  type: http
+  scheme: basic
+  usage: >-
+    Basic-auth header carrying the client id:secret pair used to authorize the token
+    request against the regional /oauth/v1/authenticate endpoint. Distinct per region.
+  regions:
+  - {region: US, header_present: true}
+  - {region: EU, header_present: true}
+  - {region: CA, header_present: true}
+  - {region: ME, header_present: true}
+  - {region: AP, header_present: true}
+  - {region: WU, header_present: true}
+  - {region: Gov, header_present: true}
+key_provisioning:
+  console_path: 'Integration > Eightfold API > Authentication > Generate API Key'
+  admin_url: https://app.eightfold.ai/integrations/api_server_config?tab_id=api_server_config

@@ -1,0 +1,19 @@
+generated: '2026-07-19'
+method: generated
+source: https://apidocs.eightfold.ai/reference
+notes: >-
+  Agent Skills generated from documented Eightfold API v2 operations. Every operationId
+  referenced exists in the Eightfold API reference (apidocs.eightfold.ai/reference).
+skills:
+- file: eightfold-match-candidates-to-position.md
+  name: Match candidates to an open position
+  api: https://apiv2.eightfold.ai/api/v2/
+  operations: [list_position, get_position_by_id, list_profile_matched_candidates, get_profile_by_id]
+- file: eightfold-source-and-advance-candidate.md
+  name: Create a candidate profile and advance their application stage
+  api: https://apiv2.eightfold.ai/api/v2/
+  operations: [create_profile, create_profile_stages, get_async_api_status_transactions_by_id]
+- file: eightfold-employee-internal-mobility.md
+  name: Find internal mobility matches for an employee
+  api: https://apiv2.eightfold.ai/api/v2/
+  operations: [get_employee_by_id, list_employee_matched_demands, create_booking]

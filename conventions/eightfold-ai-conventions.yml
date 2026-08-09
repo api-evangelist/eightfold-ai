@@ -1,0 +1,68 @@
+generated: '2026-07-19'
+method: searched
+source: https://apidocs.eightfold.ai/docs/getting-started
+authentication:
+  style: oauth2-bearer
+  detail: OAuth 2.0 password grant; bearer access_token on Authorization header.
+  see: authentication/eightfold-authentication.yml
+versioning:
+  scheme: uri-path
+  current: v2
+  base_path: /api/v2/
+  host: apiv2.eightfold.ai
+  notes: >-
+    API v2 is a separate endpoint/service from the legacy v1. v2 is fully RESTful,
+    namespaced by entity (core, careerhub, hris, insights, etc.), and adds PATCH support.
+partial_update:
+  method: PATCH
+  semantics: >-
+    PATCH applies only the fields present in the body; absent fields are untouched.
+    PUT (Update) overwrites the whole record - empty fields sent on an Update wipe the
+    stored values. Required body params are not enforced on PATCH.
+async_operations:
+  supported: true
+  contract: >-
+    Some write operations are asynchronous - a 2xx response does not guarantee success.
+    These return a transaction id used to poll status.
+  status_endpoint: /api/v2/transactions/{id}   # Get Async API Status
+  statuses: [PASS, IN PROGRESS, FAIL]
+  retention: status available for the past 3 days
+batch:
+  supported: true
+  pattern: '*_batch_fetch endpoints'
+  limit: 100 ids per batch request (most entities)
+pagination:
+  style: query-parameter search + list
+  notes: >-
+    List endpoints accept query parameters to search/filter and return full entity
+    objects. Values within one filter are OR'd; values across different filters are AND'd
+    (e.g. talent traits query). Some match endpoints (recommended successors) return a
+    fixed max of 100 results with no pagination.
+change_tracking:
+  endpoint: /api/v2/changelog   # List Entity Changelogs
+  window_max_hours: 24
+  entity_types: [profiles, positions, demands, users, profile-applications, profile-tags,
+    profile-notes, profile-feedbacks, planned-events, user-campaigns, user-messages,
+    event-candidate-activities, email-delivery-feedbacks, user-calendar-events, bookings,
+    holidays, org-units, entity-profile-applications]
+upsert:
+  supported: true
+  example: patch_offer_ats_positions (Upsert Offer by ATS IDs) - idempotent PATCH keyed
+    on (system, ats candidate id, ats position id); creates if absent, patches in place
+    otherwise.
+  note: >-
+    Upsert-by-natural-key is idempotent, but Eightfold does not document a general
+    Idempotency-Key request header, so no repo-wide Idempotency pointer is emitted.
+regions:
+  model: regional token endpoints and data residency
+  list: [US, EU, CA, ME, AP, WU, Gov]
+error_semantics:
+  standard_http_status: true
+  note: >-
+    Standard HTTP status codes; async 2xx is provisional (poll transaction status). No
+    published RFC 9457 problem+json envelope observed in the docs.
+cross_links:
+  authentication: authentication/eightfold-authentication.yml
+  scopes: scopes/eightfold-scopes.yml
+  lifecycle: lifecycle/eightfold-lifecycle.yml
+  conformance: conformance/eightfold-conformance.yml

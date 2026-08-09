@@ -1,0 +1,206 @@
+<!-- generated: 2026-07-19 -->
+<!-- method: searched -->
+<!-- source: https://apidocs.eightfold.ai/llms.txt -->
+# eightfoldapi Documentation
+
+> Documentation for eightfoldapi
+
+## Guides
+- [API Documentation](https://apidocs.eightfold.ai/docs/getting-started.md)
+- [OAuth Configuration](https://apidocs.eightfold.ai/docs/oauth-configuration.md): How to enable OAuth for an API server
+- [SCIM API Documentation](https://apidocs.eightfold.ai/docs/scim-api-documentation.md): The **SCIM (System for Cross-domain Identity Management)** API allows you to automate and manage user information within your system.
+- [Eightfold API Authorization Guide](https://apidocs.eightfold.ai/docs/eightfold-api-authorization-guide.md)
+
+## API Reference
+- [Get ATS Position](https://apidocs.eightfold.ai/reference/get_ats_position_by_id.md): Given an ats position id, it returns all attributes of the ats position
+- [Update ATS Position](https://apidocs.eightfold.ai/reference/update_ats_position.md): To update the existing Ats Position in the System, include the ats         position id in the params. Please Note: Update will overwrite existing fields.         If empty fields are sent during an update, those fields will be wiped out
+- [Patch ATS Position](https://apidocs.eightfold.ai/reference/patch_ats_position.md): Given an ats position id and data that needs to be patched, it patches the ats position. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.
+- [List ATS Positions](https://apidocs.eightfold.ai/reference/list_ats_position.md): Search ats positions using query parameters and get the complete ats position objects
+- [Create ATS Position](https://apidocs.eightfold.ai/reference/create_ats_position.md): To add a new ats position in the system, send the position information in the payload. ats position id will be sent back in case of a successful response
+- [Upload ATS Position Attachments](https://apidocs.eightfold.ai/reference/create_ats_position_attachments.md): Upload attachments for an ATS Position. Each file can be provided either as a URL or base64 encoded content.  Restrictions: - Maximum 10MB per file and total upload - Allowed file types: PDF, DOCX, XLSX, JPG, PNG, TXT - URLs must be publicly accessible HTTPS endpoints - Private IPs and localhost URLs are blocked for security - All files must succeed or entire operation fails (transactional)
+- [List Matched Positions for Profile](https://apidocs.eightfold.ai/reference/list_position_matched.md): Returns all the matching positions for a profile
+- [Get Attachment](https://apidocs.eightfold.ai/reference/get_profile_attachments_by_id.md): Given the key for an attachment, it fetches the attachment in octet-stream format
+- [Get Profile](https://apidocs.eightfold.ai/reference/get_profile_by_id.md): Given a profile id of a candidate, it returns all attributes of the profile
+- [Update Profile](https://apidocs.eightfold.ai/reference/update_profile.md): To update the existing Profile(Candidate/Employee) in the System,         include the profileId in the params. Please Note: Update will overwrite existing         fields. If empty fields are sent during an update, those fields will be wiped         out
+- [Delete Profile](https://apidocs.eightfold.ai/reference/delete_profile.md): Deletes a specific profile given a profile id
+- [Patch Profile](https://apidocs.eightfold.ai/reference/patch_profile.md): Given profile id and data that needs to be patched, it patches the profile. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.
+- [List Profiles](https://apidocs.eightfold.ai/reference/list_profile.md): Search profiles using query parameters and get the complete profile objects
+- [Create Profile](https://apidocs.eightfold.ai/reference/create_profile.md): This API creates a profile with the given data in the payload
+- [Upsert Application Stage](https://apidocs.eightfold.ai/reference/create_profile_stages.md): Create or advance application stage for a given profile and position
+- [Batch Fetch Profiles](https://apidocs.eightfold.ai/reference/profile_batch_fetch.md): Batch fetch profiles for a given list of profile ids (limit 100)
+- [Get Position](https://apidocs.eightfold.ai/reference/get_position_by_id.md): Given a position id, it returns all attributes of the position
+- [Update Position](https://apidocs.eightfold.ai/reference/update_position.md): To update the existing Position in the System, include the positionId         in the params. Please Note: Update will overwrite existing fields. If empty         fields are sent during an update, those fields will be wiped out
+- [Patch Position](https://apidocs.eightfold.ai/reference/patch_position.md): Given a position id and data that needs to be patched, it patches the position. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.
+- [List Positions](https://apidocs.eightfold.ai/reference/list_position.md): Search positions using query parameters and get the complete position objects
+- [Create Position](https://apidocs.eightfold.ai/reference/create_position.md): To add a new position in the system, send the position information in the payload. positionId will be sent back in case of a successful response
+- [Batch Fetch Positions](https://apidocs.eightfold.ai/reference/position_batch_fetch.md): Batch fetch positions for a given list of position ids (limit 100)
+- [List Matched Candidates for Position](https://apidocs.eightfold.ai/reference/list_profile_matched_candidates.md): Returns all the matching candidates for a position based on the filter query params provided in the API request. NOTE: The output may differ from UI pages as those pages may use additional configs, that are configured separately. Top 1000 Leads can be requested using the leads query parameter.
+- [List Applicants](https://apidocs.eightfold.ai/reference/list_profile_applicants.md): Returns all the matching applicants for a position
+- [Get Async API Status](https://apidocs.eightfold.ai/reference/get_async_api_status_transactions_by_id.md): Given a transaction id, it returns the status and encoded entity id of the transaction, status can be PASS, IN PROGRESS or FAIL in the past 3 days
+- [Get ATS Candidate](https://apidocs.eightfold.ai/reference/get_ats_candidate_by_id.md): Given an ats candidate id of a candidate, it returns the ats candidate object
+- [Update ATS Candidate](https://apidocs.eightfold.ai/reference/update_ats_candidate.md): To update the existing ats candidate, include the ats_candidate_id         in the params. Please Note: Update will overwrite existing fields. If empty         fields are sent during an update, those fields will be wiped out
+- [Patch ATS Candidate](https://apidocs.eightfold.ai/reference/patch_ats_candidate.md): Given an ats candidate id and data that needs to be patched, it patches the ats candidate. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.
+- [List ATS Candidates](https://apidocs.eightfold.ai/reference/list_ats_candidate.md): Search ats candidates using query parameters and get the complete ats candidate objects
+- [Create ATS Candidate](https://apidocs.eightfold.ai/reference/create_ats_candidate.md): To add a new ats candidate in the system, send the candidate information in the payload. ats candidate id will be sent back in case of a successful response
+- [Get Skill Suggestions](https://apidocs.eightfold.ai/reference/get_careerhub_suggest_skills_by_id.md): For a given profile id, fetch suggested skills for a particular profile section. Supported profile sections are 'experience', 'education', 'projects'.
+- [Get Career Planner Role](https://apidocs.eightfold.ai/reference/list_careerhub_roles.md): Returns roles for a specified section. Possible values of sections are preferred-roles and recommended-roles
+- [Patch Career Planner Role](https://apidocs.eightfold.ai/reference/patch_careerhub_.md): Patch preferred role for a user. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.
+- [Get Skill Gap Analysis](https://apidocs.eightfold.ai/reference/list_careerhub_skill_gap_analysis.md): Skill gap analysis data which includes present skills and recommeded skills for the provided role and current user profile
+- [Get Recommended Courses](https://apidocs.eightfold.ai/reference/list_careerhub_recommended_courses.md): Return recommended course for the current user and selected role pair
+- [Search Career Paths](https://apidocs.eightfold.ai/reference/get_career_navigator_recommended_paths_by_id.md): Returns career navigator recommended career paths
+- [List Recommended Courses](https://apidocs.eightfold.ai/reference/list_career_navigator_recommended_courses.md): Returns paginated list of recommended courses for a role in career navigator
+- [Get Profile Feedback](https://apidocs.eightfold.ai/reference/get_profile_feedback_by_id.md): Given a profile feedback id of a candidate, it returns all attributes of the profile feedback
+- [Batch Fetch Profile Feedbacks](https://apidocs.eightfold.ai/reference/profile_feedback_batch_fetch.md): Batch fetch profile feedbacks for a given list of feedback ids (limit 100)
+- [List Profile Feedbacks](https://apidocs.eightfold.ai/reference/list_profile_feedback.md): Search profile feedbacks using specific filter parameters and get all attributes of profile feedbacks objects
+- [Get Profile Note](https://apidocs.eightfold.ai/reference/get_profile_note_by_id.md): Given a profile note id of a candidate, it returns all attributes of the profile note
+- [Batch Fetch Profile Notes](https://apidocs.eightfold.ai/reference/profile_note_batch_fetch.md): Batch fetch profile notes for a given list of note ids (limit 100)
+- [List Profile Notes](https://apidocs.eightfold.ai/reference/list_profile_note.md): Search profile notes using specific filter parameters and get the complete profile note objects
+- [Create Profile Note](https://apidocs.eightfold.ai/reference/create_profile_note.md): Create a profile note for a candidate. profileId is required. noteType         must be one of note, email, other, title_note — email is intended for internal         integrations or callers from allowed domains only, as email notes appear in         sourcing analytics and recruiter dashboards. positionId is optional.
+- [Get Profile Tag](https://apidocs.eightfold.ai/reference/get_profile_tag_by_id.md): Given a profile tag id of a candidate, it returns all attributes of the profile tag
+- [Batch Fetch Profile Tags](https://apidocs.eightfold.ai/reference/profile_tag_batch_fetch.md): Batch fetch profile tags for a given list of tag ids (limit 100)
+- [List Profile Tags](https://apidocs.eightfold.ai/reference/list_profile_tag.md): Search profile tags using specific filter parameters and get all profile tag objects
+- [Get Profile Application](https://apidocs.eightfold.ai/reference/get_profile_application_by_id.md): Given a profile application id, it returns all attributes of the profile application
+- [Batch Fetch Profile Applications](https://apidocs.eightfold.ai/reference/profile_application_batch_fetch.md): Batch fetch profile applications for a given list of applications ids (limit 100)
+- [List Profile Applications](https://apidocs.eightfold.ai/reference/list_profile_application.md): Search profile applications using specific filter parameters and get all attributes of profile applications
+- [Get User Message](https://apidocs.eightfold.ai/reference/get_user_message_by_id.md): Given a user message id, it returns all attributes of the user message
+- [Batch Fetch User Messages](https://apidocs.eightfold.ai/reference/user_message_batch_fetch.md): Batch fetch user messages for a given list of user message ids (limit 100)
+- [List User Messages](https://apidocs.eightfold.ai/reference/list_user_message.md): Search user messages using specific filter parameters and get all attributes of entities
+- [Get Email Delivery Feedback](https://apidocs.eightfold.ai/reference/get_email_delivery_feedback_by_id.md): Given the id of email delivery feedback, it returns all attributes of the entity
+- [Batch Fetch Email Delivery Feedbacks](https://apidocs.eightfold.ai/reference/email_delivery_feedback_batch_fetch.md): Batch fetch email delivery feedbacks for a given list of entity ids (limit 100)
+- [List Email Delivery Feedbacks](https://apidocs.eightfold.ai/reference/list_email_delivery_feedback.md): Search Email Delivery Feedbacks using specific filter parameters and get all attributes of the entity objects
+- [Get User Campaign](https://apidocs.eightfold.ai/reference/get_user_campaign_by_id.md): Given a campaign id, it returns all attributes of the user campaign
+- [Batch Fetch User Campaigns](https://apidocs.eightfold.ai/reference/user_campaign_batch_fetch.md): Batch fetch user campaigns for a given list of campaign ids (limit 100)
+- [List User Campaigns](https://apidocs.eightfold.ai/reference/list_user_campaign.md): Search user campaigns using specific filter parameters and get all attributes of entities
+- [Get Course](https://apidocs.eightfold.ai/reference/get_course_by_id.md): Given a course id of a course, it returns the course object
+- [Delete Course](https://apidocs.eightfold.ai/reference/delete_course.md): Deletes a specific course given a course id. Note: It may take some         time for the newly deleted courses to disappear from LIST call, as there may         be indexing delays. You can still use the GET BY ID call right after deletion         of course to confirm the deletion of the course.
+- [Patch Course](https://apidocs.eightfold.ai/reference/patch_course.md): Given an course id and data that needs to be patched, it patches the course. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.
+- [List Courses](https://apidocs.eightfold.ai/reference/list_course.md): Search courses using query parameters and get the complete course         object. recommendedFor feature does not support query addition. Note: It may         take some time for the newly deleted courses to disappear from LIST call, as         there may be indexing delays. You can still use the GET BY ID call right after         deletion of course to confirm the deletion of the course.
+- [Create Course](https://apidocs.eightfold.ai/reference/create_course.md): Does creation for a course
+- [Get User Calendar Event](https://apidocs.eightfold.ai/reference/get_user_calendar_event_by_id.md): Given the id of User Calendar Event, it returns all attributes of the entity
+- [Batch Fetch User Calendar Events](https://apidocs.eightfold.ai/reference/user_calendar_event_batch_fetch.md): Batch fetch user calendar events for a given list of entity ids (limit 100)
+- [List User Calendar Events](https://apidocs.eightfold.ai/reference/list_user_calendar_event.md): Search User Calendar Events using specific filter parameters and get all attributes of the entity objects
+- [Get Event Candidate Activity](https://apidocs.eightfold.ai/reference/get_event_candidate_activity_by_id.md): Given an event activity id of a candidate, it returns all attributes of the event activity
+- [Batch Fetch Event Candidate Activities](https://apidocs.eightfold.ai/reference/event_candidate_activity_batch_fetch.md): Batch fetch event candidate activity for a given list of entity ids (limit 100)
+- [List Event Candidate Activities](https://apidocs.eightfold.ai/reference/list_event_candidate_activity.md): Search event candidate activities using specific filter parameters and get all attributes of the entities
+- [List Planned Events](https://apidocs.eightfold.ai/reference/list_events_planned_events.md): A get call for listing planned events data
+- [Batch Fetch Planned Events](https://apidocs.eightfold.ai/reference/events_batch_fetch.md): Batch fetch planned events for a given list of planned event ids (limit 100)
+- [Get Planned Event](https://apidocs.eightfold.ai/reference/get_events_planned_events_by_id.md): Given a planned event id, it returns all attributes of the planned event
+- [Get Entity Profile Application](https://apidocs.eightfold.ai/reference/get_entity_profile_application_by_id.md): Given an entity profile application id, it returns all attributes of the entity profile application
+- [Batch Fetch Entity Profile Applications](https://apidocs.eightfold.ai/reference/entity_profile_application_batch_fetch.md): Batch fetch entity profile applications for a given list of entity profile application ids (limit 100)
+- [List Entity Profile Applications](https://apidocs.eightfold.ai/reference/list_entity_profile_application.md): Search entity profile applications using specific filter parameters and get all attributes of entity profile applications for a given entity id and entity type
+- [List Profile Insights](https://apidocs.eightfold.ai/reference/list_insights_profile_insights.md): Returns profile insights
+- [Create Talent Traits](https://apidocs.eightfold.ai/reference/create_insights_talent_traits.md): Post a query with different filters for talent traits. All the values in the same filter is treated as an OR operation, while all the values in a different filter is treated as an AND operation.
+- [Get Employee Diversity Insights](https://apidocs.eightfold.ai/reference/list_insights_employees.md): Returns Diversity insights of employees of an organization
+- [Patch HRIS Employee](https://apidocs.eightfold.ai/reference/patch_hris_employee_ext_employees.md): Patches employee given its employee id. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.
+- [Update HRIS Employee](https://apidocs.eightfold.ai/reference/update_hris_employee_ext_employees.md): Updates employee given its employee id.
+- [Get Employee](https://apidocs.eightfold.ai/reference/get_employee_by_id.md): Given a profile id of a employee, it returns all attributes of the employee
+- [Patch Employee](https://apidocs.eightfold.ai/reference/patch_employee.md): Patches employee given its profile_id. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.
+- [Update Employee](https://apidocs.eightfold.ai/reference/update_employee.md): Updates employee given its profile_id.
+- [Create Employee](https://apidocs.eightfold.ai/reference/create_employee.md): Creates a new employee
+- [List Employees](https://apidocs.eightfold.ai/reference/list_employee.md): List call that returns all the employee profiles.
+- [Batch Fetch Employees](https://apidocs.eightfold.ai/reference/employee_batch_fetch.md): Batch fetch employees for a given list of profile ids
+- [List Recommended Mentors](https://apidocs.eightfold.ai/reference/list_employee_recommended_mentors.md): Given a profile ID of an employee, return recommended mentors
+- [List Employee Match Scores](https://apidocs.eightfold.ai/reference/list_employee_role_match_score.md): List call that returns employees match scores against their current roles.
+- [List Matched Demands for Employee](https://apidocs.eightfold.ai/reference/list_employee_matched_demands.md): Returns all the matching demands for an employee profile. Only works for employee profiles, not candidates. By default, demands are filtered by the employee's location and a minimum star rating threshold of 3.5. Results are sorted by match score (highest to lowest). Use ignoreLocation=true to search globally and minStarThreshold to adjust the quality threshold.
+- [Get HRIS Employee](https://apidocs.eightfold.ai/reference/get_hris_employee_hris_employees_by_id.md): Given an email id or employee id of an employee, it returns the HRIS employee information
+- [List HRIS Employees](https://apidocs.eightfold.ai/reference/list_hris_employee_hris_employees.md): List call that returns all the employee profiles.
+- [Create Talent Pool](https://apidocs.eightfold.ai/reference/create_talent_pool.md): Allowing the candidate to join talent pool
+- [Get Employee Role](https://apidocs.eightfold.ai/reference/get_employee_role_by_id.md): Given a role Id of a role, it returns the employee role
+- [Create Employee Role](https://apidocs.eightfold.ai/reference/create_employee_role.md): Create an employee role in Eightfold
+- [Get JIE Role](https://apidocs.eightfold.ai/reference/get_jie_roles_by_id.md): Given an Id of a role, it returns the JIE role for the same
+- [Update JIE Role](https://apidocs.eightfold.ai/reference/update_jie_roles.md): Update a role in Eightfold
+- [Delete JIE Role](https://apidocs.eightfold.ai/reference/delete_jie_roles.md): Deletes a specific role given a role id
+- [Get Succession Plan](https://apidocs.eightfold.ai/reference/list_jie_insights.md): This endpoint returns succession plan information for group id of a current user.
+- [Create JIE Role](https://apidocs.eightfold.ai/reference/create_jie_roles.md): Create a role in Eightfold
+- [List JIE Roles](https://apidocs.eightfold.ai/reference/list_jie_roles.md): This endpoint returns a list of roles. If a new role is created, it takes some time to show up in the list call, you can fetch that role using get endpoints right after the creation of role
+- [Get User](https://apidocs.eightfold.ai/reference/get_user_login_users_by_id.md): Given a user id of a user, it returns the user object
+- [Delete User](https://apidocs.eightfold.ai/reference/delete_user_login_users.md): Deletes a specific user given a user id
+- [Patch User](https://apidocs.eightfold.ai/reference/patch_user_login_users.md): Given a user id of a user with user data, it patches the user object. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.
+- [List Users](https://apidocs.eightfold.ai/reference/list_user_login_users.md): Returns a list of users
+- [Create User](https://apidocs.eightfold.ai/reference/create_user_login_users.md): Create an User in Eightfold. email, firstName and lastName cannot         be empty strings while creating an User. Note: It may take some time for the         newly created users to start reflecting in LIST calls, as there may be indexing         delays. You can still use the GET BY ID call right after creation of users.
+- [Batch Fetch Users](https://apidocs.eightfold.ai/reference/user_login_batch_fetch.md): Batch fetch users for a given list of user ids (limit 100)
+- [List Entity Changelogs](https://apidocs.eightfold.ai/reference/list_entity_changelog_changelog.md): This API fetches modified entity ids given a time frame. Maximum duration of a time window is limited to 24 hrs. The supported entity types are 'profiles', 'positions', 'demands', 'users', 'profile-applications', 'profile-tags', 'profile-notes', 'profile-feedbacks', 'planned-events', 'user-campaigns', 'user-messages', 'event-candidate-activities', 'email-delivery-feedbacks', 'user-calendar-events', 'bookings', 'holidays', 'org-units', 'entity-profile-applications'
+- [Get Demand](https://apidocs.eightfold.ai/reference/get_demand_by_id.md): Given a demand id, it returns all attributes of the demand
+- [Patch Demand](https://apidocs.eightfold.ai/reference/patch_demand.md): Patches demand given its id. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.
+- [Update Demand](https://apidocs.eightfold.ai/reference/update_demand.md): Updates demand given its id.
+- [Delete Demand](https://apidocs.eightfold.ai/reference/delete_demand.md): Deletes demand given its id.
+- [Create Demand](https://apidocs.eightfold.ai/reference/create_demand.md): Create a new Demand
+- [List Demands](https://apidocs.eightfold.ai/reference/list_demand.md): Search demands using query parameters and get the complete demand objects
+- [Batch Fetch Demands](https://apidocs.eightfold.ai/reference/demand_batch_fetch.md): Batch fetch demands for a given list of demand ids
+- [Get Succession Plan](https://apidocs.eightfold.ai/reference/get_succession_plan_by_id.md): Given a position ID of the succession plan, return attributes of the plan
+- [Delete Succession Plan](https://apidocs.eightfold.ai/reference/delete_succession_plan.md): Deletes a succession plan specified by the Eightfold position ID
+- [Patch Succession Plan](https://apidocs.eightfold.ai/reference/patch_succession_plan.md): Update existing succession plan's metadata. Refer to request schema for fields that can be updated. For updating successors and caretakers, please use the dedicated successor and caretaker endpoints. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.
+- [Get Recommended Successors](https://apidocs.eightfold.ai/reference/list_succession_plan_recommended_successors.md): Get a list of recommended successors for the specified succession plan given a position ID. The endpoint does not support pagination due to a post-processing step where employee profiles are sorted by the match score. Because of that the results will always return a full list with max number of results as 100. A sample request looks like this, https://apiv2.eightfold.ai/api/v2/careerhub/succession_plans/1234567/recommended_successors, where 1234567 is the position ID of the plan.
+- [List Succession Plans](https://apidocs.eightfold.ai/reference/list_succession_plan.md): Search and get a list of succession plans based on the search parameters given
+- [Create Succession Plan](https://apidocs.eightfold.ai/reference/create_succession_plan.md): Creates a new succession plan
+- [List Succession Plan Incumbents](https://apidocs.eightfold.ai/reference/list_succession_plan_incumbents.md): Get a list of incumbents of the succession plan. The plan is specified by the position ID in the request path. This endpoint is mainly to support getting incumbents for role-based succession plans which cannot show the incumbents in the Succession Plan Get and List endpoints.
+- [Create Succession Plan Successor](https://apidocs.eightfold.ai/reference/create_succession_plan_successors.md): An employee is added as a successor in the succession plan. The employee must be a valid and existing employee profile in Eightfold.
+- [Patch Succession Plan Successor](https://apidocs.eightfold.ai/reference/patch_succession_plan_successors.md): Patch a successor in the succession plan. The successor's attributes are updated with new data given in the request. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.
+- [Delete Succession Plan Successor](https://apidocs.eightfold.ai/reference/delete_succession_plan_successors.md): Delete a successor from the succession plan.
+- [Create Succession Plan Caretaker](https://apidocs.eightfold.ai/reference/create_succession_plan_caretakers.md): Add an employee as a new caretaker to the succession plan. The employee must be a valid and existing employee profile on Eightfold.
+- [Delete Succession Plan Caretaker](https://apidocs.eightfold.ai/reference/delete_succession_plan_caretakers.md): Delete a caretaker from the succession plan.
+- [Get External Demand](https://apidocs.eightfold.ai/reference/get_external_demand_ext_demands_by_id.md): Given a external demand id, it returns all attributes of the external demand
+- [Patch External Demand](https://apidocs.eightfold.ai/reference/patch_external_demand_ext_demands.md): Patches external demand given its id. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.
+- [Update External Demand](https://apidocs.eightfold.ai/reference/update_external_demand_ext_demands.md): Updates external demand given its id
+- [Delete External Demand](https://apidocs.eightfold.ai/reference/delete_external_demand_ext_demands.md): Deletes external demand given its id.
+- [Create External Demand](https://apidocs.eightfold.ai/reference/create_external_demand_ext_demands.md): Create a new External Demand
+- [List External Demands](https://apidocs.eightfold.ai/reference/list_external_demand_ext_demands.md): Search external demands using query parameters and get the complete external demand objects
+- [Update External Demand Employee Application](https://apidocs.eightfold.ai/reference/create_external_demand_employee_create_or_advance_application_stage.md): Create or advance application stage of an employee using their employee ID
+- [Create External Demand Org Unit](https://apidocs.eightfold.ai/reference/create_external_demand_org_unit_ext_demand_org_units.md): Create a new External Demand Org Unit
+- [Get External Demand Org Unit](https://apidocs.eightfold.ai/reference/get_external_demand_org_unit_ext_demand_org_units_by_id.md): Get an external demand org unit by its id
+- [Patch External Demand Org Unit](https://apidocs.eightfold.ai/reference/patch_external_demand_org_unit_ext_demand_org_units.md): Patches an external demand org unit given its id. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.
+- [Get Booking](https://apidocs.eightfold.ai/reference/get_booking_by_id.md): Given a Booking id, it returns all attributes of the Booking (Resource Management Entity)
+- [Patch Booking](https://apidocs.eightfold.ai/reference/patch_booking.md): Patches a booking given its id. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.
+- [Update Booking](https://apidocs.eightfold.ai/reference/update_booking.md): Updates a booking given its id.
+- [Delete Booking](https://apidocs.eightfold.ai/reference/delete_booking.md): Deletes a booking given its id.
+- [Create Booking](https://apidocs.eightfold.ai/reference/create_booking.md): Create a new Booking
+- [List Bookings](https://apidocs.eightfold.ai/reference/list_booking.md): Search bookings using query parameters and get the complete booking objects. Atleast one of employeeEmail or demandId is required in filters.
+- [Batch Fetch Bookings](https://apidocs.eightfold.ai/reference/booking_batch_fetch.md): Batch fetch bookings for a given list of booking ids
+- [Get External Booking](https://apidocs.eightfold.ai/reference/get_external_booking_ext_bookings_by_id.md): Given an external booking id, it returns all attributes of the external booking
+- [Patch External Booking](https://apidocs.eightfold.ai/reference/patch_external_booking_ext_bookings.md): Patches external booking given its id. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.
+- [Update External Booking](https://apidocs.eightfold.ai/reference/update_external_booking_ext_bookings.md): Updates external booking given its id.
+- [Delete External Booking](https://apidocs.eightfold.ai/reference/delete_external_booking_ext_bookings.md): Deletes external booking given its id.
+- [Create External Booking](https://apidocs.eightfold.ai/reference/create_external_booking_ext_bookings.md): Create a new External Booking
+- [Get Holiday](https://apidocs.eightfold.ai/reference/get_holiday_by_id.md): Given a Holiday id, it returns all attributes of the Holiday (Resource Management Entity)
+- [Patch Holiday](https://apidocs.eightfold.ai/reference/patch_holiday.md): Patches a holiday given its id. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.
+- [Update Holiday](https://apidocs.eightfold.ai/reference/update_holiday.md): Updates a holiday given its id.
+- [Delete Holiday](https://apidocs.eightfold.ai/reference/delete_holiday.md): Deletes a holiday given its id.
+- [Create Holiday](https://apidocs.eightfold.ai/reference/create_holiday.md): Create a new Holiday
+- [List Holidays](https://apidocs.eightfold.ai/reference/list_holiday.md): Search holidays using query parameters and get the complete holiday objects.
+- [Batch Fetch Holidays](https://apidocs.eightfold.ai/reference/holiday_batch_fetch.md): Batch fetch holidays for a given list of holiday ids
+- [List Org Units](https://apidocs.eightfold.ai/reference/list_org_unit.md): Search org units using query parameters and get the complete org unit objects
+- [Get Approval Workflow](https://apidocs.eightfold.ai/reference/get_approval_workflow_by_id.md): Get an approval workflow by entity type and entity id
+- [Create Approval Workflow](https://apidocs.eightfold.ai/reference/create_approval_workflow.md): Create a new Approval Workflow and start approval process
+- [Get Comment](https://apidocs.eightfold.ai/reference/get_comments_comments_by_id.md): Given a comment id, it returns all attributes of the comment
+- [List Comments](https://apidocs.eightfold.ai/reference/list_comments_comments.md): Returns all comments for a given entity type and entity id
+- [Get Comments By External Entity Id And Type](https://apidocs.eightfold.ai/reference/list_comments_ext_entity_comments.md): Returns all comments for a given entity type and external entity id
+- [Get Comments By Entity Id And Type](https://apidocs.eightfold.ai/reference/list_comments_entity_comments.md): Returns all comments for a given entity type and entity id
+- [Delete All Comments By Entity Id](https://apidocs.eightfold.ai/reference/delete_comments_entity_comments.md): Deletes all comments for a given entity type and entity id
+- [Batch Fetch Comments By Entity IDs](https://apidocs.eightfold.ai/reference/comments_entity__batch_fetch.md): Fetches all comments for a given list of entity IDs
+- [Batch Fetch Comments By External Entity IDs](https://apidocs.eightfold.ai/reference/comments_ext_entity__batch_fetch.md): Fetches all comments for a given list of external entity IDs
+- [Get Offer](https://apidocs.eightfold.ai/reference/get_offer_by_id.md): Given an Offer id, it returns all attributes of the Offer
+- [Patch Offer](https://apidocs.eightfold.ai/reference/patch_offer.md): Patches an offer given its id. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.
+- [List Offers](https://apidocs.eightfold.ai/reference/list_offer.md): Search offers using query parameters and get the complete offer objects
+- [Upsert Offer by ATS IDs](https://apidocs.eightfold.ai/reference/patch_offer_ats_positions.md): Upserts an offer identified by ATS IDs (system + ats candidate id + ats position id). If an offer already exists for the resolved (candidate, position) it is patched in place; otherwise a new offer is created and linked to the candidate's latest application. PATCH semantics: idempotent; only fields present in the body are applied; absent fields are not touched.
+- [Get Hiring Company](https://apidocs.eightfold.ai/reference/get_workforce_exchange_hiring_company_hiring_company_by_id.md): Given a Hiring Company Group Id, it returns all attributes of the Hiring Company
+- [Patch HiringCompany](https://apidocs.eightfold.ai/reference/patch_workforce_exchange_hiring_company_hiring_company.md): Given a Hiring Company and data that needs to be patched, it patches the Hiring Company. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.
+- [List Upskill Plan Assignments](https://apidocs.eightfold.ai/reference/list_careerhub_upskill_plan_assignment.md): List upskilling plan assignments for the given assignee profile.
+- [Get Upskill Plan Assignment](https://apidocs.eightfold.ai/reference/get_careerhub_upskill_plan_assignment_by_id.md): Fetch an upskilling plan assignment by `(profileEncId, planId)`.
+- [List Performance Feedbacks](https://apidocs.eightfold.ai/reference/list_careerhub_performance_feedback.md): List performance feedbacks. At least one of `profileEncId`, `reviewerEmail`, `requesterEmail` is required so the result set is always scoped. Backed by `PerformanceReviewService.search_performance_reviews`.
+- [Request Performance Feedback](https://apidocs.eightfold.ai/reference/create_careerhub_request.md): Request performance feedback for a candidate from one or more reviewers ('Request Feedback'). Body: `{profileEncId, requesteeEmails, templateId, deadline?, contextPrompt?, onBehalfOf?}`.
+- [Provide Performance Feedback](https://apidocs.eightfold.ai/reference/create_careerhub_provide.md): Submit performance feedback ('Give Feedback'). Body: `{templateId, answers, profileEncId?, reviewRequestId?}`. `profileEncId` is required unless this is a self-submitted review.
+- [Get Performance Feedback](https://apidocs.eightfold.ai/reference/get_careerhub_performance_feedback_by_id.md): Fetch a performance feedback by `reviewId`.
+- [Get Foundational Data](https://apidocs.eightfold.ai/reference/get_foundational_data_by_id.md): Given an external id, it returns Foundational Data object
+- [Patch Foundational Data](https://apidocs.eightfold.ai/reference/patch_foundational_data.md): Patch a foundational data object
+- [List Foundational Data](https://apidocs.eightfold.ai/reference/list_foundational_data.md): Search foundational data using query parameters and get the complete foundational data objects
+- [Create Foundational Data](https://apidocs.eightfold.ai/reference/create_foundational_data.md): Create a new foundational data object
+- [List Interview Guides](https://apidocs.eightfold.ai/reference/list_ext_ai_interview_guides.md): Get list of interview guides for the given user account. Query parameters are passed through to the adapter for extraction.
+- [Schedule Interview](https://apidocs.eightfold.ai/reference/create_ext_ai_interview_schedule_interview.md): Schedule an interview for a candidate-job pair. Request and response formats vary by integration system.
+- [Get Interview Feedback Link](https://apidocs.eightfold.ai/reference/list_ext_ai_interview_interview_feedback_link.md): Get the interview feedback portal URL for a candidate-job pair. Query parameters are passed through to the adapter for extraction.
+- [Get Question Template](https://apidocs.eightfold.ai/reference/get_question_template_by_id.md): Fetch a question template (questions + metadata) for form rendering. Returns the template metadata plus the ordered list of questions in frontend-form shape.
+- [Configuration and Resource Types](https://apidocs.eightfold.ai/reference/configuration-and-resource-types.md)
+- [Users](https://apidocs.eightfold.ai/reference/users-1.md)
+- [Roles](https://apidocs.eightfold.ai/reference/roles.md)
+
+## Changelog
+- [August 2022 Release Changelog](https://apidocs.eightfold.ai/changelog/eightfold-api-release-notes.md)

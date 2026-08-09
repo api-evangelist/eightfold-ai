@@ -1,0 +1,26 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/EightfoldAI
+notes: >-
+  Eightfold does not publish a first-party API client SDK for its REST API v2 (enterprise,
+  token-based; consumed directly over HTTP). It does publish first-party open-source
+  libraries on npm and GitHub: the Octuple design-system component library (its public
+  UI toolkit) and an Microsoft ESS connector. No SDKs pointer is emitted because none of
+  these is an API client library for the Eightfold API.
+packages:
+- language: javascript
+  registry: npm
+  name: '@eightfold.ai/octuple'
+  url: https://www.npmjs.com/package/@eightfold.ai/octuple
+  repo: https://github.com/EightfoldAI/octuple
+  install: npm install @eightfold.ai/octuple
+  official: true
+  category: ui-component-library
+  description: Eightfold Octuple Design System component library (React/TypeScript).
+- language: csharp
+  registry: github
+  name: MSFT_ESS_Connector
+  url: https://github.com/EightfoldAI/MSFT_ESS_Connector
+  official: true
+  category: connector
+  description: Microsoft ESS (Employee Self-Service) connector.

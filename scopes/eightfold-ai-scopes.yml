@@ -1,0 +1,39 @@
+generated: '2026-07-19'
+method: searched
+source: https://apidocs.eightfold.ai/docs/eightfold-api-authorization-guide
+docs: https://apidocs.eightfold.ai/docs/eightfold-api-authorization-guide
+model: >-
+  Eightfold uses a permission-based authorization system. Each API key is assigned
+  specific permissions in the Admin Console. Permissions follow a hierarchical structure:
+  logical_entity[:logical_subentity]:SCOPE, where SCOPE is READ or WRITE. A request is
+  allowed only when the calling key holds the required entity permission for that
+  endpoint. Global READ / global WRITE toggles grant all read or all write endpoints.
+scope_grammar: 'logical_entity[:logical_subentity]:SCOPE   # SCOPE in {READ, WRITE}'
+scope_types: [READ, WRITE]
+example_scopes:
+- scope: ats_position:READ
+  description: Read ATS positions (Get, List)
+- scope: ats_position:WRITE
+  description: Create/Update/Patch ATS positions
+- scope: profile:READ
+  description: Read candidate/employee profiles
+- scope: profile:WRITE
+  description: Create/Update/Patch/Delete profiles
+- scope: profile:skills:READ
+  description: Read the skills sub-entity of a profile (sub-entity example)
+- scope: position:READ
+  description: Read positions
+- scope: position:WRITE
+  description: Create/Update/Patch positions
+- scope: demand:READ
+  description: Read demands
+- scope: demand:WRITE
+  description: Create/Update/Patch/Delete demands
+- scope: booking:READ
+  description: Read bookings (resource management)
+- scope: booking:WRITE
+  description: Create/Update/Patch/Delete bookings
+notes: >-
+  The concrete entity list is enumerated in the Admin Console permission UI and the
+  authorization guide's endpoint/permission reference table; scopes above are
+  representative examples of the entity:SCOPE grammar, not the exhaustive registry.

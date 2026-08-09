@@ -1,0 +1,23 @@
+generated: '2026-07-19'
+method: searched
+source: https://apidocs.eightfold.ai/docs/getting-started
+versioning:
+  scheme: uri-path
+  current: v2
+  previous: v1
+  base_path: /api/v2/
+  docs: https://apidocs.eightfold.ai/docs/getting-started
+  notes: >-
+    v2 is served from a separate endpoint (apiv2.eightfold.ai) than the legacy v1 service.
+    v1 and v2 run in parallel; v2 is the RESTful, namespaced, PATCH-capable generation.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: No public deprecation policy or RFC 8594 Sunset/Deprecation header support found.
+status_page: null
+status_page_notes: No public status page found (status.eightfold.ai does not resolve).
+sla:
+  url: null
+  notes: SLA is contractual/enterprise; no public uptime target published.
+changelog: https://apidocs.eightfold.ai/changelog/eightfold-api-release-notes
+deprecated_operations: []

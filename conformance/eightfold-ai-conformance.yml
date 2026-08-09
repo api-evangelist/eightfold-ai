@@ -1,0 +1,45 @@
+generated: '2026-07-19'
+method: searched
+source: https://apidocs.eightfold.ai/docs/scim-api-documentation
+standards:
+- id: oauth2
+  conforms: true
+  evidence: OAuth 2.0 password grant with bearer tokens (oauth-configuration docs).
+- id: scim-2.0
+  conforms: true
+  evidence: >-
+    SCIM API follows SCIM 2.0 per RFC 7643 and RFC 7644; User supports full CRUD, Role
+    supports GET. https://apidocs.eightfold.ai/docs/scim-api-documentation
+- id: rfc7643-scim-core-schema
+  conforms: true
+  evidence: SCIM implementation cites RFC 7643 (core schema).
+- id: rfc7644-scim-protocol
+  conforms: true
+  evidence: SCIM implementation cites RFC 7644 (protocol).
+- id: rest
+  conforms: true
+  evidence: API v2 is fully RESTful (getting-started docs).
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: No application/problem+json error envelope documented.
+- id: soc2-type-ii
+  conforms: true
+  evidence: 'Trust Center: SOC 2 Type II. https://trust.eightfold.ai/'
+- id: soc3
+  conforms: true
+  evidence: 'Trust Center: SOC 3.'
+- id: iso-27001
+  conforms: true
+  evidence: 'Trust Center: ISO/IEC 27001 (information security).'
+- id: iso-27701
+  conforms: true
+  evidence: 'Trust Center: ISO/IEC 27701 (privacy information management).'
+- id: iso-27017
+  conforms: true
+  evidence: 'Trust Center: ISO/IEC 27017 (cloud security).'
+- id: iso-42001
+  conforms: true
+  evidence: 'Trust Center: ISO/IEC 42001 (AI management system).'
+- id: fedramp-moderate
+  conforms: true
+  evidence: 'Trust Center: FedRAMP Moderate.'

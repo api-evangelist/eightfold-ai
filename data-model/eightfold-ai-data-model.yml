@@ -1,0 +1,65 @@
+generated: '2026-07-19'
+method: derived
+source: https://apidocs.eightfold.ai/llms.txt
+notes: >-
+  Entity-relationship graph derived from documented Eightfold API v2 operations and the
+  entity types enumerated by the changelog endpoint. Relationships inferred from
+  id-reference fields and match/list operations; not from a machine-readable OpenAPI.
+entities:
+- name: Profile
+  description: Candidate or employee profile (core talent entity).
+  id: profileId (encoded profileEncId)
+- name: Employee
+  description: Profile specialization for employees (HRIS-linked).
+- name: Position
+  description: An Eightfold-native job/position.
+- name: AtsPosition
+  description: Position sourced from a customer ATS (scoped by systemId).
+- name: AtsCandidate
+  description: Candidate sourced from a customer ATS.
+- name: Demand
+  description: Resource/staffing demand (project need).
+- name: ExternalDemand
+  description: Demand sourced from an external system.
+- name: Booking
+  description: Resource-management booking of an employee to a demand.
+- name: Offer
+  description: Offer extended to a candidate for a position.
+- name: SuccessionPlan
+  description: Succession plan keyed by position id, with successors and caretakers.
+- name: Course
+  description: Learning course (CareerHub).
+- name: ProfileApplication
+  description: A profile's application to a position.
+- name: ProfileNote
+  description: Note attached to a profile.
+- name: ProfileTag
+  description: Tag attached to a profile.
+- name: ProfileFeedback
+  description: Feedback attached to a profile.
+- name: UserCampaign
+  description: Outreach/nurture campaign.
+- name: UserMessage
+  description: Message sent to a user/candidate.
+- name: User
+  description: Platform user (login).
+- name: OrgUnit
+  description: Organizational unit.
+relationships:
+- {from: ProfileApplication, to: Profile, kind: belongs_to, via: profileId}
+- {from: ProfileApplication, to: Position, kind: belongs_to, via: positionId}
+- {from: ProfileNote, to: Profile, kind: belongs_to, via: profileId}
+- {from: ProfileTag, to: Profile, kind: belongs_to, via: profileId}
+- {from: ProfileFeedback, to: Profile, kind: belongs_to, via: profileId}
+- {from: Profile, to: Position, kind: has_many, via: matched-positions}
+- {from: Position, to: Profile, kind: has_many, via: matched-candidates/applicants}
+- {from: Offer, to: AtsCandidate, kind: belongs_to, via: ats_candidate_id}
+- {from: Offer, to: AtsPosition, kind: belongs_to, via: ats_position_id}
+- {from: AtsPosition, to: AtsSystem, kind: belongs_to, via: systemId}
+- {from: Booking, to: Employee, kind: belongs_to, via: employeeEmail}
+- {from: Booking, to: Demand, kind: belongs_to, via: demandId}
+- {from: SuccessionPlan, to: Position, kind: belongs_to, via: positionId}
+- {from: SuccessionPlan, to: Employee, kind: has_many, via: successors}
+- {from: SuccessionPlan, to: Employee, kind: has_many, via: caretakers}
+- {from: Employee, to: Demand, kind: has_many, via: matched-demands}
+- {from: Employee, to: HrisEmployee, kind: has_one, via: employeeId}
