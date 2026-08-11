@@ -1,0 +1,991 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Demand API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Demand
+paths:
+  /api/v2/core/employees/{profileId}/matched-demands:
+    get:
+      description: Returns all the matching demands for an employee profile. Only works for employee profiles, not candidates. By default, demands are filtered by the employee's location and a minimum star rating threshold of 3.5. Results are sorted by match score (highest to lowest). Use ignoreLocation=true to search globally and minStarThreshold to adjust the quality threshold.
+      operationId: list_employee_matched_demands
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Employee Profile ID (supports both encoded and decoded ID)
+        in: path
+        name: profileId
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Demand Filter Query using predefined filter arguments documented [here](https://apidocs.eightfold.ai/v2.0/docs#the-filterquery-parameter)
+        in: query
+        name: filterQuery
+        schema:
+          type: string
+      - description: 'When true, applies the same filters used in the Demand Marketplace (Career Hub), including user group access control and configured visibility rules. Default: false'
+        in: query
+        name: applyMarketplaceFilters
+        schema:
+          default: false
+          type: boolean
+      - description: 'When true, applies the same filters used in the Matched Demands widget on the employee profile page in Resource Management. Default: false'
+        in: query
+        name: applyMatchedDemandsWidgetFilters
+        schema:
+          default: false
+          type: boolean
+      - description: 'When true, ignores the profile''s location when matching demands. By default, demands are filtered to match the employee''s location. Default: false'
+        in: query
+        name: ignoreLocation
+        schema:
+          default: false
+          type: boolean
+      - description: 'Minimum star rating threshold (1.0 to 5.0) for matched demands. Only demands with match scores at or above this threshold will be returned. Default: 3.5'
+        in: query
+        name: minStarThreshold
+        schema:
+          default: 3.5
+          format: float
+          maximum: 5
+          minimum: 1
+          type: number
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/MatchingDemandsSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List Matched Demands for Employee
+      tags:
+      - Demand
+  /api/v2/resource_management/demands/{demandId}:
+    get:
+      description: Given a demand id, it returns all attributes of the demand
+      operationId: get_demand_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold Demand ID
+        in: path
+        name: demandId
+        required: true
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are demandOrgUnits
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DemandSchema'
+          description: OK
+      summary: Get Demand
+      tags:
+      - Demand
+    patch:
+      description: 'Patches demand given its id. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.'
+      operationId: patch_demand
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold Demand ID
+        in: path
+        name: demandId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DemandSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DemandSchema'
+          description: OK
+      summary: Patch Demand
+      tags:
+      - Demand
+    put:
+      description: Updates demand given its id.
+      operationId: update_demand
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold Demand ID
+        in: path
+        name: demandId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DemandSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DemandSchema'
+          description: OK
+      summary: Update Demand
+      tags:
+      - Demand
+    delete:
+      description: Deletes demand given its id.
+      operationId: delete_demand
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold Demand ID
+        in: path
+        name: demandId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DemandSchema'
+          description: OK
+      summary: Delete Demand
+      tags:
+      - Demand
+  /api/v2/resource_management/demands:
+    post:
+      description: Create a new Demand
+      operationId: create_demand
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DemandSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DemandSchema'
+          description: OK
+      summary: Create Demand
+      tags:
+      - Demand
+    get:
+      description: Search demands using query parameters and get the complete demand objects
+      operationId: list_demand
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: unique identifier in the external system
+        in: query
+        name: extDemandId
+        schema:
+          type: string
+      - description: Filter query using predefined filter arguments documented [here](https://apidocs.eightfold.ai/v2.0/docs#the-filterquery-parameter)
+        in: query
+        name: filterQuery
+        schema:
+          type: string
+      - description: any wildcard text to search in demand
+        in: query
+        name: query
+        schema:
+          type: string
+      - description: Include archived demands
+        in: query
+        name: includeArchived
+        schema:
+          type: boolean
+      - description: Include additional fields in the response. Possible values are demandOrgUnits
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/DemandSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List Demands
+      tags:
+      - Demand
+  /api/v2/resource_management/demands/batch-fetch:
+    post:
+      description: Batch fetch demands for a given list of demand ids
+      operationId: demand_batch_fetch
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are demandOrgUnits
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchFetchEntityRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/DemandSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/BatchFetchMetaSchema'
+                type: object
+          description: OK
+      summary: Batch Fetch Demands
+      tags:
+      - Demand
+components:
+  schemas:
+    ConciseDemandSchema:
+      type: object
+      properties:
+        demandId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Demand ID
+        extDemandId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: External demand ID in the ATS system
+        name:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Title of the demand
+        locations:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: The location(s) of the demand
+          items:
+            type: string
+    RoleSchema:
+      type: object
+      properties:
+        templates:
+          readOnly: true
+          description: all calibration templates associated with the role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CalibrationTemplate'
+        name:
+          type:
+          - string
+          - 'null'
+          description: name of the role
+    EntityTag:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - user
+          - system
+          description: Type of the tag (user/system)
+        name:
+          type: string
+          description: Name of the tag
+        category:
+          type:
+          - string
+          - 'null'
+          enum:
+          - inherited_tag
+          - null
+          description: Category of the tag (e.g. inherited_tag)
+      required:
+      - name
+      - type
+    DemandSchema:
+      type: object
+      properties:
+        isArchived:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Whether the demand has been archived or not
+        demandManager:
+          description: Demand Manager
+          allOf:
+          - $ref: '#/components/schemas/PersonSchema'
+        capacity:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Capacity of the demand
+        serviceLine:
+          type:
+          - string
+          - 'null'
+          description: Service Line of the demand
+        rmUserGroups:
+          description: User groups associated with the demand
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RmUserGroup'
+        publishSettings:
+          readOnly: true
+          description: Publish mode and the user groups the demand is published to. Only applicable when RM user groups are enabled.
+          allOf:
+          - $ref: '#/components/schemas/DemandPublishSettings'
+        name:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Title of the Demand
+        userId:
+          type:
+          - string
+          - 'null'
+          description: User who created the demand
+        followers:
+          type:
+          - array
+          - 'null'
+          description: all the followers of the demand
+          items:
+            type: string
+        startDate:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Start date of the demand
+        demandOrgUnits:
+          readOnly: true
+          description: Org units (program, project) associated with the demand
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DemandOrgUnit'
+        demandId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Demand id
+        endDate:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: End date of the demand
+        demandStatus:
+          type:
+          - string
+          - 'null'
+          description: Status of the demand
+        numOpenings:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: The number of openings for this demand
+        calibrationConfirmedBy:
+          type:
+          - string
+          - 'null'
+          description: User who confirmed the calibration
+        resourceManager:
+          description: Resource Manager
+          allOf:
+          - $ref: '#/components/schemas/PersonSchema'
+        calibrationConfirmedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Confirmed timestamp for the calibration
+        calibrationData:
+          description: calibration data of the demand
+          allOf:
+          - $ref: '#/components/schemas/DemandCalibrationData'
+        subServiceLine:
+          type:
+          - string
+          - 'null'
+          description: Sub service line of the demand
+        role:
+          readOnly: true
+          description: role associated with the demand
+          allOf:
+          - $ref: '#/components/schemas/RoleSchema'
+        description:
+          type:
+          - string
+          - 'null'
+          description: Detailed Description in a text format
+      required:
+      - capacity
+      - demandStatus
+      - endDate
+      - startDate
+    SkillProficiency:
+      type: object
+      properties:
+        proficiency:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: proficiency of the role
+        skillGroupList:
+          description: skill group list of a role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SkillGroupList'
+        level:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: level of the role
+        name:
+          type:
+          - string
+          - 'null'
+          description: name of the role
+    PersonSchema:
+      type: object
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+          description: email
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name
+      required:
+      - name
+    BatchFetchMetaSchema:
+      type: object
+      properties:
+        missingEntityIds:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of entity ids for which no result was found
+          items:
+            type: string
+    DemandOrgUnit:
+      type: object
+      properties:
+        externalId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: external id
+        id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: id
+        isArchived:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: is archived
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: status
+        userGroups:
+          readOnly: true
+          description: User groups associated with the demand
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RmUserGroup'
+        mainOwner:
+          readOnly: true
+          description: main owner
+          allOf:
+          - $ref: '#/components/schemas/PersonSchema'
+        endDate:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: end date in epoch timestamp
+        otherOwners:
+          readOnly: true
+          description: other owners
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PersonSchema'
+        parentExtId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: parent external id
+        startDate:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: start date in epoch timestamp
+        type:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: org unit type
+        customFields:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: custom fields
+        title:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: title
+        tags:
+          readOnly: true
+          description: Tags associated with the demand org unit
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityTag'
+    BatchFetchEntityRequestSchema:
+      type: object
+      properties:
+        entityIds:
+          type: array
+          description: list of entity ids to fetch the entity objects
+          items:
+            type: string
+      required:
+      - entityIds
+    RmUserGroup:
+      type: object
+      properties:
+        userGroupId:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier for the user group
+    DemandPublishSettings:
+      type: object
+      properties:
+        publishMode:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Publish mode (local, custom, local_and_custom)
+        publishedToUserGroups:
+          readOnly: true
+          description: User groups the demand is published to
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RmUserGroup'
+    CalibrationTemplate:
+      type: object
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: id of the calibration template
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the calibration template
+    MatchingDemandsSchema:
+      type: object
+      properties:
+        missingSkills:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Demand skills missing in resource's profile
+          items:
+            type: string
+        skillScoreRelevance:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: Skill relevance score based on matching of demand and resource profile
+        demand:
+          readOnly: true
+          description: Demand information in concise format
+          allOf:
+          - $ref: '#/components/schemas/ConciseDemandSchema'
+        validatedSkills:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Demand skills validated in resource's profile
+          items:
+            type: string
+        finalScore:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: The matching score (range 0 to 5) of demand and resource profile
+        titleScoreRelevance:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: Title relevance score based on matching demand's hiring title with resource's experience titles
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+    SkillGroupList:
+      type: object
+      properties:
+        proficiency:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: group proficiency of the skill group
+        groupName:
+          type:
+          - string
+          - 'null'
+          description: name of the skill group
+        level:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: level of the role
+        skillCategory:
+          type:
+          - string
+          - 'null'
+          description: skill category of the skill group
+    DemandCalibrationData:
+      type: object
+      properties:
+        flags:
+          type:
+          - array
+          - 'null'
+          description: flags
+          items:
+            type: string
+        skillProficiencies:
+          writeOnly: true
+          description: skill proficiencies
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SkillProficiency'
+        minExperience:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: min experience
+        workCategories:
+          type:
+          - array
+          - 'null'
+          description: work categories
+          items:
+            type: string
+        demandTitle:
+          type:
+          - string
+          - 'null'
+          description: demand title
+        notes:
+          type:
+          - string
+          - 'null'
+          description: notes
+        numOpenings:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: number of openings
+        relocation:
+          type:
+          - array
+          - 'null'
+          description: relocation
+          items:
+            type: string
+        skills:
+          type:
+          - array
+          - 'null'
+          description: skills
+          items:
+            type: string
+        seniorities:
+          type:
+          - array
+          - 'null'
+          description: seniorities
+          items:
+            type: string
+        titles:
+          type:
+          - array
+          - 'null'
+          description: alternative demand titles
+          items:
+            type: string
+        idealResources:
+          type:
+          - array
+          - 'null'
+          description: ideal resources
+          items:
+            type: string
+        locations:
+          type:
+          - array
+          - 'null'
+          description: locations
+          items:
+            type: string
+        maxExperience:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: max experience
+        customFields:
+          type:
+          - object
+          - 'null'
+          description: custom fields
+        idealResourceUrls:
+          type:
+          - array
+          - 'null'
+          description: ideal resources url
+          items:
+            type: string
+        tags:
+          description: Tags associated with the demand
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityTag'

@@ -1,0 +1,908 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Succession Plan API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Succession Plan
+paths:
+  /api/v2/careerhub/succession_plans/{positionId}:
+    get:
+      description: Given a position ID of the succession plan, return attributes of the plan
+      operationId: get_succession_plan_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold position ID associated with the succession plan
+        in: path
+        name: positionId
+        required: true
+        schema:
+          type: integer
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessionPlanSchema'
+          description: OK
+      summary: Get Succession Plan
+      tags:
+      - Succession Plan
+    delete:
+      description: Deletes a succession plan specified by the Eightfold position ID
+      operationId: delete_succession_plan
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold position ID associated with the succession plan
+        in: path
+        name: positionId
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessionPlanSchema'
+          description: OK
+      summary: Delete Succession Plan
+      tags:
+      - Succession Plan
+    patch:
+      description: 'Update existing succession plan''s metadata. Refer to request schema for fields that can be updated. For updating successors and caretakers, please use the dedicated successor and caretaker endpoints. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.'
+      operationId: patch_succession_plan
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold position ID associated with the succession plan
+        in: path
+        name: positionId
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SuccessionPlanPatchSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessionPlanSchema'
+          description: OK
+      summary: Patch Succession Plan
+      tags:
+      - Succession Plan
+  /api/v2/careerhub/succession_plans/{positionId}/recommended_successors:
+    get:
+      description: Get a list of recommended successors for the specified succession plan given a position ID. The endpoint does not support pagination due to a post-processing step where employee profiles are sorted by the match score. Because of that the results will always return a full list with max number of results as 100. A sample request looks like this, https://apiv2.eightfold.ai/api/v2/careerhub/succession_plans/1234567/recommended_successors, where 1234567 is the position ID of the plan.
+      operationId: list_succession_plan_recommended_successors
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold position ID associated with the succession plan
+        in: path
+        name: positionId
+        required: true
+        schema:
+          type: integer
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/RecommendedSuccessorSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: Get Recommended Successors
+      tags:
+      - Succession Plan
+  /api/v2/careerhub/succession_plans:
+    get:
+      description: Search and get a list of succession plans based on the search parameters given
+      operationId: list_succession_plan
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: This specifies list of incumbent profile IDs. If this is given, only plans that have incumbents who match the specified profile IDs are returned. The format should be comma-separated values with or without spaces (ex. 1000,2000, 3000).
+        in: query
+        name: incumbentIds
+        schema:
+          type: string
+      - description: Wildcard text used when searching for the results
+        in: query
+        name: query
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/SuccessionPlanSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List Succession Plans
+      tags:
+      - Succession Plan
+    post:
+      description: Creates a new succession plan
+      operationId: create_succession_plan
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SuccessionPlanSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessionPlanSchema'
+          description: OK
+      summary: Create Succession Plan
+      tags:
+      - Succession Plan
+  /api/v2/careerhub/succession_plans/{positionId}/incumbents:
+    get:
+      description: Get a list of incumbents of the succession plan. The plan is specified by the position ID in the request path. This endpoint is mainly to support getting incumbents for role-based succession plans which cannot show the incumbents in the Succession Plan Get and List endpoints.
+      operationId: list_succession_plan_incumbents
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold position ID associated with the succession plan
+        in: path
+        name: positionId
+        required: true
+        schema:
+          type: integer
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Wildcard text used when searching for the results
+        in: query
+        name: query
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/SuccessionPlanIncumbentSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List Succession Plan Incumbents
+      tags:
+      - Succession Plan
+  /api/v2/careerhub/succession_plans/{positionId}/successors:
+    post:
+      description: An employee is added as a successor in the succession plan. The employee must be a valid and existing employee profile in Eightfold.
+      operationId: create_succession_plan_successors
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold position ID associated with the succession plan
+        in: path
+        name: positionId
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SuccessionPlanSuccessorSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessionPlanSchema'
+          description: OK
+      summary: Create Succession Plan Successor
+      tags:
+      - Succession Plan
+  /api/v2/careerhub/succession_plans/{positionId}/successors/{profileId}:
+    patch:
+      description: 'Patch a successor in the succession plan. The successor''s attributes are updated with new data given in the request. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.'
+      operationId: patch_succession_plan_successors
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold position ID associated with the succession plan
+        in: path
+        name: positionId
+        required: true
+        schema:
+          type: integer
+      - description: Eightfold decoded profile ID (numeric) of the successor
+        in: path
+        name: profileId
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SuccessionPlanSuccessorSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessionPlanSchema'
+          description: OK
+      summary: Patch Succession Plan Successor
+      tags:
+      - Succession Plan
+    delete:
+      description: Delete a successor from the succession plan.
+      operationId: delete_succession_plan_successors
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold position ID associated with the succession plan
+        in: path
+        name: positionId
+        required: true
+        schema:
+          type: integer
+      - description: Eightfold decoded profile ID (numeric) of the successor
+        in: path
+        name: profileId
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessionPlanSchema'
+          description: OK
+      summary: Delete Succession Plan Successor
+      tags:
+      - Succession Plan
+  /api/v2/careerhub/succession_plans/{positionId}/caretakers:
+    post:
+      description: Add an employee as a new caretaker to the succession plan. The employee must be a valid and existing employee profile on Eightfold.
+      operationId: create_succession_plan_caretakers
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold position ID associated with the succession plan
+        in: path
+        name: positionId
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SuccessionPlanCaretakerSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessionPlanSchema'
+          description: OK
+      summary: Create Succession Plan Caretaker
+      tags:
+      - Succession Plan
+  /api/v2/careerhub/succession_plans/{positionId}/caretakers/{profileId}:
+    delete:
+      description: Delete a caretaker from the succession plan.
+      operationId: delete_succession_plan_caretakers
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold position ID associated with the succession plan
+        in: path
+        name: positionId
+        required: true
+        schema:
+          type: integer
+      - description: Eightfold decoded profile ID (numeric) of the caretaker
+        in: path
+        name: profileId
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessionPlanSchema'
+          description: OK
+      summary: Delete Succession Plan Caretaker
+      tags:
+      - Succession Plan
+components:
+  schemas:
+    SuccessionPlanPatchSchema:
+      type: object
+      properties:
+        planName:
+          type:
+          - string
+          - 'null'
+          writeOnly: true
+          description: Name of the succession plan
+        description:
+          type:
+          - string
+          - 'null'
+          writeOnly: true
+          description: Description of the succession plan
+        positionCriticalityTags:
+          type:
+          - array
+          - 'null'
+          writeOnly: true
+          description: Criticality tags of the succession plan that is associated with the position held by the incumbent
+          items:
+            type: string
+    SuccessionPlanCaretaker:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when the caretaker was first added to the plan
+        employeeId:
+          type:
+          - string
+          - 'null'
+          description: ATS/HRIS employee ID of the caretaker
+        updatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when the caretaker data was last updated
+        profileId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Eightfold decoded profile ID (numeric) of the caretaker
+    SuccessionPlanIncumbentSchema:
+      type: object
+      properties:
+        externalJobId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Position ID associated with the incumbent in ATS/HRIS
+        employeeId:
+          type:
+          - string
+          - 'null'
+          description: ATS/HRIS employee ID of the incumbent
+        profileId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Eightfold decoded profile ID (numeric) of the incumbent
+    SuccessionPlanSuccessorSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when the successor was first added to the plan
+        order:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Order of the successor within its succession state group
+        profileId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Eightfold decoded profile ID (numeric)
+        employeeId:
+          type:
+          - string
+          - 'null'
+          description: ATS/HRIS employee ID of the successor
+        matchScores:
+          readOnly: true
+          description: Match score details
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EmployeeMatchScoreSchema'
+        updatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when the successor data was last updated
+        state:
+          type:
+          - string
+          - 'null'
+          description: Succession state of the successor
+    SuccessionPlanMetricFields:
+      type: object
+      properties:
+        insightTag:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Tags to highlight key aspects of the plan
+          items:
+            type: string
+        pipelineStrength:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Strength of the plan’s successor pipeline
+        femalePercentage:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: Percentage of female successors in the plan
+        diverseEthnicityPercentage:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: Percentage of diverse-ethnicity successor in the plan
+    RecommendedSuccessorSchema:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Full name of the employee
+        profileId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Eightfold decoded profile ID (numeric)
+        matchScores:
+          readOnly: true
+          description: Match score details
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EmployeeMatchScoreSchema'
+        email:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Email of the employee
+        title:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Title of the employee
+    SuccessionPlanCaretakerSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when the caretaker was first added to the plan
+        employeeId:
+          type:
+          - string
+          - 'null'
+          description: ATS/HRIS employee ID of the caretaker
+        updatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when the caretaker data was last updated
+        profileId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Eightfold decoded profile ID (numeric) of the caretaker
+    SuccessionPlanIncumbent:
+      type: object
+      properties:
+        externalJobId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Position ID associated with the incumbent in ATS/HRIS
+        employeeId:
+          type:
+          - string
+          - 'null'
+          description: ATS/HRIS employee ID of the incumbent
+        profileId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Eightfold decoded profile ID (numeric) of the incumbent
+    SuccessionPlanSuccessor:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when the successor was first added to the plan
+        order:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Order of the successor within its succession state group
+        profileId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Eightfold decoded profile ID (numeric)
+        employeeId:
+          type:
+          - string
+          - 'null'
+          description: ATS/HRIS employee ID of the successor
+        matchScores:
+          readOnly: true
+          description: Match score details
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EmployeeMatchScoreSchema'
+        updatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when the successor data was last updated
+        state:
+          type:
+          - string
+          - 'null'
+          description: Succession state of the successor
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+    SuccessionPlanSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp representing creation date and time of the succession plan
+        associatedRoleId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Eightfold role ID associated with the succession plan
+        jobCode:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: External job code of the incumbent(s)
+        caretakers:
+          readOnly: true
+          description: Caretaker profile IDs of the succession plan
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SuccessionPlanCaretaker'
+        entityId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ATS/HRIS position ID associated with the plan
+        positionCriticalityTags:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Criticality tags of the succession plan that is associated with the position held by the incumbent
+          items:
+            type: string
+        incumbents:
+          description: Incumbents of the succession plan
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SuccessionPlanIncumbent'
+        planType:
+          type:
+          - string
+          - 'null'
+          description: Type of the succession plan Ex. either "position" or "role" (only honored for POST)
+        planName:
+          type:
+          - string
+          - 'null'
+          description: Name of the succession plan
+        successors:
+          readOnly: true
+          description: Successors of the succession plan
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SuccessionPlanSuccessor'
+        updatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp representing the updation date and time of the succession plan
+        metricFields:
+          readOnly: true
+          description: Metric fields highlighting key aspects of the succession plan
+          allOf:
+          - $ref: '#/components/schemas/SuccessionPlanMetricFields'
+        roleCriticalityTags:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Criticality tags of the role that is associated with the position held by the incumbent
+          items:
+            type: string
+        positionId:
+          type: integer
+          format: int32
+          readOnly: true
+          description: Eightfold position ID associated with the succession plan
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the succession plan
+      required:
+      - positionId
+    EmployeeMatchScoreSchema:
+      type: object
+      properties:
+        matchType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Match score criteria
+        rawScore:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: Raw match score in float
+        topMatches:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Top items matched based on the match type
+          items:
+            type: string
+        score:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Rounded match score in integer

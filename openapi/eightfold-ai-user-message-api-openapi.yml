@@ -1,0 +1,735 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service User Message API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: User Message
+paths:
+  /api/v2/core/user-messages/{userMessageId}:
+    get:
+      description: Given a user message id, it returns all attributes of the user message
+      operationId: get_user_message_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Id of user message in Eightfold
+        in: path
+        name: userMessageId
+        required: true
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are emailContent, messageContent
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserMessageSchema'
+          description: OK
+      summary: Get User Message
+      tags:
+      - User Message
+  /api/v2/core/user-messages/batch-fetch:
+    post:
+      description: Batch fetch user messages for a given list of user message ids (limit 100)
+      operationId: user_message_batch_fetch
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are emailContent, messageContent
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchFetchEntityRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/UserMessageSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/BatchFetchMetaSchema'
+                type: object
+          description: OK
+      summary: Batch Fetch User Messages
+      tags:
+      - User Message
+  /api/v2/core/user-messages:
+    get:
+      description: Search user messages using specific filter parameters and get all attributes of entities
+      operationId: list_user_message
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Limit on the total number of search results, defaults to 100
+        in: query
+        name: queryLimit
+        schema:
+          type: string
+      - description: Filter on user id of the message
+        in: query
+        name: userId
+        schema:
+          type: string
+      - description: Filter on profile id of the candidate
+        in: query
+        name: profileId
+        schema:
+          type: string
+      - description: Filter on position id associated with the message
+        in: query
+        name: positionId
+        schema:
+          type: string
+      - description: Filter on conversation id of the message
+        in: query
+        name: conversationId
+        schema:
+          type: string
+      - description: Filter on email address to which email message was addressed
+        in: query
+        name: emailTo
+        schema:
+          type: string
+      - description: Filter on email address from which email message was sent
+        in: query
+        name: emailFrom
+        schema:
+          type: string
+      - description: Filter on campaign id of the user message
+        in: query
+        name: userCampaignId
+        schema:
+          type: string
+      - description: Filter on template id of the user message
+        in: query
+        name: templateId
+        schema:
+          type: string
+      - description: Filter on create timestamp of user message
+        in: query
+        name: createdAt
+        schema:
+          type: string
+      - description: Filter on reply time of user message
+        in: query
+        name: replyTime
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are emailContent, messageContent
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/UserMessageSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List User Messages
+      tags:
+      - User Message
+components:
+  schemas:
+    PlannedEventSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when this event was created
+        isCancelled:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: ''
+        eventSpeakers:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of speakers
+          items:
+            type: string
+        activeRegistrations:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: active registrations
+        registerButton:
+          readOnly: true
+          description: Registration button information
+          allOf:
+          - $ref: '#/components/schemas/RegisterButton'
+        eventTeamDataJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Event team data
+        eventBucket:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Bucket of the event
+        address:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Address of venue
+        eventCustomFieldsJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Event custom fields
+        eventType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+        institution:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Institution related to event
+        selectedTimezone:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Selected time zome
+        name:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Name of the event
+        homePageBanner:
+          readOnly: true
+          description: Home page banner information
+          allOf:
+          - $ref: '#/components/schemas/HomePageBanner'
+        eventLocationType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: id
+        parentId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Parent id of the event
+        venue:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Venue of the event
+        endTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Ending timestamp of event
+        isPublished:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: ''
+        eventLandingPage:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Event landing page
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+        createdBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User id which created this event
+        eventCategory:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Category of the event
+        startTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Starting time stamp of event
+        when:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: When tag of the event
+        description:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Description of event
+    HomePageBanner:
+      type: object
+      properties:
+        useImage:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: boolean value for using image
+        image:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: image of home page banner
+        title:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: title for home page
+    BatchFetchMetaSchema:
+      type: object
+      properties:
+        missingEntityIds:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of entity ids for which no result was found
+          items:
+            type: string
+    BatchFetchEntityRequestSchema:
+      type: object
+      properties:
+        entityIds:
+          type: array
+          description: list of entity ids to fetch the entity objects
+          items:
+            type: string
+      required:
+      - entityIds
+    UserMessageSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Creation timestamp for the user message
+        plannedEventId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Decrypted Event ID
+        parentMessageId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Parent message id of the user message
+        emailTo:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Recipient of the user message with type email
+        profileId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Profile Id associated with the user message
+        failureReason:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Reason of failure of the user message
+        messageTo:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Recipient of the user message
+        company:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Company name associated with user message
+        userId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User who initiated sending this user message
+        userCampaignId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: User Campaign Id associated with the user message
+        conversationId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Conversation Id associated with the user message
+        workflowRecipeId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Workflow recipe id associated with user message
+        conversationType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Conversation Type associated with the user message e.g. email, sms
+        emailBcc:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Email blind carbon copy addresses in comma separated format
+        templateId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Template Id associated with the user message
+        readTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Read timestamp for the user message
+        replyTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Reply timestamp for the user message
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Object id of the user message
+        emailCc:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Email carbon copy addresses in comma separated format
+        failureTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Time of failure of the user message
+        plannedEvent:
+          readOnly: true
+          description: Planned event associated with the user message
+          allOf:
+          - $ref: '#/components/schemas/PlannedEventSchema'
+        emailContent:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Email file content of the message. This is an email content with Internet Message Format specification (RFC 5322)
+        deliveryTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Delivery timestamp for the user message
+        messageFrom:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Sender of the user message
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Status of the user message
+        subject:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Subject of the user message with type email
+        emailReplyTo:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Reply-To as set in the email envelope of the user message with type email
+        readCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Read count for the user message
+        emailFrom:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Sent-on-behalf-of if different from user_id of the user message with type email
+        messageContent:
+          readOnly: true
+          description: JSON data for message content of the user message
+          allOf:
+          - $ref: '#/components/schemas/UserMessageContent'
+        clickTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Click timestamp for the user message
+        clickCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Click count for the user message
+        positionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Position Id associated with the user message
+    MessageAttachment:
+      type: object
+      properties:
+        contentType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Mime type of the attachment
+        fileName:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: File name of the attachment
+        content:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Content of the attachment
+        isBased64Encoded:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Flag to indicate if the content is base64 encoded
+    RegisterButton:
+      type: object
+      properties:
+        textColor:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: text color for registration button
+        backgroundColor:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: background color of registration button
+        text:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Text of registration button
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+    UserMessageContent:
+      type: object
+      properties:
+        attachments:
+          readOnly: true
+          description: List of attachments of the user message
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/MessageAttachment'
+        body:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Message body of the user message

@@ -1,0 +1,279 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service User Campaign API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: User Campaign
+paths:
+  /api/v2/core/user-campaigns/{userCampaignId}:
+    get:
+      description: Given a campaign id, it returns all attributes of the user campaign
+      operationId: get_user_campaign_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Id of user campaign in Eightfold
+        in: path
+        name: userCampaignId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCampaignSchema'
+          description: OK
+      summary: Get User Campaign
+      tags:
+      - User Campaign
+  /api/v2/core/user-campaigns/batch-fetch:
+    post:
+      description: Batch fetch user campaigns for a given list of campaign ids (limit 100)
+      operationId: user_campaign_batch_fetch
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchFetchEntityRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/UserCampaignSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/BatchFetchMetaSchema'
+                type: object
+          description: OK
+      summary: Batch Fetch User Campaigns
+      tags:
+      - User Campaign
+  /api/v2/core/user-campaigns:
+    get:
+      description: Search user campaigns using specific filter parameters and get all attributes of entities
+      operationId: list_user_campaign
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Limit on the total number of search results, defaults to 100
+        in: query
+        name: queryLimit
+        schema:
+          type: string
+      - description: Filter on user id of the campaign
+        in: query
+        name: userId
+        schema:
+          type: string
+      - description: Filter on create timestamp of user campaign
+        in: query
+        name: createdAt
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/UserCampaignSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List User Campaigns
+      tags:
+      - User Campaign
+components:
+  schemas:
+    BatchFetchEntityRequestSchema:
+      type: object
+      properties:
+        entityIds:
+          type: array
+          description: list of entity ids to fetch the entity objects
+          items:
+            type: string
+      required:
+      - entityIds
+    UserCampaignSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when this user campaign was created
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Id associated with the user campaign
+        subject:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Subject of this user campaign
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Status of this user campaign
+        name:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Name of the user campaign
+        userId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User who initiated this user campaign
+        replyTo:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Reply To as set in the email envelope of this user campaign
+        emailFromName:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Name of the sender in email envelope of this user campaign
+        updatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when this user campaign was updated
+        emailFromAddress:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Email from address of the email envelope for this user campaign
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+    BatchFetchMetaSchema:
+      type: object
+      properties:
+        missingEntityIds:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of entity ids for which no result was found
+          items:
+            type: string

@@ -1,0 +1,376 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Entity Profile Application API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Entity Profile Application
+paths:
+  /api/v2/core/entity-profile-applications/{entityType}/{applicationId}:
+    get:
+      description: Given an entity profile application id, it returns all attributes of the entity profile application
+      operationId: get_entity_profile_application_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Entity profile application id of application in Eightfold
+        in: path
+        name: applicationId
+        required: true
+        schema:
+          type: string
+      - description: Entity type of the entity profile application (e.g. planned_event)
+        in: path
+        name: entityType
+        required: true
+        schema:
+          enum:
+          - planned_event
+          type: string
+      - description: Include additional fields in the response. Possible values are customInfo
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityProfileApplicationSchema'
+          description: OK
+      summary: Get Entity Profile Application
+      tags:
+      - Entity Profile Application
+  /api/v2/core/entity-profile-applications/{entityType}/batch-fetch:
+    post:
+      description: Batch fetch entity profile applications for a given list of entity profile application ids (limit 100)
+      operationId: entity_profile_application_batch_fetch
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Entity type of the entity profile application (e.g. planned_event)
+        in: path
+        name: entityType
+        required: true
+        schema:
+          enum:
+          - planned_event
+          type: string
+      - description: Include additional fields in the response. Possible values are customInfo
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchFetchEntityRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/EntityProfileApplicationSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/BatchFetchMetaSchema'
+                type: object
+          description: OK
+      summary: Batch Fetch Entity Profile Applications
+      tags:
+      - Entity Profile Application
+  /api/v2/core/entity-profile-applications/{entityType}:
+    get:
+      description: Search entity profile applications using specific filter parameters and get all attributes of entity profile applications for a given entity id and entity type
+      operationId: list_entity_profile_application
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Entity type of the entity profile application (e.g. planned_event)
+        in: path
+        name: entityType
+        required: true
+        schema:
+          enum:
+          - planned_event
+          type: string
+      - description: Filter on entity id associated with the application
+        in: query
+        name: entityId
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are customInfo
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/EntityProfileApplicationSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List Entity Profile Applications
+      tags:
+      - Entity Profile Application
+components:
+  schemas:
+    Person:
+      type: object
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+          description: email
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name
+      required:
+      - name
+    ApplicationQuestionAnswers:
+      type: object
+      properties:
+        answer:
+          type:
+          - string
+          - 'null'
+          description: Answer of candidate Application question answers
+        questionId:
+          type:
+          - string
+          - 'null'
+          description: question ID of candidate Application question answers
+        question:
+          type:
+          - string
+          - 'null'
+          description: question of candidate Application question answers
+      required:
+      - question
+      - questionId
+    BatchFetchMetaSchema:
+      type: object
+      properties:
+        missingEntityIds:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of entity ids for which no result was found
+          items:
+            type: string
+    BatchFetchEntityRequestSchema:
+      type: object
+      properties:
+        entityIds:
+          type: array
+          description: list of entity ids to fetch the entity objects
+          items:
+            type: string
+      required:
+      - entityIds
+    EntityProfileApplicationSchema:
+      type: object
+      properties:
+        status:
+          type:
+          - string
+          - 'null'
+          description: status of the application
+        id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: object id of the profile application
+        namespace:
+          type:
+          - string
+          - 'null'
+          description: namespace of profile application
+        stage:
+          type:
+          - string
+          - 'null'
+          description: ''
+        applicationTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: application timestamp of profile application
+        entityId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: entity id of profile application
+        lastModifiedTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: last modified timestamp of profile application
+        applicationAnswers:
+          readOnly: true
+          description: application answers of candidate application
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ApplicationQuestionAnswers'
+        customInfo:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: custom info for the application
+        profileId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: profile id of candidate
+        actionUser:
+          readOnly: true
+          description: user who advanced the stage
+          allOf:
+          - $ref: '#/components/schemas/Person'
+        groupId:
+          type:
+          - string
+          - 'null'
+          description: ''
+        candidateId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: candidate id of profile application
+        comment:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: comment added during stage advance
+        currentStage:
+          type:
+          - string
+          - 'null'
+          description: current stage of profile application
+        applicationId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: application id of profile application
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''

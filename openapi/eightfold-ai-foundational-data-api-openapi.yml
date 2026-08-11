@@ -1,0 +1,391 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Foundational Data API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Foundational Data
+paths:
+  /api/v2/ats/foundational-data/{externalId}:
+    get:
+      description: Given an external id, it returns Foundational Data object
+      operationId: get_foundational_data_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: External ID of the Foundational Data
+        in: path
+        name: externalId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoundationalDataResponseSchema'
+          description: OK
+      summary: Get Foundational Data
+      tags:
+      - Foundational Data
+    patch:
+      description: Patch a foundational data object
+      operationId: patch_foundational_data
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: External ID of the Foundational Data
+        in: path
+        name: externalId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FoundationalDataPatchRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoundationalDataResponseSchema'
+          description: OK
+      summary: Patch Foundational Data
+      tags:
+      - Foundational Data
+  /api/v2/ats/foundational-data:
+    get:
+      description: Search foundational data using query parameters and get the complete foundational data objects
+      operationId: list_foundational_data
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Filter query using predefined filter arguments documented [here](https://apidocs.eightfold.ai/docs#the-filterquery-parameter)
+        in: query
+        name: filterQuery
+        schema:
+          type: string
+      - description: any wildcard text to search in foundational data
+        in: query
+        name: query
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/FoundationalDataResponseSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List Foundational Data
+      tags:
+      - Foundational Data
+    post:
+      description: Create a new foundational data object
+      operationId: create_foundational_data
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FoundationalDataCreateRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoundationalDataResponseSchema'
+          description: OK
+      summary: Create Foundational Data
+      tags:
+      - Foundational Data
+components:
+  schemas:
+    FoundationalDataCreateRequestSchema:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: External ID of the foundational data
+        status:
+          type: string
+          description: Status of the foundational data
+        parents:
+          minItems: 1
+          description: List of parent org units; must contain at least one {externalId, viewId} pair
+          type: array
+          items:
+            $ref: '#/components/schemas/ParentOrgUnitSchema'
+        type:
+          type: string
+          description: Type of the foundational data
+        users:
+          description: List of users
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FoundationalDataUserSchema'
+        attributes:
+          description: List of attributes
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FoundationalDataAttributeSchema'
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the foundational data
+        title:
+          type: string
+          description: Title of the foundational data
+      required:
+      - externalId
+      - parents
+      - status
+      - title
+      - type
+    FoundationalDataAttributeSchema:
+      type: object
+      properties:
+        value:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+          description: Attribute value
+        attributeId:
+          type: string
+          maxLength: 1000
+          description: Attribute ID
+      required:
+      - attributeId
+    ParentOrgUnitSchema:
+      type: object
+      properties:
+        externalId:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+          description: External ID; null or omitted signals a root node in the given view
+        viewId:
+          type: string
+          maxLength: 1000
+          description: View ID
+      required:
+      - viewId
+    FoundationalDataUserSchema:
+      type: object
+      properties:
+        role:
+          type: string
+          maxLength: 1000
+          description: User role
+        email:
+          type: string
+          maxLength: 1000
+          description: User email
+      required:
+      - email
+      - role
+    FoundationalDataPatchRequestSchema:
+      type: object
+      properties:
+        status:
+          type:
+          - string
+          - 'null'
+          description: Status of the foundational data
+        parents:
+          description: List of parent org units
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ParentOrgUnitSchema'
+        users:
+          description: List of users
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FoundationalDataUserSchema'
+        attributes:
+          description: List of attributes
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FoundationalDataAttributeSchema'
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the foundational data
+        title:
+          type:
+          - string
+          - 'null'
+          description: Title of the foundational data
+    FoundationalDataResponseSchema:
+      type: object
+      properties:
+        externalId:
+          type:
+          - string
+          - 'null'
+          description: External ID of the foundational data
+        status:
+          type:
+          - string
+          - 'null'
+          description: Status of the foundational data
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Created timestamp
+        parents:
+          description: List of parent org units
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ParentOrgUnitSchema'
+        type:
+          type:
+          - string
+          - 'null'
+          description: Type of the foundational data
+        updatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Updated timestamp
+        users:
+          description: List of users
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FoundationalDataUserSchema'
+        attributes:
+          description: List of attributes
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FoundationalDataAttributeSchema'
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the foundational data
+        title:
+          type:
+          - string
+          - 'null'
+          description: Title of the foundational data
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''

@@ -1,0 +1,683 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service User Calendar Event API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: User Calendar Event
+paths:
+  /api/v2/core/user-calendar-events/{userCalendarEventId}:
+    get:
+      description: Given the id of User Calendar Event, it returns all attributes of the entity
+      operationId: get_user_calendar_event_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Entity Id of User Calendar Event in Eightfold
+        in: path
+        name: userCalendarEventId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCalendarEventDetailSchema'
+          description: OK
+      summary: Get User Calendar Event
+      tags:
+      - User Calendar Event
+  /api/v2/core/user-calendar-events/batch-fetch:
+    post:
+      description: Batch fetch user calendar events for a given list of entity ids (limit 100)
+      operationId: user_calendar_event_batch_fetch
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchFetchEntityRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/UserCalendarEventsSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/BatchFetchMetaSchema'
+                type: object
+          description: OK
+      summary: Batch Fetch User Calendar Events
+      tags:
+      - User Calendar Event
+  /api/v2/core/user-calendar-events:
+    get:
+      description: Search User Calendar Events using specific filter parameters and get all attributes of the entity objects
+      operationId: list_user_calendar_event
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Limit on the total number of search results, defaults to 100
+        in: query
+        name: queryLimit
+        schema:
+          type: string
+      - description: Filter on User id who created the calendar event
+        in: query
+        name: creatorUserId
+        schema:
+          type: string
+      - description: Filter on position id associated with the calendar event
+        in: query
+        name: positionId
+        schema:
+          type: string
+      - description: Filter on profile id of the candidate
+        in: query
+        name: profileId
+        schema:
+          type: string
+      - description: Filter on candidate's email address
+        in: query
+        name: candidateEmail
+        schema:
+          type: string
+      - description: Filter on meeting time of the calendar event
+        in: query
+        name: meetingTime
+        schema:
+          type: string
+      - description: Filter on assignee user id of the calendar event
+        in: query
+        name: assigneeUserId
+        schema:
+          type: string
+      - description: Filter on the status of the calendar event
+        in: query
+        name: status
+        schema:
+          type: string
+      - description: Filter on the event type (e.g. INTERVIEW); case-insensitive.
+        in: query
+        name: eventType
+        schema:
+          type: string
+      - description: Comma-separated list of user calendar event ids to filter by (e.g. 1,2,3).
+        in: query
+        name: entityIds
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/UserCalendarEventsSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List User Calendar Events
+      tags:
+      - User Calendar Event
+components:
+  schemas:
+    HomePageBanner:
+      type: object
+      properties:
+        useImage:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: boolean value for using image
+        image:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: image of home page banner
+        title:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: title for home page
+    PlannedEvent:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when this event was created
+        isCancelled:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: ''
+        eventSpeakers:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of speakers
+          items:
+            type: string
+        activeRegistrations:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: active registrations
+        registerButton:
+          readOnly: true
+          description: Registration button information
+          allOf:
+          - $ref: '#/components/schemas/RegisterButton'
+        eventTeamDataJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Event team data
+        eventBucket:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Bucket of the event
+        address:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Address of venue
+        eventCustomFieldsJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Event custom fields
+        eventType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+        institution:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Institution related to event
+        selectedTimezone:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Selected time zome
+        name:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Name of the event
+        homePageBanner:
+          readOnly: true
+          description: Home page banner information
+          allOf:
+          - $ref: '#/components/schemas/HomePageBanner'
+        eventLocationType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: id
+        parentId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Parent id of the event
+        venue:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Venue of the event
+        endTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Ending timestamp of event
+        isPublished:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: ''
+        eventLandingPage:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Event landing page
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+        createdBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User id which created this event
+        eventCategory:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Category of the event
+        startTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Starting time stamp of event
+        when:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: When tag of the event
+        description:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Description of event
+    BatchFetchMetaSchema:
+      type: object
+      properties:
+        missingEntityIds:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of entity ids for which no result was found
+          items:
+            type: string
+    BatchFetchEntityRequestSchema:
+      type: object
+      properties:
+        entityIds:
+          type: array
+          description: list of entity ids to fetch the entity objects
+          items:
+            type: string
+      required:
+      - entityIds
+    UserCalendarEventsSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when this user calendar event was created
+        plannedEventId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Planned Event id associated with the user calendar event
+        assigneeUserId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User id of the assignee for the calendar event
+        profileId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Profile id of the candidate associated the user calendar event
+        eventType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Type of the calendar event (e.g. INTERVIEW)
+        meetingTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Meeting timestamp for the user calendar event
+        creatorUserId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User id of the user who created the calendar event
+        interviewSlotsJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Interview Slots
+        templateId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Template id associated with the user calendar event
+        id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Id associated with the user calendar event
+        candidateEmail:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Candidate email for the user calendar event
+        durationMinutes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Time duration in minutes of the user calendar event
+        updatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when this user calendar event was last updated
+        plannedEvent:
+          readOnly: true
+          description: Planned Event associated with the user calendar event
+          allOf:
+          - $ref: '#/components/schemas/PlannedEvent'
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Status of the user calendar event
+        timezone:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Timezone for the user calendar event
+        positionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Position id associated with the user calendar event
+    UserCalendarEventDetailSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when this user calendar event was created
+        plannedEventId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Planned Event id associated with the user calendar event
+        assigneeUserId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User id of the assignee for the calendar event
+        profileId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Profile id of the candidate associated the user calendar event
+        eventType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Type of the calendar event (e.g. INTERVIEW)
+        meetingTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Meeting timestamp for the user calendar event
+        creatorUserId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User id of the user who created the calendar event
+        interviewSlotsJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Interview Slots, each enriched with its feedback_url
+        templateId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Template id associated with the user calendar event
+        id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Id associated with the user calendar event
+        candidateEmail:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Candidate email for the user calendar event
+        durationMinutes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Time duration in minutes of the user calendar event
+        updatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when this user calendar event was last updated
+        plannedEvent:
+          readOnly: true
+          description: Planned Event associated with the user calendar event
+          allOf:
+          - $ref: '#/components/schemas/PlannedEvent'
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Status of the user calendar event
+        timezone:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Timezone for the user calendar event
+        positionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Position id associated with the user calendar event
+    RegisterButton:
+      type: object
+      properties:
+        textColor:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: text color for registration button
+        backgroundColor:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: background color of registration button
+        text:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Text of registration button
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
