@@ -1,0 +1,110 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Ext AI Interview API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Ext AI Interview
+paths:
+  /api/v2/agent_kit/ext-systems/{systemId}/ext-ai-interview/guides:
+    get:
+      description: Get list of interview guides for the given user account. Query parameters are passed through to the adapter for extraction.
+      operationId: list_ext_ai_interview_guides
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: System ID of the external integration system
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: OK - Response format varies by integration system
+      summary: List Interview Guides
+      tags:
+      - Ext AI Interview
+  /api/v2/agent_kit/ext-systems/{systemId}/ext-ai-interview/schedule-interview:
+    post:
+      description: Schedule an interview for a candidate-job pair. Request and response formats vary by integration system.
+      operationId: create_ext_ai_interview_schedule_interview
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: System ID of the external integration system
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: OK - Response format varies by integration system
+      summary: Schedule Interview
+      tags:
+      - Ext AI Interview
+  /api/v2/agent_kit/ext-systems/{systemId}/ext-ai-interview/interview-feedback-link:
+    get:
+      description: Get the interview feedback portal URL for a candidate-job pair. Query parameters are passed through to the adapter for extraction.
+      operationId: list_ext_ai_interview_interview_feedback_link
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: System ID of the external integration system
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: OK - Response format varies by integration system
+      summary: Get Interview Feedback Link
+      tags:
+      - Ext AI Interview

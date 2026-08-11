@@ -1,0 +1,1063 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service ATS Position API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: ATS Position
+paths:
+  /api/v2/core/ats-systems/{systemId}/ats-positions/{atsPositionId}:
+    get:
+      description: Given an ats position id, it returns all attributes of the ats position
+      operationId: get_ats_position_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ATS entity ID of position
+        in: path
+        name: atsPositionId
+        required: true
+        schema:
+          type: string
+      - description: System ID of position
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ATSPositionDataSchema'
+          description: OK
+      summary: Get ATS Position
+      tags:
+      - ATS Position
+    put:
+      description: 'To update the existing Ats Position in the System, include the ats position id in the params. Please Note: Update will overwrite existing fields. If empty fields are sent during an update, those fields will be wiped out'
+      operationId: update_ats_position
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ATS entity ID of position
+        in: path
+        name: atsPositionId
+        required: true
+        schema:
+          type: string
+      - description: System ID of position
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ATSPositionDataSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ATSPositionDataSchema'
+          description: OK
+      summary: Update ATS Position
+      tags:
+      - ATS Position
+    patch:
+      description: 'Given an ats position id and data that needs to be patched, it patches the ats position. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.'
+      operationId: patch_ats_position
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ATS entity ID of position
+        in: path
+        name: atsPositionId
+        required: true
+        schema:
+          type: string
+      - description: System ID of position
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ATSPositionDataSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ATSPositionDataSchema'
+          description: OK
+      summary: Patch ATS Position
+      tags:
+      - ATS Position
+  /api/v2/core/ats-systems/{systemId}/ats-positions:
+    get:
+      description: Search ats positions using query parameters and get the complete ats position objects
+      operationId: list_ats_position
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Filter query using predefined filter arguments documented [here](https://apidocs.eightfold.ai/v2.0/docs#the-filterquery-parameter)
+        in: query
+        name: filterQuery
+        schema:
+          type: string
+      - description: any wildcard text to search in position
+        in: query
+        name: query
+        schema:
+          type: string
+      - description: System ID of position
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/ATSPositionDataSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List ATS Positions
+      tags:
+      - ATS Position
+    post:
+      description: To add a new ats position in the system, send the position information in the payload. ats position id will be sent back in case of a successful response
+      operationId: create_ats_position
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: System ID of position
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ATSPositionDataSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ATSPositionDataSchema'
+          description: OK
+      summary: Create ATS Position
+      tags:
+      - ATS Position
+  /api/v2/core/ats-systems/{systemId}/ats-positions/{atsPositionId}/attachments:
+    post:
+      description: 'Upload attachments for an ATS Position. Each file can be provided either as a URL or base64 encoded content.
+
+
+        Restrictions:
+
+        - Maximum 10MB per file and total upload
+
+        - Allowed file types: PDF, DOCX, XLSX, JPG, PNG, TXT
+
+        - URLs must be publicly accessible HTTPS endpoints
+
+        - Private IPs and localhost URLs are blocked for security
+
+        - All files must succeed or entire operation fails (transactional)'
+      operationId: create_ats_position_attachments
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ATS entity ID of position
+        in: path
+        name: atsPositionId
+        required: true
+        schema:
+          type: string
+      - description: System ID of position
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PositionAttachmentUploadRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PositionAttachmentUploadResponseSchema'
+          description: Successfully uploaded all attachments. Returns list of uploaded attachment details including attachment_id, name, type, size, and optional client-provided key.
+      summary: Upload ATS Position Attachments
+      tags:
+      - ATS Position
+components:
+  schemas:
+    PositionAttachmentUploadRequestSchema:
+      type: object
+      properties:
+        files:
+          description: List of files to upload
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PositionAttachmentUploadRequestItemSchema'
+      required:
+      - files
+    LangMapping:
+      type: object
+      properties:
+        locale:
+          type:
+          - string
+          - 'null'
+          description: locale
+        label:
+          type:
+          - string
+          - 'null'
+          description: label
+    PositionActivitiesSchema:
+      type: object
+      properties:
+        activityTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: activity time in epoch format
+        activityType:
+          type:
+          - string
+          - 'null'
+          description: activity type
+        changeLogs:
+          description: all the change logs for the activity
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChangeLog'
+        message:
+          type:
+          - string
+          - 'null'
+          description: message for the activity
+      required:
+      - activityTime
+      - activityType
+      - message
+    AtsOpenings:
+      type: object
+      properties:
+        closedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Closing timestamp in epoch format
+        openingDetails:
+          description: Details of the openings
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsOpeningDetail'
+        numOpenings:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of openings. Set to -1 for unlimited openings
+        openedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Opening timestamp in epoch format
+        numOpeningsFilled:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of openings filled
+    HiringTeamMemberSchema:
+      type: object
+      properties:
+        role:
+          type:
+          - string
+          - 'null'
+          description: Role label (e.g. Hiring Manager, HRBP)
+        email:
+          type:
+          - string
+          - 'null'
+          description: Email of the team member
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the team member
+        roleKey:
+          type:
+          - string
+          - 'null'
+          description: Storage key for the role (e.g. hiring_manager, secondary_hiring_managers, cust_hrbp)
+    AtsOpeningDetail:
+      type: object
+      properties:
+        status:
+          type:
+          - string
+          - 'null'
+          description: Status of the opening
+        closedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Closing timestamp in epoch format
+        openingId:
+          type:
+          - string
+          - 'null'
+          description: Opening ID
+        openedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Opening timestamp in epoch format
+        closeReason:
+          type:
+          - string
+          - 'null'
+          description: Reason for closing the opening
+        candidateId:
+          type:
+          - string
+          - 'null'
+          description: List of candidate ID
+        applicationId:
+          type:
+          - string
+          - 'null'
+          description: List of application ID
+    AtsUserGroupsSchema:
+      type: object
+      properties:
+        userGroupId:
+          type:
+          - string
+          - 'null'
+          description: Ats Group of a user
+    JobPostSchema:
+      type: object
+      properties:
+        publishedTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: published time in epoch format
+        expirationTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: expiration time in epoch format
+        postingTitle:
+          type:
+          - string
+          - 'null'
+          description: posting title
+        postingId:
+          type:
+          - string
+          - 'null'
+          description: posting id
+        locale:
+          type:
+          - string
+          - 'null'
+          description: locale of the ats job post
+        primaryPost:
+          type:
+          - boolean
+          - 'null'
+          description: is primary post
+        jobDescription:
+          type:
+          - string
+          - 'null'
+          description: job description
+        postedFor:
+          type:
+          - string
+          - 'null'
+          description: internal for internal jobs, external for external jobs, or all for both.
+      required:
+      - postedFor
+      - postingId
+      - postingTitle
+      - publishedTime
+    PositionAttachmentUploadResponseItemSchema:
+      type: object
+      properties:
+        key:
+          type:
+          - string
+          - 'null'
+          description: Client-provided key for this file
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the uploaded file
+        type:
+          type:
+          - string
+          - 'null'
+          description: MIME type of the file
+        attachment_id:
+          type:
+          - string
+          - 'null'
+          description: Unique attachment identifier
+        size:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Size of the file in bytes
+    PositionAttachmentUploadRequestItemSchema:
+      type: object
+      properties:
+        key:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier for this file in the response
+        variable_id:
+          type:
+          - string
+          - 'null'
+          description: Variable ID to associate this attachment with. Must be a valid file attachment variable in the position intake form
+        file_name:
+          type:
+          - string
+          - 'null'
+          description: Name of the file
+        url:
+          type:
+          - string
+          - 'null'
+          description: 'URL to download the file from (use either url or content), Max file size : 10MB'
+        content:
+          type:
+          - string
+          - 'null'
+          description: 'Base64 encoded file content (use either url or content), Max file size : 10MB'
+      required:
+      - file_name
+      - variable_id
+    PersonSchema:
+      type: object
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+          description: email
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name
+      required:
+      - name
+    ChangeLog:
+      type: object
+      properties:
+        newValue:
+          type:
+          - string
+          - 'null'
+          description: new value
+        fieldName:
+          type:
+          - string
+          - 'null'
+          description: field name
+        prevValue:
+          type:
+          - string
+          - 'null'
+          description: previous value
+      required:
+      - fieldName
+      - newValue
+      - prevValue
+    QuestionLabel:
+      type: object
+      properties:
+        langMappingList:
+          description: lang_mapping_list
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/LangMapping'
+        label:
+          type:
+          - string
+          - 'null'
+          description: label
+        value:
+          type:
+          - string
+          - 'null'
+          description: value
+    PositionAttachmentUploadResponseSchema:
+      type: object
+      properties:
+        data:
+          description: List of uploaded attachments
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PositionAttachmentUploadResponseItemSchema'
+    QuestionDependencies:
+      type: object
+      properties:
+        questionId:
+          type:
+          - string
+          - 'null'
+          description: question id
+        questionSource:
+          type:
+          - string
+          - 'null'
+          description: question source
+        choiceValue:
+          type:
+          - string
+          - 'null'
+          description: choice value
+        dependencyType:
+          type:
+          - string
+          - 'null'
+          description: dependency type
+        childQuestionIds:
+          type:
+          - array
+          - 'null'
+          description: child question ids
+          items:
+            type: string
+      required:
+      - choiceValue
+      - questionId
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+    ATSPositionDataSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: creation timestamp in epoch format
+        locationCountry:
+          type:
+          - string
+          - 'null'
+          description: Country of the location
+        coordinators:
+          description: all the coordinators related to this position
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PersonSchema'
+        businessUnit:
+          type:
+          - string
+          - 'null'
+          description: business unit
+        isPrivate:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if a position is a private posting
+        workLocationOption:
+          type:
+          - string
+          - 'null'
+          description: Indicates the option for working location e.g. onsite, remote_global, remote_local, hybrid
+        atsEntityId:
+          type:
+          - string
+          - 'null'
+          description: position_id in the ats system
+        hiringManager:
+          description: Hiring Manager
+          allOf:
+          - $ref: '#/components/schemas/PersonSchema'
+        internalPostingUrl:
+          type:
+          - string
+          - 'null'
+          description: internal posting url
+        evergreen:
+          type:
+          - boolean
+          - 'null'
+          description: is evergreen
+        skills:
+          type:
+          - array
+          - 'null'
+          description: skills
+          items:
+            type: string
+        company:
+          type:
+          - string
+          - 'null'
+          description: company
+        locationCity:
+          type:
+          - string
+          - 'null'
+          description: City of the location
+        lastUpdated:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: last modified date time in epoch format
+        displayJobId:
+          type:
+          - string
+          - 'null'
+          description: display job id
+        openings:
+          description: Openings
+          allOf:
+          - $ref: '#/components/schemas/AtsOpenings'
+        hiringTeam:
+          readOnly: true
+          description: 'Unified hiring team array. Each entry: {role, roleKey, name, email}. Includes primary/secondary HMs, primary/secondary recruiters, and custom roles.'
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/HiringTeamMemberSchema'
+        followers:
+          description: all the followers of the positions as hiring managers etc.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PersonSchema'
+        startDate:
+          type:
+          - string
+          - 'null'
+          description: start date of the position in ISO 8601 format (e.g. 2024-05-01)
+        requisitionType:
+          type:
+          - string
+          - 'null'
+          description: Requisition Type
+        systemId:
+          type:
+          - string
+          - 'null'
+          description: system id
+        activities:
+          description: all the activities related to this positions
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PositionActivitiesSchema'
+        postedFor:
+          type:
+          - string
+          - 'null'
+          description: 'internal for internal jobs, external for external jobs, or all for both. Can be omitted for unposted positions.Input values must be one of these: internal, external, all, None'
+        questionnaires:
+          description: questionnaires
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/QuestionnaireSchema'
+        restrictAccess:
+          type:
+          - boolean
+          - 'null'
+          description: restrict access
+        title:
+          type:
+          - string
+          - 'null'
+          description: job title
+        templateId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Template id of the template used to create the position
+        recruiter:
+          description: recruiter
+          allOf:
+          - $ref: '#/components/schemas/PersonSchema'
+        jobPosts:
+          description: job postings
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/JobPostSchema'
+        hiringBand:
+          type:
+          - string
+          - 'null'
+          description: hiring band
+        postingTitle:
+          type:
+          - string
+          - 'null'
+          description: posting title
+        employmentType:
+          type:
+          - string
+          - 'null'
+          description: Employment Type
+        posted:
+          type:
+          - boolean
+          - 'null'
+          description: status of the position posted or not
+        locationFlexibility:
+          type:
+          - string
+          - 'null'
+          description: Indicates the flexibility on location e.g. not_flexible, flexible_within_country, flexible_global
+        orgUnits:
+          type:
+          - object
+          - 'null'
+          description: Org units of the position
+        companyDescription:
+          type:
+          - string
+          - 'null'
+          description: Company description
+        customFields:
+          type:
+          - object
+          - 'null'
+          description: custom fields
+        sourcers:
+          description: all the recruiters/sourcers related to this positions
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PersonSchema'
+        workflowTemplateId:
+          type:
+          - string
+          - 'null'
+          description: Indicates which workflow this position belongs to
+        status:
+          type:
+          - string
+          - 'null'
+          description: status
+        jobCode:
+          type:
+          - string
+          - 'null'
+          description: ATS attribute which identifies the job this jobrequestion is mapped to
+        open:
+          type:
+          - boolean
+          - 'null'
+          description: status of the position open or not
+        postingUrl:
+          type:
+          - string
+          - 'null'
+          description: posting url
+        atsUserGroups:
+          description: ATS user groups
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsUserGroupsSchema'
+        createdBy:
+          type:
+          - string
+          - 'null'
+          description: Email of the user who created this position
+        function:
+          type:
+          - string
+          - 'null'
+          description: job function
+        jobStages:
+          type:
+          - array
+          - 'null'
+          description: job_stages
+          items:
+            type: string
+        requiredSkills:
+          type:
+          - array
+          - 'null'
+          description: required skills
+          items:
+            type: string
+        questions:
+          description: questions
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/QuestionsSchema'
+        locationState:
+          type:
+          - string
+          - 'null'
+          description: State of the location
+        locations:
+          type:
+          - array
+          - 'null'
+          description: location
+          items:
+            type: string
+        positionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: EF Position ID
+        description:
+          type:
+          - string
+          - 'null'
+          description: job description
+      required:
+      - atsEntityId
+      - company
+      - createdAt
+      - lastUpdated
+      - open
+      - posted
+      - recruiter
+      - status
+      - title
+    QuestionChoice:
+      type: object
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+          description: label
+        value:
+          type:
+          - string
+          - 'null'
+          description: value
+    QuestionnaireSchema:
+      type: object
+      properties:
+        questionDependencies:
+          description: question dependencies
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/QuestionDependencies'
+        questionnaireId:
+          type:
+          - string
+          - 'null'
+          description: questionnaire id
+      required:
+      - questionnaireId
+    QuestionsSchema:
+      type: object
+      properties:
+        choices:
+          description: Question choices
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/QuestionChoice'
+        choicesV2:
+          description: Question choices V2. It supports language mapping.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/QuestionLabel'
+        questionId:
+          type:
+          - string
+          - 'null'
+          description: question_id
+        help:
+          type:
+          - string
+          - 'null'
+          description: help
+        type:
+          type:
+          - string
+          - 'null'
+          description: type of the question. e.g.-choice, numeric or text
+        question:
+          description: question. It supports language mapping.
+          allOf:
+          - $ref: '#/components/schemas/QuestionLabel'
+        required:
+          type:
+          - boolean
+          - 'null'
+          description: required
+      required:
+      - questionId

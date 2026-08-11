@@ -1,0 +1,78 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Join Talent Pool API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Join Talent Pool
+paths:
+  /api/v2/smartapply/talent-pool:
+    post:
+      description: Allowing the candidate to join talent pool
+      operationId: create_talent_pool
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TalentPoolSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TalentPoolSchema'
+          description: OK
+      summary: Create Talent Pool
+      tags:
+      - Join Talent Pool
+components:
+  schemas:
+    TalentPoolSchema:
+      type: object
+      properties:
+        tags:
+          type:
+          - array
+          - 'null'
+          description: Tags of profile for Talent Pool
+          items:
+            type: string
+        message:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Response message for Joining Talent Pool
+        emailSubscription:
+          type:
+          - boolean
+          - 'null'
+          description: Subscribed for emails
+        profileId:
+          type:
+          - string
+          - 'null'
+          description: Profile Id to be added in the Talent Pool

@@ -35,9 +35,10 @@ specificationVersion: '0.19'
 apis:
 - aid: eightfold-ai:talent-intelligence
   name: Eightfold Talent Intelligence Platform
-  description: Core AI platform that powers candidate matching, skills inference, career-path recommendations,
-    and internal mobility decisions across the Eightfold suite. Customer-facing APIs are made available
-    to enterprise customers and certified ATS/HRIS partners under contract; no public, self-serve developer
+  description: >-
+    Core AI platform that powers candidate matching, skills inference, career-path recommendations, and
+    internal mobility decisions across the Eightfold suite. Customer-facing APIs are made available to
+    enterprise customers and certified ATS/HRIS partners under contract; no public, self-serve developer
     portal is published.
   humanURL: https://eightfold.ai/products/
   baseURL: https://app.eightfold.ai
@@ -50,9 +51,10 @@ apis:
     url: https://eightfold.ai/products/
 - aid: eightfold-ai:talent-acquisition
   name: Eightfold Talent Acquisition
-  description: Recruiting product that surfaces candidates by skills, potential, and fit rather than resumes
-    alone, with agentic workflows for sourcing, screening, and pipelining. Integrated with the customer
-    ATS over partner connectors.
+  description: >-
+    Recruiting product that surfaces candidates by skills, potential, and fit rather than resumes alone,
+    with agentic workflows for sourcing, screening, and pipelining. Integrated with the customer ATS over
+    partner connectors.
   humanURL: https://eightfold.ai/products/
   baseURL: https://app.eightfold.ai
   tags:
@@ -64,9 +66,9 @@ apis:
     url: https://eightfold.ai/products/
 - aid: eightfold-ai:talent-management
   name: Eightfold Talent Management
-  description: Single view of internal talent for retention, skills development, career planning, and
-    succession. Powers manager and employee experiences against the same Talent Intelligence model used
-    for hiring.
+  description: >-
+    Single view of internal talent for retention, skills development, career planning, and succession.
+    Powers manager and employee experiences against the same Talent Intelligence model used for hiring.
   humanURL: https://eightfold.ai/products/
   baseURL: https://app.eightfold.ai
   tags:
@@ -78,8 +80,9 @@ apis:
     url: https://eightfold.ai/products/
 - aid: eightfold-ai:workforce-exchange
   name: Eightfold Workforce Exchange
-  description: Internal mobility marketplace that lets employees discover roles, gigs, mentors, and learning
-    paths matched to their skills and aspirations.
+  description: >-
+    Internal mobility marketplace that lets employees discover roles, gigs, mentors, and learning paths
+    matched to their skills and aspirations.
   humanURL: https://eightfold.ai/products/
   baseURL: https://app.eightfold.ai
   tags:
@@ -90,8 +93,9 @@ apis:
     url: https://eightfold.ai/products/
 - aid: eightfold-ai:resource-management
   name: Eightfold Resource Management
-  description: Project staffing product that matches consultants and employees to billable work using
-    AI-driven skills matching, primarily used by professional services and consulting organisations.
+  description: >-
+    Project staffing product that matches consultants and employees to billable work using AI-driven skills
+    matching, primarily used by professional services and consulting organisations.
   humanURL: https://eightfold.ai/products/
   baseURL: https://app.eightfold.ai
   tags:
@@ -103,9 +107,10 @@ apis:
     url: https://eightfold.ai/products/
 - aid: eightfold-ai:ai-interviewer
   name: Eightfold AI Interviewer
-  description: Autonomous agentic interviewer that conducts structured candidate interviews end-to-end
-    and returns scored, skills-anchored evaluations. Embedded into customer workflows directly and via
-    partner platforms such as Oracle Fusion Cloud Recruiting.
+  description: >-
+    Autonomous agentic interviewer that conducts structured candidate interviews end-to-end and returns
+    scored, skills-anchored evaluations. Embedded into customer workflows directly and via partner platforms
+    such as Oracle Fusion Cloud Recruiting.
   humanURL: https://eightfold.ai/products/
   baseURL: https://app.eightfold.ai
   tags:
@@ -117,8 +122,9 @@ apis:
     url: https://eightfold.ai/products/
 - aid: eightfold-ai:ai-interview-companion
   name: Eightfold AI Interview Companion
-  description: Real-time copilot for human-led interviews, providing skills-based prompts, structured
-    note-taking, and consistent evaluation across the interview loop.
+  description: >-
+    Real-time copilot for human-led interviews, providing skills-based prompts, structured note-taking,
+    and consistent evaluation across the interview loop.
   humanURL: https://eightfold.ai/products/
   baseURL: https://app.eightfold.ai
   tags:
@@ -130,8 +136,9 @@ apis:
     url: https://eightfold.ai/products/
 - aid: eightfold-ai:talentforge
   name: Eightfold TalentForge
-  description: Build-it-yourself layer that lets customers compose custom talent applications on top of
-    the Talent Intelligence Platform without long engineering cycles.
+  description: >-
+    Build-it-yourself layer that lets customers compose custom talent applications on top of the Talent
+    Intelligence Platform without long engineering cycles.
   humanURL: https://eightfold.ai/products/
   baseURL: https://app.eightfold.ai
   tags:
@@ -143,8 +150,9 @@ apis:
     url: https://eightfold.ai/products/
 - aid: eightfold-ai:app-marketplace
   name: Eightfold App Marketplace
-  description: Marketplace of certified partner and customer-built applications that extend the Eightfold
-    Talent Intelligence Platform.
+  description: >-
+    Marketplace of certified partner and customer-built applications that extend the Eightfold Talent
+    Intelligence Platform.
   humanURL: https://app.eightfold.ai/app_marketplace/
   baseURL: https://app.eightfold.ai/app_marketplace/
   tags:
@@ -154,6 +162,471 @@ apis:
   properties:
   - type: Documentation
     url: https://app.eightfold.ai/app_marketplace/
+- aid: eightfold-ai:eightfold-ai-approval-workflow-api
+  name: Eightfold AI Approval Workflow API
+  description: The Approval Workflow API from Eightfold AI — 1 operation(s) for approval workflow.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Approval Workflow
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-approval-workflow-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-async-api-status-api
+  name: Eightfold AI Async API Status API
+  description: The Async API Status API from Eightfold AI — 1 operation(s) for async api status.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Async API Status
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-async-api-status-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-ats-candidate-api
+  name: Eightfold AI ATS Candidate API
+  description: The ATS Candidate API from Eightfold AI — 2 operation(s) for ats candidate.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - ATS Candidate
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-ats-candidate-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-ats-position-api
+  name: Eightfold AI ATS Position API
+  description: The ATS Position API from Eightfold AI — 3 operation(s) for ats position.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - ATS Position
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-ats-position-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-booking-api
+  name: Eightfold AI Booking API
+  description: The Booking API from Eightfold AI — 3 operation(s) for booking.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Booking
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-booking-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-candidate-api
+  name: Eightfold AI Candidate API
+  description: services related to candidate id
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Candidate
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-candidate-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-career-navigator-api
+  name: Eightfold AI Career Navigator API
+  description: The Career Navigator API from Eightfold AI — 2 operation(s) for career navigator.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Career Navigator
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-career-navigator-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-careerhub-api
+  name: Eightfold AI Careerhub API
+  description: The Careerhub API from Eightfold AI — 5 operation(s) for careerhub.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Careerhub
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-careerhub-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-comment-api
+  name: Eightfold AI Comment API
+  description: The Comment API from Eightfold AI — 6 operation(s) for comment.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Comment
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-comment-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-course-api
+  name: Eightfold AI Course API
+  description: The Course API from Eightfold AI — 2 operation(s) for course.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Course
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-course-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-demand-api
+  name: Eightfold AI Demand API
+  description: The Demand API from Eightfold AI — 4 operation(s) for demand.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Demand
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-demand-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-email-delivery-feedback-api
+  name: Eightfold AI Email Delivery Feedback API
+  description: >-
+    The Email Delivery Feedback API from Eightfold AI — 3 operation(s) for email delivery feedback.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Email Delivery Feedback
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-email-delivery-feedback-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-employee-api
+  name: Eightfold AI Employee API
+  description: The Employee API from Eightfold AI — 9 operation(s) for employee.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Employee
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-employee-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-employee-role-api
+  name: Eightfold AI Employee Role API
+  description: The Employee Role API from Eightfold AI — 2 operation(s) for employee role.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Employee Role
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-employee-role-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-entity-changelog-api
+  name: Eightfold AI Entity Changelog API
+  description: The Entity Changelog API from Eightfold AI — 1 operation(s) for entity changelog.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Entity Changelog
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-entity-changelog-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-entity-profile-application-api
+  name: Eightfold AI Entity Profile Application API
+  description: >-
+    The Entity Profile Application API from Eightfold AI — 3 operation(s) for entity profile application.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Entity Profile Application
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-entity-profile-application-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-event-candidate-activity-api
+  name: Eightfold AI Event Candidate Activity API
+  description: >-
+    The Event Candidate Activity API from Eightfold AI — 3 operation(s) for event candidate activity.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Event Candidate Activity
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-event-candidate-activity-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-events-api
+  name: Eightfold AI Events API
+  description: The Events API from Eightfold AI — 4 operation(s) for events.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-events-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-ext-ai-interview-api
+  name: Eightfold AI Ext AI Interview API
+  description: The Ext AI Interview API from Eightfold AI — 3 operation(s) for ext ai interview.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Ext AI Interview
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-ext-ai-interview-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-ext-booking-api
+  name: Eightfold AI Ext Booking API
+  description: The Ext Booking API from Eightfold AI — 2 operation(s) for ext booking.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Ext Booking
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-ext-booking-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-ext-demand-api
+  name: Eightfold AI Ext Demand API
+  description: The Ext Demand API from Eightfold AI — 3 operation(s) for ext demand.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Ext Demand
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-ext-demand-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-ext-demand-org-unit-api
+  name: Eightfold AI Ext Demand Org Unit API
+  description: The Ext Demand Org Unit API from Eightfold AI — 2 operation(s) for ext demand org unit.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Ext Demand Org Unit
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-ext-demand-org-unit-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-foundational-data-api
+  name: Eightfold AI Foundational Data API
+  description: The Foundational Data API from Eightfold AI — 2 operation(s) for foundational data.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Foundational Data
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-foundational-data-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-hiring-company-api
+  name: Eightfold AI Hiring Company API
+  description: The Hiring Company API from Eightfold AI — 1 operation(s) for hiring company.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Hiring Company
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-hiring-company-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-holiday-api
+  name: Eightfold AI Holiday API
+  description: The Holiday API from Eightfold AI — 3 operation(s) for holiday.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Holiday
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-holiday-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-hris-employee-api
+  name: Eightfold AI HRIS Employee API
+  description: The HRIS Employee API from Eightfold AI — 2 operation(s) for hris employee.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - HRIS Employee
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-hris-employee-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-insights-api
+  name: Eightfold AI Insights API
+  description: The Insights API from Eightfold AI — 5 operation(s) for insights.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Insights
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-insights-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-jie-api
+  name: Eightfold AI JIE API
+  description: The JIE API from Eightfold AI — 3 operation(s) for jie.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - JIE
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-jie-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-join-talent-pool-api
+  name: Eightfold AI Join Talent Pool API
+  description: The Join Talent Pool API from Eightfold AI — 1 operation(s) for join talent pool.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Join Talent Pool
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-join-talent-pool-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-oauthusers-api
+  name: Eightfold AI O Auth Users API
+  description: serves info on the oauth usage of users
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - OAuthUsers
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-oauthusers-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-offer-api
+  name: Eightfold AI Offer API
+  description: The Offer API from Eightfold AI — 3 operation(s) for offer.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Offer
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-offer-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-org-unit-api
+  name: Eightfold AI Org Unit API
+  description: The Org Unit API from Eightfold AI — 1 operation(s) for org unit.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Org Unit
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-org-unit-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-performance-feedback-api
+  name: Eightfold AI Performance Feedback API
+  description: >-
+    The Performance Feedback API from Eightfold AI — 4 operation(s) for performance feedback.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Performance Feedback
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-performance-feedback-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-position-api
+  name: Eightfold AI Position API
+  description: The Position API from Eightfold AI — 12 operation(s) for position.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Position
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-position-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-profile-api
+  name: Eightfold AI Profile API
+  description: The Profile API from Eightfold AI — 7 operation(s) for profile.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Profile
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-profile-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-profile-application-api
+  name: Eightfold AI Profile Application API
+  description: The Profile Application API from Eightfold AI — 3 operation(s) for profile application.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Profile Application
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-profile-application-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-profile-feedback-api
+  name: Eightfold AI Profile Feedback API
+  description: The Profile Feedback API from Eightfold AI — 3 operation(s) for profile feedback.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Profile Feedback
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-profile-feedback-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-profile-note-api
+  name: Eightfold AI Profile Note API
+  description: The Profile Note API from Eightfold AI — 3 operation(s) for profile note.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Profile Note
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-profile-note-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-profile-tag-api
+  name: Eightfold AI Profile Tag API
+  description: The Profile Tag API from Eightfold AI — 3 operation(s) for profile tag.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Profile Tag
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-profile-tag-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-question-api
+  name: Eightfold AI Question API
+  description: The Question API from Eightfold AI — 2 operation(s) for question.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Question
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-question-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-succession-plan-api
+  name: Eightfold AI Succession Plan API
+  description: The Succession Plan API from Eightfold AI — 8 operation(s) for succession plan.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Succession Plan
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-succession-plan-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-upskill-plan-assignment-api
+  name: Eightfold AI Upskill Plan Assignment API
+  description: >-
+    The Upskill Plan Assignment API from Eightfold AI — 2 operation(s) for upskill plan assignment.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Upskill Plan Assignment
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-upskill-plan-assignment-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-user-calendar-event-api
+  name: Eightfold AI User Calendar Event API
+  description: The User Calendar Event API from Eightfold AI — 3 operation(s) for user calendar event.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - User Calendar Event
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-user-calendar-event-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-user-campaign-api
+  name: Eightfold AI User Campaign API
+  description: The User Campaign API from Eightfold AI — 3 operation(s) for user campaign.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - User Campaign
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-user-campaign-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-user-message-api
+  name: Eightfold AI User Message API
+  description: The User Message API from Eightfold AI — 3 operation(s) for user message.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - User Message
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-user-message-api-openapi.yml
+- aid: eightfold-ai:eightfold-ai-users-api
+  name: Eightfold AI Users API
+  description: The Users API from Eightfold AI — 3 operation(s) for users.
+  humanURL: https://eightfold.ai/products/
+  baseURL: https://app.eightfold.ai
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/eightfold-ai-users-api-openapi.yml
 common:
 - type: TrustCenter
   url: security/eightfold-ai-trust-center.yml

@@ -1,0 +1,738 @@
+openapi: 3.2.0
+info:
+  title: Eightfold Ai Events API
+  version: '1.0'
+  description: 'Operations tagged Events across 2 of this provider''s published API definitions: eightfold-ai-api-server-v2-service-service.yml, eightfold-ai-api.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+- url: //api.eightfold.ai
+tags:
+- name: Events
+paths:
+  /api/v2/events/planned-events:
+    get:
+      description: A get call for listing planned events data
+      operationId: list_events_planned_events
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlannedEventsSchema'
+          description: OK
+      summary: List Planned Events
+      tags:
+      - Events
+    servers:
+    - url: https://apiv2.{domain}.ai
+      variables:
+        domain:
+          default: eightfold
+          enum:
+          - eightfold
+          - eightfold-eu
+          - eightfold-gov
+          - eightfold-ca
+          - eightfold-me
+          - eightfold-wu
+          - eightfold-ap
+  /api/v2/events/planned-events/batch-fetch:
+    post:
+      description: Batch fetch planned events for a given list of planned event ids (limit 100)
+      operationId: events_batch_fetch
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchFetchEntityRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/PlannedEventSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/BatchFetchMetaSchema'
+                type: object
+          description: OK
+      summary: Batch Fetch Planned Events
+      tags:
+      - Events
+    servers:
+    - url: https://apiv2.{domain}.ai
+      variables:
+        domain:
+          default: eightfold
+          enum:
+          - eightfold
+          - eightfold-eu
+          - eightfold-gov
+          - eightfold-ca
+          - eightfold-me
+          - eightfold-wu
+          - eightfold-ap
+  /api/v2/events/planned-events/{plannedEventId}:
+    get:
+      description: Given a planned event id, it returns all attributes of the planned event
+      operationId: get_events_planned_events_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: planned event ID of planned event in Eightfold
+        in: path
+        name: plannedEventId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlannedEventSchema'
+          description: OK
+      summary: Get Planned Event
+      tags:
+      - Events
+    servers:
+    - url: https://apiv2.{domain}.ai
+      variables:
+        domain:
+          default: eightfold
+          enum:
+          - eightfold
+          - eightfold-eu
+          - eightfold-gov
+          - eightfold-ca
+          - eightfold-me
+          - eightfold-wu
+          - eightfold-ap
+  /v1/events/open/list:
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/planned_event_list_with_branding'
+      summary: Get Open Events
+      description: Get list of all happening/upcoming published open events
+      operationId: get_planned_event_search
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: The secret key to access the api, starts with Basic
+        schema:
+          type: string
+      - name: X-Fields
+        in: header
+        description: An optional fields mask
+        schema:
+          type: string
+          format: mask
+      tags:
+      - Events
+    servers:
+    - url: //api.eightfold.ai
+components:
+  schemas:
+    PlannedEventSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when this event was created
+        isCancelled:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: ''
+        eventSpeakers:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of speakers
+          items:
+            type: string
+        activeRegistrations:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: active registrations
+        registerButton:
+          readOnly: true
+          description: Registration button information
+          allOf:
+          - $ref: '#/components/schemas/RegisterButton'
+        eventTeamDataJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Event team data
+        eventBucket:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Bucket of the event
+        address:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Address of venue
+        eventCustomFieldsJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Event custom fields
+        eventType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+        institution:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Institution related to event
+        selectedTimezone:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Selected time zome
+        name:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Name of the event
+        homePageBanner:
+          readOnly: true
+          description: Home page banner information
+          allOf:
+          - $ref: '#/components/schemas/HomePageBanner'
+        eventLocationType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: id
+        parentId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Parent id of the event
+        venue:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Venue of the event
+        endTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Ending timestamp of event
+        isPublished:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: ''
+        eventLandingPage:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Event landing page
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+        createdBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User id which created this event
+        eventCategory:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Category of the event
+        startTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Starting time stamp of event
+        when:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: When tag of the event
+        description:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Description of event
+    HomePageBanner:
+      type: object
+      properties:
+        useImage:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: boolean value for using image
+        image:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: image of home page banner
+        title:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: title for home page
+    PlannedEventsSchema:
+      type: object
+      properties:
+        plannedEventList:
+          readOnly: true
+          description: List of planned events
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PlannedEvent'
+        plannedEventListBranding:
+          readOnly: true
+          description: list of branding planned events.
+          allOf:
+          - $ref: '#/components/schemas/EventBranding'
+    EventBranding:
+      type: object
+      properties:
+        navBar:
+          readOnly: true
+          description: Navigation banner information
+          allOf:
+          - $ref: '#/components/schemas/NavBar'
+        homePageBanner:
+          readOnly: true
+          description: Home page banner information
+          allOf:
+          - $ref: '#/components/schemas/HomePageBanner'
+    PlannedEvent:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when this event was created
+        isCancelled:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: ''
+        eventSpeakers:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of speakers
+          items:
+            type: string
+        activeRegistrations:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: active registrations
+        registerButton:
+          readOnly: true
+          description: Registration button information
+          allOf:
+          - $ref: '#/components/schemas/RegisterButton'
+        eventTeamDataJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Event team data
+        eventBucket:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Bucket of the event
+        address:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Address of venue
+        eventCustomFieldsJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Event custom fields
+        eventType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+        institution:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Institution related to event
+        selectedTimezone:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Selected time zome
+        name:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Name of the event
+        homePageBanner:
+          readOnly: true
+          description: Home page banner information
+          allOf:
+          - $ref: '#/components/schemas/HomePageBanner'
+        eventLocationType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: id
+        parentId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Parent id of the event
+        venue:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Venue of the event
+        endTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Ending timestamp of event
+        isPublished:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: ''
+        eventLandingPage:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Event landing page
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+        createdBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User id which created this event
+        eventCategory:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Category of the event
+        startTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Starting time stamp of event
+        when:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: When tag of the event
+        description:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Description of event
+    BatchFetchMetaSchema:
+      type: object
+      properties:
+        missingEntityIds:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of entity ids for which no result was found
+          items:
+            type: string
+    BatchFetchEntityRequestSchema:
+      type: object
+      properties:
+        entityIds:
+          type: array
+          description: list of entity ids to fetch the entity objects
+          items:
+            type: string
+      required:
+      - entityIds
+    RegisterButton:
+      type: object
+      properties:
+        textColor:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: text color for registration button
+        backgroundColor:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: background color of registration button
+        text:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Text of registration button
+    NavBar:
+      type: object
+      properties:
+        color:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Color of navbar
+        background:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: background of navbar
+        link:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Link of navbar
+        image:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Image on navbar
+        title:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: title of navbar
+    planned_event_list_branding:
+      properties:
+        homePageBanner:
+          $ref: '#/components/schemas/plannedEventLandingConfigBanner'
+        navBar:
+          $ref: '#/components/schemas/plannedEventLandingNavBar'
+      type: object
+    plannedEventDetails:
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        venue:
+          type: string
+        institution:
+          type: string
+        address:
+          type: string
+        startTimestamp:
+          type: integer
+        endTimestamp:
+          type: integer
+        selectedTimezone:
+          type: string
+        activeRegistrations:
+          type: boolean
+        homePageBanner:
+          $ref: '#/components/schemas/plannedEventLandingConfigBanner'
+        eventLandingPage:
+          type: string
+      type: object
+    plannedEventLandingConfigBanner:
+      properties:
+        image:
+          type: string
+        title:
+          type: string
+      type: object
+    planned_event_list_with_branding:
+      properties:
+        plannedEventListBranding:
+          $ref: '#/components/schemas/planned_event_list_branding'
+        plannedEventList:
+          type: array
+          items:
+            $ref: '#/components/schemas/plannedEventDetails'
+      type: object
+    plannedEventLandingNavBar:
+      properties:
+        color:
+          type: string
+        image:
+          type: string
+        link:
+          type: string
+        background:
+          type: string
+        title:
+          type: string
+      type: object
+x-refined-from:
+- eightfold-ai-api-server-v2-service-service.yml
+- eightfold-ai-api.yml

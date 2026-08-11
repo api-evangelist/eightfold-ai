@@ -1,0 +1,906 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Offer API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Offer
+paths:
+  /api/v2/ats/offers/{offerId}:
+    get:
+      description: Given an Offer id, it returns all attributes of the Offer
+      operationId: get_offer_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ID of an offer in Eightfold
+        in: path
+        name: offerId
+        required: true
+        schema:
+          type: string
+      - description: version of the offer
+        in: query
+        name: version
+        schema:
+          type: string
+      - description: Comma-separated list of macro variable IDs to evaluate and include in the response customInfo.
+        in: query
+        name: macroIds
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OfferSchema'
+          description: OK
+      summary: Get Offer
+      tags:
+      - Offer
+    patch:
+      description: 'Patches an offer given its id. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.'
+      operationId: patch_offer
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ID of an offer in Eightfold
+        in: path
+        name: offerId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OfferSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OfferSchema'
+          description: OK
+      summary: Patch Offer
+      tags:
+      - Offer
+    delete:
+      description: Delete (soft-delete) a DRAFT offer that has not progressed beyond creation. Returns a success confirmation.
+      operationId: delete_offer
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ID of an offer in Eightfold
+        in: path
+        name: offerId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+      summary: Delete Offer
+      tags:
+      - Offer
+  /api/v2/ats/offers/ats-systems/{systemId}/ats-candidates/{atsCandidateId}/ats-positions/{atsPositionId}:
+    patch:
+      description: 'Upserts an offer identified by ATS IDs (system + ats candidate id + ats position id). If an offer already exists for the resolved (candidate, position) it is patched in place; otherwise a new offer is created and linked to the candidate''s latest application. PATCH semantics: idempotent; only fields present in the body are applied; absent fields are not touched.'
+      operationId: patch_offer_ats_positions
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ATS system id (e.g. 'successfactors')
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+      - description: ATS-side candidate id (e.g. SF candidateId)
+        in: path
+        name: atsCandidateId
+        required: true
+        schema:
+          type: string
+      - description: ATS-side position / job requisition id (e.g. SF jobReqId)
+        in: path
+        name: atsPositionId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateOfferSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOrUpdateOfferSchema'
+          description: OK
+      summary: Patch Offer by ATS IDs
+      tags:
+      - Offer
+  /api/v2/ats/offers:
+    get:
+      description: Search offers using query parameters and get the complete offer objects
+      operationId: list_offer
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Filter query using predefined filter arguments documented [here](https://apidocs.eightfold.ai/v2.0/docs#the-filterquery-parameter)
+        in: query
+        name: filterQuery
+        schema:
+          type: string
+      - description: any wildcard text to search in offer
+        in: query
+        name: query
+        schema:
+          type: string
+      - description: Whether to include attachments signed urls in the response
+        in: query
+        name: includeAttachments
+        schema:
+          type: boolean
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OfferSchema'
+          description: OK
+      summary: List Offers
+      tags:
+      - Offer
+    post:
+      description: Create a prefilled DRAFT offer for a candidate on a position. positionId and profileId are required; applicationId is optional -- when omitted, the candidate's latest application to the position is linked. The candidate must already have an application to the position; if they have none the request is rejected (advance the candidate into the position's pipeline first via the application-stages API). Field values are set in a separate PATCH /offers/ call (two-step create, mirroring the UI create -> intake-form flow). Returns the full created offer. If an offer already exists for the candidate+position, that existing offer is returned.
+      operationId: create_offer
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Whether to prefill candidate, position and compensation data on the new offer. Defaults to true.
+        in: query
+        name: prefill
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OfferCreateSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OfferSchema'
+          description: OK
+      summary: Create Offer
+      tags:
+      - Offer
+components:
+  schemas:
+    OfferAtsOfferData:
+      type: object
+      properties:
+        applicationStatus:
+          type:
+          - string
+          - 'null'
+          description: ATS application status
+        documentCollections:
+          description: ATS document collections (e.g. signing-URL groupings)
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/OfferAtsDocumentCollection'
+    OfferAtsDocument:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Creation timestamp
+        statusQueryUrl:
+          type:
+          - string
+          - 'null'
+          description: URL to query document status
+        documentName:
+          type:
+          - string
+          - 'null'
+          description: Document name
+        underRevision:
+          type:
+          - string
+          - 'null'
+          description: Whether the document is under revision
+        signingUrl:
+          type:
+          - string
+          - 'null'
+          description: Signing URL for the document
+        documentType:
+          type:
+          - string
+          - 'null'
+          description: Document type
+        updatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Last updated timestamp
+        documentStatus:
+          type:
+          - string
+          - 'null'
+          description: Document status
+    OfferAtsData:
+      type: object
+      properties:
+        atsOfferData:
+          description: ATS offer payload (application status, document collections)
+          allOf:
+          - $ref: '#/components/schemas/OfferAtsOfferData'
+        atsApplicationId:
+          type:
+          - string
+          - 'null'
+          description: ATS application id
+        atsCandidateId:
+          type:
+          - string
+          - 'null'
+          description: ATS candidate id
+    CreateOrUpdateOfferSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp of when the offer was created
+        stockVestingFrequency:
+          type:
+          - string
+          - 'null'
+          description: Stock vesting frequency
+        versions:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: All versions of the offer
+          items:
+            type: string
+        stockOptionsType:
+          type:
+          - string
+          - 'null'
+          description: Type of stock options
+        offerStatus:
+          type:
+          - string
+          - 'null'
+          description: status of the offer
+        profileId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: unique identifier for profile
+        candidateAddress:
+          type:
+          - string
+          - 'null'
+          description: Candidate address
+        currency:
+          type:
+          - string
+          - 'null'
+          description: Currency for compensation
+        version:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Version of the offer
+        groupId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: group id
+        jobTitle:
+          type:
+          - string
+          - 'null'
+          description: Job title
+        relocationBonus:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Relocation bonus amount
+        workplaceType:
+          type:
+          - string
+          - 'null'
+          enum:
+          - remote_global
+          - remote_local
+          - hybrid
+          - onsite
+          description: 'Workplace type. Possible values: [''remote_global'', ''remote_local'', ''hybrid'', ''onsite'']'
+        payGradeId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Pay grade of the offer
+        variableBonus:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Variable bonus amount
+        note:
+          type:
+          - string
+          - 'null'
+          description: Additional notes
+        customInfo:
+          type:
+          - object
+          - 'null'
+          description: Custom info
+        jobLocation:
+          type:
+          - string
+          - 'null'
+          description: Job location
+        bonusPayFrequency:
+          type:
+          - string
+          - 'null'
+          description: Bonus pay frequency
+        offerId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Offer id
+        templateId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Template id of the template used to create the offer
+        countryCode:
+          type:
+          - string
+          - 'null'
+          description: Country code
+        offerLetter:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Offer letter details
+        visaType:
+          type:
+          - string
+          - 'null'
+          description: Visa type
+        candidateEmail:
+          type:
+          - string
+          - 'null'
+          description: Candidate email address
+        isPeopleManagerRole:
+          type:
+          - boolean
+          - 'null'
+          description: Whether this is a people manager role
+        watchers:
+          type:
+          - array
+          - 'null'
+          description: Watchers (email list)
+          items:
+            type: string
+        joiningTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Joining timestamp in seconds since epoch
+        isRehire:
+          type:
+          - boolean
+          - 'null'
+          description: Whether this is a rehire
+        stockOptionsDescription:
+          type:
+          - string
+          - 'null'
+          description: Stock options description
+        stockOptionsTotalVestingYears:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Total years for stock options vesting
+        stockVestingStartTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Stock vesting start timestamp in seconds since epoch
+        updatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp of when the offer was last updated
+        salaryAmount:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Base salary amount
+        shiftAllowance:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Shift allowance amount
+        stockOptionsAmount:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Stock options amount
+        totalCompensation:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Total compensation amount
+        createdBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User email who created the offer
+        basePayFrequency:
+          type:
+          - string
+          - 'null'
+          description: Base pay frequency
+        candidateFullName:
+          type:
+          - string
+          - 'null'
+          description: Candidate full name
+        atsData:
+          description: ATS-system metadata
+          allOf:
+          - $ref: '#/components/schemas/OfferAtsData'
+        joiningBonus:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Joining bonus amount
+        stockOptionsPercentageVesting:
+          type:
+          - array
+          - 'null'
+          description: Stock options vesting percentages per period (list of ints)
+          items:
+            type: integer
+            format: int32
+        positionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: job id
+        applicationId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: application id
+    OfferSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp of when the offer was created
+        stockVestingFrequency:
+          type:
+          - string
+          - 'null'
+          description: Stock vesting frequency
+        versions:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: All versions of the offer
+          items:
+            type: string
+        stockOptionsType:
+          type:
+          - string
+          - 'null'
+          description: Type of stock options
+        offerStatus:
+          type:
+          - string
+          - 'null'
+          description: status of the offer
+        profileId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: unique identifier for profile
+        candidateAddress:
+          type:
+          - string
+          - 'null'
+          description: Candidate address
+        currency:
+          type:
+          - string
+          - 'null'
+          description: Currency for compensation
+        version:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Version of the offer
+        groupId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: group id
+        relocationBonus:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Relocation bonus amount
+        jobTitle:
+          type:
+          - string
+          - 'null'
+          description: Job title
+        workplaceType:
+          type:
+          - string
+          - 'null'
+          enum:
+          - remote_global
+          - remote_local
+          - hybrid
+          - onsite
+          description: 'Workplace type. Possible values: [''remote_global'', ''remote_local'', ''hybrid'', ''onsite'']'
+        payGradeId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Pay grade of the offer
+        variableBonus:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Variable bonus amount
+        note:
+          type:
+          - string
+          - 'null'
+          description: Additional notes
+        customInfo:
+          type:
+          - object
+          - 'null'
+          description: Custom info
+        jobLocation:
+          type:
+          - string
+          - 'null'
+          description: Job location
+        bonusPayFrequency:
+          type:
+          - string
+          - 'null'
+          description: Bonus pay frequency
+        joiningDate:
+          type:
+          - string
+          - 'null'
+          description: Joining date
+        offerId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Offer id
+        templateId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Template id of the template used to create the offer
+        countryCode:
+          type:
+          - string
+          - 'null'
+          description: Country code
+        offerLetter:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Offer letter details
+        stockOptionsDescription:
+          type:
+          - string
+          - 'null'
+          description: Stock options description
+        candidateEmail:
+          type:
+          - string
+          - 'null'
+          description: Candidate email address
+        visaType:
+          type:
+          - string
+          - 'null'
+          description: Visa type
+        isPeopleManagerRole:
+          type:
+          - boolean
+          - 'null'
+          description: Whether this is a people manager role
+        stockOptionsTotalVestingYears:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Total years for stock options vesting
+        isRehire:
+          type:
+          - boolean
+          - 'null'
+          description: Whether this is a rehire
+        watchers:
+          type:
+          - array
+          - 'null'
+          description: Watchers
+          items:
+            type: string
+        updatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp of when the offer was last updated
+        salaryAmount:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Base salary amount
+        shiftAllowance:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Shift allowance amount
+        stockOptionsAmount:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Stock options amount
+        totalCompensation:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Total compensation amount
+        createdBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User email who created the offer
+        basePayFrequency:
+          type:
+          - string
+          - 'null'
+          description: Base pay frequency
+        candidateFullName:
+          type:
+          - string
+          - 'null'
+          description: Candidate full name
+        joiningBonus:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Joining bonus amount
+        stockOptionsPercentageVesting:
+          type:
+          - string
+          - 'null'
+          description: Stock options vesting percentage
+        positionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: job id
+        stockVestingStartDate:
+          type:
+          - string
+          - 'null'
+          description: Stock vesting start date
+        applicationId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: application id
+    OfferCreateSchema:
+      type: object
+      properties:
+        positionId:
+          type: integer
+          format: int32
+          writeOnly: true
+          description: job id. Accepts an integer or a numeric string.
+        applicationId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          writeOnly: true
+          description: application id to link the offer to. If omitted, the candidate's latest application to the position is used.
+        profileId:
+          type: string
+          writeOnly: true
+          description: unique identifier for profile. Accepts the numeric profile id as a string or an encoded profile id; resolved to the numeric id OfferSchema returns as profileId.
+      required:
+      - positionId
+      - profileId
+    OfferAtsDocumentCollection:
+      type: object
+      properties:
+        collectionType:
+          type:
+          - string
+          - 'null'
+          description: Type of the document collection
+        signatureProvider:
+          type:
+          - string
+          - 'null'
+          description: Signature provider for the collection
+        documents:
+          description: Documents in the collection
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/OfferAtsDocument'
+        updatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Last updated timestamp

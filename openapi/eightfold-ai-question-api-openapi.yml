@@ -1,0 +1,203 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Question API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Question
+paths:
+  /api/v2/question/template/{templateId}:
+    get:
+      description: Fetch a question template (questions + metadata) for form rendering. Returns the template metadata plus the ordered list of questions in frontend-form shape.
+      operationId: get_question_template_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: QuestionTemplate id
+        in: path
+        name: templateId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestionTemplateSchema'
+          description: OK
+      summary: Get Question Template
+      tags:
+      - Question
+  /api/v2/question/location/options:
+    get:
+      description: State/region options for a given country, scoped to the current tenant. Used to render country-dependent state dropdowns alongside question templates.
+      operationId: list_question_options
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Country to fetch state/region options for
+        in: query
+        name: country
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationOptionSchema'
+          description: OK
+      summary: Get Location Options
+      tags:
+      - Question
+components:
+  schemas:
+    Question:
+      type: object
+      properties:
+        options:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Options list for choice-style questions
+        placeholder:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Placeholder text for the input
+        validations:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Validation rules for the answer
+        questionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Question ID
+        customData:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Question-type-specific config
+        type:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Question input type (e.g. textarea, skill_rating)
+        label:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Question label shown to the user
+        required:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Whether an answer is required
+    LocationOptionSchema:
+      type: object
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Display label for the option
+        value:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Value for the option
+    QuestionTemplateSchema:
+      type: object
+      properties:
+        templateType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Template type
+        questions:
+          readOnly: true
+          description: Ordered list of questions on the form
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Question'
+        formGuide:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Intro/help text for the form
+        displayName:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Template display name
+        templateId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Template ID

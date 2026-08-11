@@ -1,0 +1,64 @@
+openapi: 3.2.0
+info:
+  title: O Auth Users API
+  version: '1.0'
+  x-source-url: https://dash.readme.com/api/v1/api-registry/eb0jwp1fol38uq2p9
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+  description: serves info on the oauth usage of users
+servers:
+- url: //api.eightfold.ai
+tags:
+- name: OAuthUsers
+  description: serves info on the oauth usage of users
+paths:
+  /v1/oauthusers/calendar:
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AuthUserInfo'
+      operationId: get_calendar
+      parameters:
+      - name: X-Fields
+        in: header
+        description: An optional fields mask
+        schema:
+          type: string
+          format: mask
+      tags:
+      - OAuthUsers
+components:
+  schemas:
+    Calendar:
+      properties:
+        connectedEmail:
+          type: string
+        scopes:
+          type: array
+          items:
+            type: string
+      type: object
+    AuthUserInfo:
+      properties:
+        email:
+          type: string
+        fullName:
+          type: string
+        role:
+          type: array
+          items:
+            type: string
+        calendars:
+          type: array
+          items:
+            $ref: '#/components/schemas/Calendar'
+      type: object

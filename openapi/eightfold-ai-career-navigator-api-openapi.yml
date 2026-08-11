@@ -1,0 +1,414 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Career Navigator API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Career Navigator
+paths:
+  /api/v2/careerhub/career-navigator/recommended-paths/{userEmail}:
+    get:
+      description: Returns career navigator recommended career paths
+      operationId: get_career_navigator_recommended_paths_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: User Email
+        in: path
+        name: userEmail
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CareerNavigatorSearchResponseSchema'
+          description: OK
+      summary: Search Career Paths
+      tags:
+      - Career Navigator
+  /api/v2/careerhub/career-navigator/recommended-courses/{userEmail}:
+    get:
+      description: Returns paginated list of recommended courses for a role in career navigator
+      operationId: list_career_navigator_recommended_courses
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: User Email
+        in: path
+        name: userEmail
+        required: true
+        schema:
+          type: string
+      - description: Role ID
+        in: query
+        name: roleId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/CareerNavigatorRecommendedCourseSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List Recommended Courses
+      tags:
+      - Career Navigator
+components:
+  schemas:
+    CareerNavigatorRecommendedCourseSchema:
+      type: object
+      properties:
+        imageUrl:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Image url of course
+        isCompleted:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Is the course completed
+        missingSkills:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Missing Skills user will learm from the course
+          items:
+            type: string
+        courseSkills:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Skills user will learn from the course
+          items:
+            type: string
+        duration:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: Duration of the course in hour
+        provider:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: A provider of the course
+        exploreCourseUrl:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Explore course url
+        courseType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Course type
+        courseUrl:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: A link to the course
+        description:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Description of course
+        title:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: A title of the course
+    CareerNavigatorPath:
+      type: object
+      properties:
+        pathHighlights:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Highlights of the career path
+          items:
+            type: string
+        roleList:
+          readOnly: true
+          description: List of roles in the career path
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CareerNavigatorRole'
+      required:
+      - pathHighlights
+      - roleList
+    CareerNavigatorSearchResponseSchema:
+      type: object
+      properties:
+        careerPaths:
+          readOnly: true
+          description: List of career paths
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CareerNavigatorPath'
+        userAdditionalData:
+          readOnly: true
+          description: User additional data
+          allOf:
+          - $ref: '#/components/schemas/CareerNavigatorUserAdditionalData'
+      required:
+      - careerPaths
+      - userAdditionalData
+    CareerNavigatorSkillData:
+      type: object
+      properties:
+        requiredSkills:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Skills marked as required in talent design for the role
+          items:
+            type: string
+        roleSkills:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Skills defined in talent design for the role
+          items:
+            type: string
+        matchingSkills:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Profile skills expanded with synonyms from skills engine, matching role skills
+          items:
+            type: string
+        matchingRequiredSkills:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Matching required skills for the role
+          items:
+            type: string
+    CareerNavigatorUserAdditionalData:
+      type: object
+      properties:
+        currentRole:
+          readOnly: true
+          description: Current role
+          allOf:
+          - $ref: '#/components/schemas/CareerNavigatorRole'
+        currentTenure:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Tenure in current role, fallsback to company tenure
+      required:
+      - currentRole
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+    CareerNavigatorAssociatedEmployee:
+      type: object
+      properties:
+        currentTitle:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Current title of the employee
+        imageUrl:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: URL for the avatar of the employee
+        encId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Encoded profile id of the employee
+        name:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Name of the employee
+    CareerNavigatorRoleEmployee:
+      type: object
+      properties:
+        associatedEmployeesCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Number of associated employees for the role
+        associatedEmployeesProfiles:
+          readOnly: true
+          description: Associated employees profiles limited to 10
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CareerNavigatorAssociatedEmployee'
+    CareerNavigatorRole:
+      type: object
+      properties:
+        entityId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Unique identifier for the role
+        associatedEmployeesData:
+          readOnly: true
+          description: Associated employees data
+          allOf:
+          - $ref: '#/components/schemas/CareerNavigatorRoleEmployee'
+        isCareerInterest:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: It indicates if the role is added as career interest
+        encEntityId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Hashids-encoded role id (matches `Role.get_encoded_employee_role_id()`); use this when constructing role-detail URLs.
+        highlights:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Highlights of the role
+          items:
+            type: string
+        recommendedPositionsCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Number of recommended positions for the role
+        title:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Title of the role
+        skillData:
+          readOnly: true
+          description: Skill data
+          allOf:
+          - $ref: '#/components/schemas/CareerNavigatorSkillData'
+      required:
+      - entityId
+      - title

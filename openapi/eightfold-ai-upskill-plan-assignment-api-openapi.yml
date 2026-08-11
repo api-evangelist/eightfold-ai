@@ -1,0 +1,384 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Upskill Plan Assignment API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Upskill Plan Assignment
+paths:
+  /api/v2/careerhub/{profileEncId}/upskill-plan-assignment:
+    get:
+      description: List upskilling plan assignments for the given assignee profile.
+      operationId: list_careerhub_upskill_plan_assignment
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Encoded profile id of the assignee
+        in: path
+        name: profileEncId
+        required: true
+        schema:
+          type: string
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpskillingPlanAssignmentSchema'
+          description: OK
+      summary: List Upskill Plan Assignments
+      tags:
+      - Upskill Plan Assignment
+  /api/v2/careerhub/{profileEncId}/upskill-plan-assignment/{planId}:
+    get:
+      description: Fetch an upskilling plan assignment by `(profileEncId, planId)`.
+      operationId: get_careerhub_upskill_plan_assignment_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Encoded profile id of the assignee
+        in: path
+        name: profileEncId
+        required: true
+        schema:
+          type: string
+      - description: Assignment id (profile_data primary key) — same as the response's `id` field on list
+        in: path
+        name: planId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpskillingPlanAssignmentSchema'
+          description: OK
+      summary: Get Upskill Plan Assignment
+      tags:
+      - Upskill Plan Assignment
+components:
+  schemas:
+    UpskillingPlanCalibrationData:
+      type: object
+      properties:
+        jobFunctions:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Job functions
+          items:
+            type: string
+        associatedRoleId:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Associated role ids
+          items:
+            type: string
+        skills:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Skills associated with this plan
+          items:
+            type: string
+        locations:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Locations
+          items:
+            type: string
+        businessUnits:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Business units
+          items:
+            type: string
+    UpskillingPlanAssignmentSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Created timestamp (epoch seconds)
+        id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Assignment id (profile_data primary key)
+        planStatus:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: invited | in_progress | completed | archived
+        entityStatuses:
+          readOnly: true
+          description: Per-entity progress
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UpskillingPlanEntityStatus'
+        name:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Plan display name
+        userId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Plan owner user id
+        completionPercentage:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Completion percentage 0-100 (derived)
+        metadata:
+          readOnly: true
+          description: Plan metadata (tasks, sections, visibility, etc.)
+          allOf:
+          - $ref: '#/components/schemas/UpskillingPlanMetadata'
+        profileId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Assignee profile id
+        startDate:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Start date (epoch seconds)
+        lastProgressTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Last progress timestamp (epoch seconds, system-set)
+        calibrationData:
+          readOnly: true
+          description: Plan calibration data (skills, associated roles)
+          allOf:
+          - $ref: '#/components/schemas/UpskillingPlanCalibrationData'
+        groupId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Tenant group id
+        updatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Updated timestamp (epoch seconds)
+        lastNotifiedTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Last notification timestamp (epoch seconds, system-set)
+        targetDate:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Target completion date (epoch seconds)
+        parentPlanId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Template plan id this assignment was cloned from
+      required:
+      - name
+    UpskillingPlanMetadata:
+      type: object
+      properties:
+        planSubtype:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: 'Plan subtype: general | role | skill'
+        visibility:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: public | private
+        tasks:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Tasks keyed by entity_id
+        planDurationDays:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Plan duration in days
+        planSections:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Ordered plan sections (entity_type + entity_data)
+          items:
+            type: object
+        planSectionsLayout:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Plan sections layout metadata
+          items:
+            type: object
+        planType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: 'Plan type: profile | role'
+        permissions:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Per-entity permission rows
+          items:
+            type: object
+        lastUpdateProfileId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Profile id of last editor
+        tPublish:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Publish timestamp (epoch seconds)
+        description:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Plan description
+    UpskillingPlanEntityStatus:
+      type: object
+      properties:
+        completed:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Entity ids completed
+          items:
+            type: integer
+            format: int32
+        notStarted:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Entity ids not started
+          items:
+            type: integer
+            format: int32
+        inProgress:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Entity ids in progress
+          items:
+            type: integer
+            format: int32
+        entityType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: 'Entity type: task | course | project'
