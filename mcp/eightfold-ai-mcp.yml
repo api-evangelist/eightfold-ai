@@ -2,45 +2,112 @@ generated: '2026-07-19'
 method: derived
 status: candidate
 source: https://apidocs.eightfold.ai/llms.txt
-notes: >-
-  No official hosted/remote Eightfold MCP server was found. This is a CANDIDATE tool
-  surface derived from documented Eightfold API v2 operations (one tool per operation),
-  as a starting point for an MCP wrapper. Every tool maps to a real documented operationId
-  from apidocs.eightfold.ai/reference. Not an authoritative Eightfold product claim.
+notes: No official hosted/remote Eightfold MCP server was found. This is a CANDIDATE tool surface derived
+  from documented Eightfold API v2 operations (one tool per operation), as a starting point for an MCP
+  wrapper. Every tool maps to a real documented operationId from apidocs.eightfold.ai/reference. Not an
+  authoritative Eightfold product claim.
 server:
   name: eightfold
   transport: http
   base_url: https://apiv2.eightfold.ai/api/v2/
   auth: OAuth 2.0 password-grant bearer token (see authentication artifact)
 tools:
-- {name: get_profile, description: Get a candidate/employee profile by id, source_operation: 'reference#get_profile_by_id'}
-- {name: list_profiles, description: Search profiles by query parameters, source_operation: 'reference#list_profile'}
-- {name: create_profile, description: Create a profile, source_operation: 'reference#create_profile'}
-- {name: patch_profile, description: Partially update a profile, source_operation: 'reference#patch_profile'}
-- {name: batch_fetch_profiles, description: Batch fetch up to 100 profiles by id, source_operation: 'reference#profile_batch_fetch'}
-- {name: list_matched_positions_for_profile, description: List matching positions for a profile, source_operation: 'reference#list_position_matched'}
-- {name: get_position, description: Get a position by id, source_operation: 'reference#get_position_by_id'}
-- {name: list_positions, description: Search positions, source_operation: 'reference#list_position'}
-- {name: create_position, description: Create a position, source_operation: 'reference#create_position'}
-- {name: list_matched_candidates_for_position, description: List matching candidates for a position, source_operation: 'reference#list_profile_matched_candidates'}
-- {name: list_applicants, description: List applicants for a position, source_operation: 'reference#list_profile_applicants'}
-- {name: upsert_application_stage, description: Create or advance an application stage, source_operation: 'reference#create_profile_stages'}
-- {name: get_ats_position, description: Get an ATS position by id, source_operation: 'reference#get_ats_position_by_id'}
-- {name: list_ats_positions, description: Search ATS positions, source_operation: 'reference#list_ats_position'}
-- {name: get_ats_candidate, description: Get an ATS candidate by id, source_operation: 'reference#get_ats_candidate_by_id'}
-- {name: get_demand, description: Get a demand by id, source_operation: 'reference#get_demand_by_id'}
-- {name: list_demands, description: Search demands, source_operation: 'reference#list_demand'}
-- {name: list_matched_demands_for_employee, description: List matching demands for an employee, source_operation: 'reference#list_employee_matched_demands'}
-- {name: get_employee, description: Get an employee by profile id, source_operation: 'reference#get_employee_by_id'}
-- {name: list_employees, description: List employee profiles, source_operation: 'reference#list_employee'}
-- {name: list_recommended_mentors, description: Recommended mentors for an employee, source_operation: 'reference#list_employee_recommended_mentors'}
-- {name: get_succession_plan, description: Get a succession plan by position id, source_operation: 'reference#get_succession_plan_by_id'}
-- {name: list_recommended_successors, description: Recommended successors for a plan, source_operation: 'reference#list_succession_plan_recommended_successors'}
-- {name: search_career_paths, description: Career-navigator recommended career paths, source_operation: 'reference#get_career_navigator_recommended_paths_by_id'}
-- {name: get_skill_gap_analysis, description: Skill gap analysis for a role, source_operation: 'reference#list_careerhub_skill_gap_analysis'}
-- {name: create_talent_traits, description: Query talent traits with filters, source_operation: 'reference#create_insights_talent_traits'}
-- {name: get_employee_diversity_insights, description: Org employee diversity insights, source_operation: 'reference#list_insights_employees'}
-- {name: list_entity_changelogs, description: List modified entity ids in a time window, source_operation: 'reference#list_entity_changelog_changelog'}
-- {name: get_async_api_status, description: Poll async transaction status, source_operation: 'reference#get_async_api_status_transactions_by_id'}
-- {name: get_offer, description: Get an offer by id, source_operation: 'reference#get_offer_by_id'}
-- {name: upsert_offer_by_ats_ids, description: Idempotent upsert of an offer by ATS ids, source_operation: 'reference#patch_offer_ats_positions'}
+- name: get_profile
+  description: Get a candidate/employee profile by id
+  source_operation: reference#get_profile_by_id
+- name: list_profiles
+  description: Search profiles by query parameters
+  source_operation: reference#list_profile
+- name: create_profile
+  description: Create a profile
+  source_operation: reference#create_profile
+- name: patch_profile
+  description: Partially update a profile
+  source_operation: reference#patch_profile
+- name: batch_fetch_profiles
+  description: Batch fetch up to 100 profiles by id
+  source_operation: reference#profile_batch_fetch
+- name: list_matched_positions_for_profile
+  description: List matching positions for a profile
+  source_operation: reference#list_position_matched
+- name: get_position
+  description: Get a position by id
+  source_operation: reference#get_position_by_id
+- name: list_positions
+  description: Search positions
+  source_operation: reference#list_position
+- name: create_position
+  description: Create a position
+  source_operation: reference#create_position
+- name: list_matched_candidates_for_position
+  description: List matching candidates for a position
+  source_operation: reference#list_profile_matched_candidates
+- name: list_applicants
+  description: List applicants for a position
+  source_operation: reference#list_profile_applicants
+- name: upsert_application_stage
+  description: Create or advance an application stage
+  source_operation: reference#create_profile_stages
+- name: get_ats_position
+  description: Get an ATS position by id
+  source_operation: reference#get_ats_position_by_id
+- name: list_ats_positions
+  description: Search ATS positions
+  source_operation: reference#list_ats_position
+- name: get_ats_candidate
+  description: Get an ATS candidate by id
+  source_operation: reference#get_ats_candidate_by_id
+- name: get_demand
+  description: Get a demand by id
+  source_operation: reference#get_demand_by_id
+- name: list_demands
+  description: Search demands
+  source_operation: reference#list_demand
+- name: list_matched_demands_for_employee
+  description: List matching demands for an employee
+  source_operation: reference#list_employee_matched_demands
+- name: get_employee
+  description: Get an employee by profile id
+  source_operation: reference#get_employee_by_id
+- name: list_employees
+  description: List employee profiles
+  source_operation: reference#list_employee
+- name: list_recommended_mentors
+  description: Recommended mentors for an employee
+  source_operation: reference#list_employee_recommended_mentors
+- name: get_succession_plan
+  description: Get a succession plan by position id
+  source_operation: reference#get_succession_plan_by_id
+- name: list_recommended_successors
+  description: Recommended successors for a plan
+  source_operation: reference#list_succession_plan_recommended_successors
+- name: search_career_paths
+  description: Career-navigator recommended career paths
+  source_operation: reference#get_career_navigator_recommended_paths_by_id
+- name: get_skill_gap_analysis
+  description: Skill gap analysis for a role
+  source_operation: reference#list_careerhub_skill_gap_analysis
+- name: create_talent_traits
+  description: Query talent traits with filters
+  source_operation: reference#create_insights_talent_traits
+- name: get_employee_diversity_insights
+  description: Org employee diversity insights
+  source_operation: reference#list_insights_employees
+- name: list_entity_changelogs
+  description: List modified entity ids in a time window
+  source_operation: reference#list_entity_changelog_changelog
+- name: get_async_api_status
+  description: Poll async transaction status
+  source_operation: reference#get_async_api_status_transactions_by_id
+- name: get_offer
+  description: Get an offer by id
+  source_operation: reference#get_offer_by_id
+- name: upsert_offer_by_ats_ids
+  description: Idempotent upsert of an offer by ATS ids
+  source_operation: reference#patch_offer_ats_positions
+deployment:
+  mode: none
+  verified: derived
+  tools: 31
+  checked: '2026-08-12'
+  source: catalog MCP census
