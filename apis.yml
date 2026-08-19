@@ -31,7 +31,7 @@ tags:
 - Agentic AI
 created: '2026-05-23'
 modified: '2026-08-08'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: eightfold-ai:talent-intelligence
   name: Eightfold Talent Intelligence Platform
