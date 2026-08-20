@@ -135,6 +135,10 @@ apis:
   humanURL: https://eightfold.ai/products/
   baseURL: https://app.eightfold.ai
   tags:
+  - Low-Code
+  - Builder
+  - Platform
+  tags_raw:
   - Low Code
   - Builder
   - Platform
@@ -148,6 +152,10 @@ apis:
   humanURL: https://app.eightfold.ai/app_marketplace/
   baseURL: https://app.eightfold.ai/app_marketplace/
   tags:
+  - Marketplace
+  - Application
+  - Integration
+  tags_raw:
   - Marketplace
   - Apps
   - Integrations
