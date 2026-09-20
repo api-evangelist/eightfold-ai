@@ -1,0 +1,719 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service HRIS Employee API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: HRIS Employee
+paths:
+  /api/v2/core/hris-systems/{systemId}/hris-employees/{uniqueIdentifier}:
+    get:
+      description: Given an email id or employee id of an employee, it returns the HRIS employee information
+      operationId: get_HRIS_employee_hris_employees_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: HRIS system ID. Use default if you have only one system and dont want to use system-Id.
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+      - description: Employee Email ID or unique Id
+        in: path
+        name: uniqueIdentifier
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HRISEmployeeSchema'
+          description: OK
+      summary: Get HRIS Employee
+      tags:
+      - HRIS Employee
+  /api/v2/core/hris-systems/{systemId}/hris-employees:
+    get:
+      description: List call that returns all the employee profiles.
+      operationId: list_HRIS_employee_hris_employees
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: HRIS system ID. Use default if you have only one system and dont want to use system-Id.
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Filter query using predefined filter arguments documented [here](https://apidocs.eightfold.ai/v2.0/docs#the-filterquery-parameter)
+        in: query
+        name: filterQuery
+        schema:
+          type: string
+      - description: Any wildcard text to search in position
+        in: query
+        name: query
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HRISEmployeeSchema'
+          description: OK
+      summary: List HRIS Employees
+      tags:
+      - HRIS Employee
+components:
+  schemas:
+    UserGroup:
+      type: object
+      properties:
+        userGroupId:
+          type:
+          - string
+          - 'null'
+          format: email
+          description: ''
+    EmployeeSuccessor:
+      type: object
+      properties:
+        employeeDetails:
+          description: The employee details
+          allOf:
+          - $ref: '#/components/schemas/User'
+        readiness:
+          type:
+          - string
+          - 'null'
+          description: The readiness of the successor
+        rank:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The rank
+        comments:
+          type:
+          - string
+          - 'null'
+          description: The comments
+    AdditionalManager:
+      type: object
+      properties:
+        capacityManagerEmail:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The email of the capacity manager
+        employeeId:
+          type:
+          - string
+          - 'null'
+          description: Employee id of the additional manager in the HRIS system
+        type:
+          type:
+          - string
+          - 'null'
+          description: Type of the additional manager (e.g. capacity)
+        email:
+          type:
+          - string
+          - 'null'
+          description: Email of the additional manager
+    Pay:
+      type: object
+      properties:
+        frequency:
+          type:
+          - string
+          - 'null'
+          description: The frequency of pay
+        amount:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: The amount of pay
+        currency:
+          type:
+          - string
+          - 'null'
+          description: The currency of pay in ISO format
+    HRISEmployeeSchema:
+      type: object
+      properties:
+        locationCountry:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The location country of the employee
+        bonusAmount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: The amount of the bonus of the employee
+        managerEmail:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The email of the manager
+        positionCriticality:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: The criticality of the position of the employee
+          items:
+            type: string
+        bonusAmountCurrency:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The currency of the bonus given to the employee
+        location:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The location of the employee
+        badges:
+          readOnly: true
+          description: The badges of the employee
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EmployeeBadge'
+        firstName:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: First Name of employee
+        mobility:
+          readOnly: true
+          description: The mobility of the employee
+          allOf:
+          - $ref: '#/components/schemas/EmployeeMobility'
+        bu:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The Business unit of the employee
+        email:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: List of Emails of the employee comma seperated
+        bonusAmountFrequency:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The frequency of the bonus pay to the employee
+        basePayCurrency:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The currency of the base pay of the employee
+        basePay:
+          readOnly: true
+          description: The base pay of the employee
+          allOf:
+          - $ref: '#/components/schemas/Pay'
+        level:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The job level of the employee
+        userId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The userId of the employee
+        lastReviewRating:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The last review rating of the employee
+        additionalManagers:
+          readOnly: true
+          description: The additional managers of the employee
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AdditionalManager'
+        customInfo:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: The custom info captured for the employee by custom fields
+        tenureYears:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: The total tenure years of the employee
+        systemId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The system id of the HRIS system in EF
+        employeeCriticality:
+          readOnly: true
+          description: The criticality information of the employee
+          allOf:
+          - $ref: '#/components/schemas/EmployeeCriticality'
+        companyName:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The company name of the employee
+        phone:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The phone number of the employee
+        performanceRatings:
+          readOnly: true
+          description: The performance rating of the employee
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EmployeePerformanceRating'
+        languages:
+          readOnly: true
+          description: The employee language proficiencies
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EmployeeLanguageProficiency'
+        title:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The title of the employee
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The unique id of the Employee in the HRIS system
+        terminationDate:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The termination date of the employee
+        hiringDate:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The hiring date of the employee
+        managerUserId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The user id of the manager in HRIS system
+        successionPlan:
+          readOnly: true
+          description: The succession plan of the employee
+          allOf:
+          - $ref: '#/components/schemas/EmployeeSuccessionPlan'
+        bonus:
+          readOnly: true
+          description: The bonus given to the employee
+          allOf:
+          - $ref: '#/components/schemas/Pay'
+        lastActivityTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: The last activity timestamp
+        managerFullname:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The full name of the manager
+        jobCode:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The job code of the employee
+        tenureCurrentRoleYears:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: The no of years the employee is in current role
+        basePayFrequency:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The frequency of the base pay of the employee
+        lob:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The lob of the employee
+        roleChangeDate:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The last role change date of the employee
+        role:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The role of the employee
+        eligibleForTransfer:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Is the employee eligible for transfer or not
+        lastName:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Last Name of employee
+    EmployeeCriticality:
+      type: object
+      properties:
+        riskOfLoss:
+          type:
+          - string
+          - 'null'
+          description: The risk of looking the employee
+        impactOfLoss:
+          type:
+          - string
+          - 'null'
+          description: The impact of loss of the employee
+    EmployeeMobility:
+      type: object
+      properties:
+        comments:
+          type:
+          - string
+          - 'null'
+          description: The comments
+        travelPercentageMin:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: The min travel percentage
+        relocationLocations:
+          type:
+          - array
+          - 'null'
+          description: The relocation locations
+          items:
+            type: string
+        relocation:
+          type:
+          - string
+          - 'null'
+          description: The relocation information
+        travel:
+          type:
+          - string
+          - 'null'
+          description: The travel detail
+        travelPercentageMax:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: The max travel percentage
+    EmployeeBadge:
+      type: object
+      properties:
+        badgeId:
+          type:
+          - string
+          - 'null'
+          description: The id of the badge
+        userId:
+          type:
+          - string
+          - 'null'
+          description: The user id the badge belongs to.
+        creator:
+          type:
+          - string
+          - 'null'
+          description: The creator of the badge
+        photoUrl:
+          type:
+          - string
+          - 'null'
+          description: The photo url
+        lastModifiedTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The last modified timestamp of the badge
+        photoContent:
+          description: The photo content
+          allOf:
+          - $ref: '#/components/schemas/PhotoContent'
+        comment:
+          type:
+          - string
+          - 'null'
+          description: comment on the badge
+        title:
+          type:
+          - string
+          - 'null'
+          description: The title of the badge
+    User:
+      type: object
+      properties:
+        atsUserGroups:
+          description: The user groups
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UserGroup'
+        name:
+          type:
+          - string
+          - 'null'
+          description: The name of the user
+        atsRoles:
+          type:
+          - array
+          - 'null'
+          description: The ats roles
+          items:
+            type: string
+        userId:
+          type:
+          - string
+          - 'null'
+          description: The user id of the user
+        firstName:
+          type:
+          - string
+          - 'null'
+          description: The first name of the user
+        lastName:
+          type:
+          - string
+          - 'null'
+          description: The last name of the user
+        email:
+          type:
+          - string
+          - 'null'
+          format: email
+          description: The email of the user
+    EmployeeLanguageProficiency:
+      type: object
+      properties:
+        read:
+          type:
+          - string
+          - 'null'
+          description: The reading proficiency
+        speak:
+          type:
+          - string
+          - 'null'
+          description: The speaking proficiency
+        overall:
+          type:
+          - string
+          - 'null'
+          description: The overall proficiency
+        language:
+          type:
+          - string
+          - 'null'
+          description: The language string
+        write:
+          type:
+          - string
+          - 'null'
+          description: The writing proficiency
+    EmployeeSuccessionPlan:
+      type: object
+      properties:
+        comments:
+          type:
+          - string
+          - 'null'
+          description: The comments
+        planDate:
+          type:
+          - string
+          - 'null'
+          description: The date of the plan
+        planName:
+          type:
+          - string
+          - 'null'
+          description: The name of the plan
+        successors:
+          description: The successors of an employee
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EmployeeSuccessor'
+    PhotoContent:
+      type: object
+      properties:
+        extension:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The extension of the photo
+        content:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The actual string content
+        isBase64:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Is the content base 64 encoded
+    EmployeePerformanceRating:
+      type: object
+      properties:
+        periodEndDate:
+          type:
+          - string
+          - 'null'
+          description: The performance period end date
+        rating:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: The rating given
+        reviewedBy:
+          description: The reviewer info
+          allOf:
+          - $ref: '#/components/schemas/User'
+        ratingLabel:
+          type:
+          - string
+          - 'null'
+          description: The rating level
+        reviewComments:
+          type:
+          - string
+          - 'null'
+          description: The review comments
+        periodStartDate:
+          type:
+          - string
+          - 'null'
+          description: The performance period start date
+        reviewType:
+          type:
+          - string
+          - 'null'
+          description: The review type

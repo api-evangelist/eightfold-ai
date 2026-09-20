@@ -1,0 +1,665 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Ext Demand API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Ext Demand
+paths:
+  /api/v2/resource_management/ext-systems/resourcing/ext-demands/{extDemandId}:
+    get:
+      description: Given a external demand id, it returns all attributes of the external demand
+      operationId: get_external_demand_ext_demands_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: External Demand ID
+        in: path
+        name: extDemandId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtDemandDataSchema'
+          description: OK
+      summary: Get External Demand
+      tags:
+      - Ext Demand
+    patch:
+      description: 'Patches external demand given its id. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.'
+      operationId: patch_external_demand_ext_demands
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: External Demand ID
+        in: path
+        name: extDemandId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtDemandDataSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtDemandDataSchema'
+          description: OK
+      summary: Patch External Demand
+      tags:
+      - Ext Demand
+    put:
+      description: Updates external demand given its id
+      operationId: update_external_demand_ext_demands
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: External Demand ID
+        in: path
+        name: extDemandId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtDemandDataSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtDemandDataSchema'
+          description: OK
+      summary: Update External Demand
+      tags:
+      - Ext Demand
+    delete:
+      description: Deletes external demand given its id.
+      operationId: delete_external_demand_ext_demands
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: External Demand ID
+        in: path
+        name: extDemandId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtDemandDataSchema'
+          description: OK
+      summary: Delete External Demand
+      tags:
+      - Ext Demand
+  /api/v2/resource_management/ext-systems/resourcing/ext-demands:
+    post:
+      description: Create a new External Demand
+      operationId: create_external_demand_ext_demands
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtDemandDataSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtDemandDataSchema'
+          description: OK
+      summary: Create External Demand
+      tags:
+      - Ext Demand
+    get:
+      description: Search external demands using query parameters and get the complete external demand objects
+      operationId: list_external_demand_ext_demands
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Filter query using predefined filter arguments documented [here](https://apidocs.eightfold.ai/v2.0/docs#the-filterquery-parameter)
+        in: query
+        name: filterQuery
+        schema:
+          type: string
+      - description: any wildcard text to search in external demand
+        in: query
+        name: query
+        schema:
+          type: string
+      - description: Include archived demands
+        in: query
+        name: includeArchived
+        schema:
+          type: boolean
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/ExtDemandDataSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List External Demands
+      tags:
+      - Ext Demand
+  /api/v2/resource_management/ext-systems/resourcing/ext-demands/{extDemandId}/employee-create-or-advance-application-stage:
+    post:
+      description: 'Create or advance application stage of an employee using their employee ID '
+      operationId: create_external_demand_employee_create_or_advance_application_stage
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: External Demand ID
+        in: path
+        name: extDemandId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtDemandEmployeeCreateOrAdvanceApplicationStageSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessMessageSchema'
+          description: OK
+      summary: Update External Demand Employee Application
+      tags:
+      - Ext Demand
+components:
+  schemas:
+    ExtDemandEmployeeCreateOrAdvanceApplicationStageSchema:
+      type: object
+      properties:
+        isReject:
+          type:
+          - boolean
+          - 'null'
+          description: Reject application
+        displayReason:
+          type:
+          - string
+          - 'null'
+          description: Stage Change Reason to Display
+        actionUserEmail:
+          type:
+          - string
+          - 'null'
+          description: Action user email
+        reason:
+          type:
+          - string
+          - 'null'
+          description: Reason
+        customInfo:
+          type:
+          - object
+          - 'null'
+          description: Custom info
+        employeeId:
+          type:
+          - string
+          - 'null'
+          description: Employee ID
+        newStage:
+          type:
+          - string
+          - 'null'
+          description: New Stage
+        comment:
+          type:
+          - string
+          - 'null'
+          description: Comment
+      required:
+      - actionUserEmail
+      - employeeId
+      - newStage
+    SuccessMessageSchema:
+      type: object
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+    ExtDemandDataSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: creation timestamp in epoch format
+        locationCountry:
+          type:
+          - string
+          - 'null'
+          description: location country
+        workLocationOption:
+          type:
+          - string
+          - 'null'
+          description: Indicates the option for working location e.g. onsite, remote_global, remote_local, hybrid
+        skillDetails:
+          description: skill details of the demand
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ATSSkillDetail'
+        demandManager:
+          description: Demand Manager
+          allOf:
+          - $ref: '#/components/schemas/PersonSchema'
+        skills:
+          type:
+          - array
+          - 'null'
+          description: skills
+          items:
+            type: string
+        locationCity:
+          type:
+          - string
+          - 'null'
+          description: location city
+        lastUpdated:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: last modified date time in epoch format
+        demandBand:
+          type:
+          - string
+          - 'null'
+          description: Demand Band
+        rmUserGroups:
+          description: User groups associated with the demand
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RmUserGroup'
+        openings:
+          description: demand openings data
+          allOf:
+          - $ref: '#/components/schemas/ExtDemandOpeningsData'
+        publishSettings:
+          readOnly: true
+          description: Publish mode and the user groups the demand is published to. Only applicable when RM user groups are enabled.
+          allOf:
+          - $ref: '#/components/schemas/DemandPublishSettingsSchema'
+        followers:
+          description: all the followers of the demand such as resource manager etc.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PersonSchema'
+        restrictAccess:
+          type:
+          - boolean
+          - 'null'
+          description: restrict access
+        tags:
+          description: Tags associated with the demand
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtEntityTag'
+        title:
+          type:
+          - string
+          - 'null'
+          description: demand title
+        demandOrgUnits:
+          description: demand org units data
+          allOf:
+          - $ref: '#/components/schemas/ExtDemandOrgUnitsData'
+        demandId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Internal demand ID
+        locationFlexibility:
+          type:
+          - string
+          - 'null'
+          description: Indicates the flexibility on location e.g. not_flexible, flexible_within_country, flexible_global
+        extDemandId:
+          type:
+          - string
+          - 'null'
+          description: demand id in the external system
+        maxExperience:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Maximum experience in years
+        customFields:
+          type:
+          - object
+          - 'null'
+          description: custom fields
+        resourceManager:
+          description: Resource Manager
+          allOf:
+          - $ref: '#/components/schemas/PersonSchema'
+        workflowTemplateId:
+          type:
+          - string
+          - 'null'
+          description: Indicates which workflow this demand belongs to
+        displayDemandId:
+          type:
+          - string
+          - 'null'
+          description: display demand id
+        open:
+          type:
+          - boolean
+          - 'null'
+          description: 'status of the demand: open or not'
+        minExperience:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Minimum experience in years
+        requiredSkills:
+          type:
+          - array
+          - 'null'
+          description: required skills
+          items:
+            type: string
+        locationState:
+          type:
+          - string
+          - 'null'
+          description: location state
+        demandCode:
+          type:
+          - string
+          - 'null'
+          description: Demand Code
+        locations:
+          type:
+          - array
+          - 'null'
+          description: locations
+          items:
+            type: string
+        description:
+          type:
+          - string
+          - 'null'
+          description: demand description
+      required:
+      - createdAt
+      - extDemandId
+      - lastUpdated
+      - open
+      - title
+    ExtDemandOrgUnitsData:
+      type: object
+      properties:
+        programId:
+          type:
+          - string
+          - 'null'
+          description: Program id
+        projectId:
+          type:
+          - string
+          - 'null'
+          description: Project id
+      required:
+      - projectId
+    PersonSchema:
+      type: object
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+          description: email
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name
+      required:
+      - name
+    ATSSkillGroup:
+      type: object
+      properties:
+        proficiency:
+          type:
+          - string
+          - 'null'
+          description: Proficiency
+        skillGroup:
+          type:
+          - string
+          - 'null'
+          description: Skill Group
+    DemandPublishSettingsSchema:
+      type: object
+      properties:
+        publishMode:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Publish mode (local, custom, local_and_custom)
+        publishedToUserGroups:
+          readOnly: true
+          description: User groups the demand is published to
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RmUserGroup'
+    RmUserGroup:
+      type: object
+      properties:
+        userGroupId:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier for the user group
+    ExtDemandOpeningsData:
+      type: object
+      properties:
+        numOpenings:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of openings
+        numOpeningsFilled:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of openings filled
+      required:
+      - numOpenings
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+    ExtEntityTag:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - user
+          - system
+          description: Type of the tag (user/system)
+        name:
+          type: string
+          description: Name of the tag
+      required:
+      - name
+      - type
+    ATSSkillDetail:
+      type: object
+      properties:
+        skillGroups:
+          description: Skill groups
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ATSSkillGroup'
+        proficiency:
+          type:
+          - string
+          - 'null'
+          description: 'Proficiency. Note: proficiency must be specified only for each skill group when skill groups are present'
+        evaluationTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Evaluation timestamp
+        dataSource:
+          type:
+          - string
+          - 'null'
+          description: Data source of the skill
+        skill:
+          type:
+          - string
+          - 'null'
+          description: Skill

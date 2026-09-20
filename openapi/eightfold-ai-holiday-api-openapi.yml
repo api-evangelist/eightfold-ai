@@ -1,0 +1,405 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Holiday API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Holiday
+paths:
+  /api/v2/resource_management/holidays/{holidayId}:
+    get:
+      description: Given a Holiday id, it returns all attributes of the Holiday (Resource Management Entity)
+      operationId: get_holiday_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ID of a holiday in Eightfold
+        in: path
+        name: holidayId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HolidaySchema'
+          description: OK
+      summary: Get Holiday
+      tags:
+      - Holiday
+    patch:
+      description: 'Patches a holiday given its id. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.'
+      operationId: patch_holiday
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold Holiday ID
+        in: path
+        name: holidayId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HolidaySchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HolidaySchema'
+          description: OK
+      summary: Patch Holiday
+      tags:
+      - Holiday
+    put:
+      description: Updates a holiday given its id.
+      operationId: update_holiday
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold Holiday ID
+        in: path
+        name: holidayId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HolidaySchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HolidaySchema'
+          description: OK
+      summary: Update Holiday
+      tags:
+      - Holiday
+    delete:
+      description: Deletes a holiday given its id.
+      operationId: delete_holiday
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold Holiday ID
+        in: path
+        name: holidayId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HolidaySchema'
+          description: OK
+      summary: Delete Holiday
+      tags:
+      - Holiday
+  /api/v2/resource_management/holidays:
+    post:
+      description: Create a new Holiday
+      operationId: create_holiday
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HolidaySchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HolidaySchema'
+          description: OK
+      summary: Create Holiday
+      tags:
+      - Holiday
+    get:
+      description: Search holidays using query parameters and get the complete holiday objects.
+      operationId: list_holiday
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: 'Filter on holiday type. Possible values: [''public_holiday'', ''optional_holiday'']'
+        in: query
+        name: holidayType
+        schema:
+          type: string
+      - description: Filter on holiday region
+        in: query
+        name: region
+        schema:
+          type: string
+      - description: The start date of the period for which you want to filter holidays
+        in: query
+        name: startDate
+        schema:
+          type: string
+      - description: The end date of the period for which you want to filter holidays
+        in: query
+        name: endDate
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/HolidaySchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List Holidays
+      tags:
+      - Holiday
+  /api/v2/resource_management/holidays/batch-fetch:
+    post:
+      description: Batch fetch holidays for a given list of holiday ids
+      operationId: holiday_batch_fetch
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchFetchEntityRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/HolidaySchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/BatchFetchMetaSchema'
+                type: object
+          description: OK
+      summary: Batch Fetch Holidays
+      tags:
+      - Holiday
+components:
+  schemas:
+    BatchFetchEntityRequestSchema:
+      type: object
+      properties:
+        entityIds:
+          type: array
+          description: list of entity ids to fetch the entity objects
+          items:
+            type: string
+      required:
+      - entityIds
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+    BatchFetchMetaSchema:
+      type: object
+      properties:
+        missingEntityIds:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of entity ids for which no result was found
+          items:
+            type: string
+    HolidaySchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Created timestamp for the holiday
+        updatedBy:
+          type:
+          - string
+          - 'null'
+          description: User who updated the holiday
+        isArchived:
+          type:
+          - boolean
+          - 'null'
+          description: A flag indicating if holiday is archived
+        holidayDate:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Date of the holiday
+        createdBy:
+          type:
+          - string
+          - 'null'
+          description: User who created the holiday
+        holidayName:
+          type:
+          - string
+          - 'null'
+          description: Name of the holiday
+        archivedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Archived timestamp for the holiday
+        updatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Updated timestamp for the holiday
+        holidayType:
+          type:
+          - string
+          - 'null'
+          enum:
+          - public_holiday
+          - optional_holiday
+          description: Type of the holiday
+        region:
+          type:
+          - string
+          - 'null'
+          description: Region of the holiday
+        holidayId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Holiday id
+      required:
+      - holidayDate
+      - holidayType

@@ -1,0 +1,345 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Course API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Course
+paths:
+  /api/v2/core/courses/{courseId}:
+    get:
+      description: Given a course id of a course, it returns the course object
+      operationId: get_course_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ID of course in Eightfold
+        in: path
+        name: courseId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseSchema'
+          description: OK
+      summary: Get Course
+      tags:
+      - Course
+    delete:
+      description: 'Deletes a specific course given a course id. Note: It may take some time for the newly deleted courses to disappear from LIST call, as there may be indexing delays. You can still use the GET BY ID call right after deletion of course to confirm the deletion of the course.'
+      operationId: delete_course
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ID of a course in Eightfold
+        in: path
+        name: courseId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseSchema'
+          description: OK
+      summary: Delete Course
+      tags:
+      - Course
+    patch:
+      description: 'Given an course id and data that needs to be patched, it patches the course. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.'
+      operationId: patch_course
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: course ID of course
+        in: path
+        name: courseId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseSchema'
+          description: OK
+      summary: Patch Course
+      tags:
+      - Course
+  /api/v2/core/courses:
+    get:
+      description: 'Search courses using query parameters and get the complete course object. recommendedFor feature does not support query addition. Note: It may take some time for the newly deleted courses to disappear from LIST call, as there may be indexing delays. You can still use the GET BY ID call right after deletion of course to confirm the deletion of the course.'
+      operationId: list_course
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Any wildcard text to search in courses
+        in: query
+        name: query
+        schema:
+          type: string
+      - description: Provides recommended courses for a given profileId, this feature does not support query addition.
+        in: query
+        name: recommendedFor
+        schema:
+          type: string
+      - description: This field can be utilized to surface courses with type certificate in course search. By default non certificate type courses are exposed. Use course type value as certificate to filter them out.
+        in: query
+        name: courseType
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/CourseSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List Courses
+      tags:
+      - Course
+    post:
+      description: Does creation for a course
+      operationId: create_course
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseSchema'
+          description: OK
+      summary: Create Course
+      tags:
+      - Course
+components:
+  schemas:
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+    CourseSchema:
+      type: object
+      properties:
+        courseId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ID of the course
+        skills:
+          type:
+          - array
+          - 'null'
+          description: skills related to course
+          items:
+            type: string
+        groupId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Group id of the course
+        durationHours:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Duration hours of course
+        category:
+          type:
+          - string
+          - 'null'
+          description: course category
+        imageUrl:
+          type:
+          - string
+          - 'null'
+          description: image url of course
+        systemId:
+          type:
+          - string
+          - 'null'
+          description: System id for the course
+        courseType:
+          type:
+          - string
+          - 'null'
+          description: course type
+        difficulty:
+          type:
+          - string
+          - 'null'
+          description: Difficulty of course
+        courseUrl:
+          type:
+          - string
+          - 'null'
+          description: url of the course
+        title:
+          type:
+          - string
+          - 'null'
+          description: title of course
+        ratingCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of ratings submitted for the course
+        rating:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Average rating of the course
+        lmsCourseId:
+          type:
+          - string
+          - 'null'
+          description: lms course id
+        language:
+          type:
+          - string
+          - 'null'
+          description: language
+        efSkills:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Eightfold-detected course skills based on title and description
+          items:
+            type: string
+        status:
+          type:
+          - string
+          - 'null'
+          description: status of course
+        provider:
+          type:
+          - string
+          - 'null'
+          description: provider of course
+        publishedDate:
+          type:
+          - string
+          - 'null'
+          description: Publication date of course
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of course

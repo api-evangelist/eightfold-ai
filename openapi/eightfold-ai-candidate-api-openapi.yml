@@ -1,0 +1,882 @@
+openapi: 3.2.0
+info:
+  title: Candidate API
+  version: '1.0'
+  x-source-url: https://dash.readme.com/api/v1/api-registry/eb0jwp1fol38uq2p9
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+  description: services related to candidate id
+servers:
+- url: //api.eightfold.ai
+tags:
+- name: Candidate
+  description: services related to candidate id
+paths:
+  /v1/candidate:
+    post:
+      responses:
+        '200':
+          description: Success
+      summary: Post Candidate
+      description: 'Post the complete candidate object without the profileId param to add a new candidate.
+
+        On the other hand, to update the existing candidate in the System, include the profileId in the params.
+
+        Please Note: Update will overwrite existing fields. If empty fields are sent during an update,
+
+        those fields will be wiped out.'
+      operationId: post_candidate_post
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: The secret key to access the api, starts with Basic
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/candidate_add_request'
+        required: true
+      tags:
+      - Candidate
+  /v1/candidate/advance-application:
+    post:
+      responses:
+        '200':
+          description: Success
+      summary: Advance Application Stage
+      description: Advance the stage of a candidate's application for a given job id
+      operationId: post_advance_application_stage
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: The secret key to access the api, starts with Basic
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/candidate_advance_application'
+        required: true
+      tags:
+      - Candidate
+  /v1/candidate/search:
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/candidateProfile'
+      summary: Search Candidate
+      description: Search a candidate using query parameters and get the complete candidate object
+      operationId: get_candidate_search
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: The secret key to access the api, starts with Basic
+        schema:
+          type: string
+      - name: atsEntityId
+        in: query
+        description: unique identifier in the ATS system
+        schema:
+          type: string
+      - name: firstName
+        in: query
+        description: first name of the candidate
+        schema:
+          type: string
+      - name: lastName
+        in: query
+        description: last name of the candidate
+        schema:
+          type: string
+      - name: email
+        in: query
+        description: email of the candidate
+        schema:
+          type: string
+      - name: title
+        in: query
+        description: title or designation of the candidate
+        schema:
+          type: string
+      - name: work
+        in: query
+        description: organization or company of the candidate
+        schema:
+          type: string
+      - name: stage
+        in: query
+        description: stage of the candidate
+        schema:
+          type: string
+      - name: location
+        in: query
+        description: location of the candidate
+        schema:
+          type: string
+      - name: source
+        in: query
+        description: source of the candidate
+        schema:
+          type: string
+      - name: hasTags
+        in: query
+        description: gets the candidates who has the tags as ("Screened" "Rejected")
+        schema:
+          type: string
+      - name: lastModified
+        in: query
+        description: last updated date range of the candidate as [1598375838 TO *]
+        schema:
+          type: string
+      - name: filterQuery
+        in: query
+        description: filter query using predefined filter arguments documented at https://apidocs.eightfold.ai/docs#the-filterquery-parameter
+        schema:
+          type: string
+      - name: query
+        in: query
+        description: any wildcard text to search in candidate data
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: max number of results to be fetched
+        explode: true
+        schema:
+          type: integer
+          enum:
+          - 10
+          - 50
+          - 100
+      - name: start
+        in: query
+        description: starting index of the candidate to be fetched
+        schema:
+          type: integer
+          default: 0
+      - name: include
+        in: query
+        description: if you want additional fields in the response, please specify comma separate values as resume,tags,applications,notes
+        schema:
+          type: string
+          default: resume,tags,applications
+      - name: X-Fields
+        in: header
+        description: An optional fields mask
+        schema:
+          type: string
+          format: mask
+      tags:
+      - Candidate
+  /v1/candidate/talent-pool:
+    post:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/candidate_join_talent_pool'
+      summary: 'Join Talent Pool: Allowing the candidate to join talent pool'
+      operationId: post_join_talent_pool
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: The secret key to access the api, starts with Basic
+        schema:
+          type: string
+      - name: X-Fields
+        in: header
+        description: An optional fields mask
+        schema:
+          type: string
+          format: mask
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  description: Candidate first name
+                  type: string
+                lastName:
+                  description: Candidate last name
+                  type: string
+                email:
+                  description: Candidate email
+                  type: string
+                phone:
+                  description: Candidate phone number
+                  type: string
+                urls:
+                  description: Candidate LinkedIn, stackoverflow urls
+                  type: array
+                  items:
+                    type: string
+                title:
+                  description: Candidate title in the last company
+                  type: string
+                company:
+                  description: Candidate last company
+                  type: string
+                location:
+                  description: Candidate current location
+                  type: string
+                customTag:
+                  description: Candidate tags that can be attached
+                  type: array
+                  items:
+                    type: string
+                resume:
+                  description: Candidate resume
+                  type: string
+                  format: binary
+                emailSubscription:
+                  description: Candidate email subscription
+                  type: boolean
+              required:
+              - firstName
+              - lastName
+              - email
+        required: true
+      tags:
+      - Candidate
+  /v1/candidate/{profile_id}:
+    parameters:
+    - name: profile_id
+      in: path
+      required: true
+      schema:
+        type: string
+    delete:
+      responses:
+        '200':
+          description: Success
+      summary: Delete Candidate
+      description: 'Given a profile id of a candidate it marks the candidate deleted in eightfold.
+
+        it might take few minutes to reflect to all products, as it is asynchronous action.'
+      operationId: delete_candidate_by_id
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: The secret key to access the api, starts with Basic
+        schema:
+          type: string
+      tags:
+      - Candidate
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/candidateProfile'
+      summary: Get Candidate
+      description: Given a profile id of a candidate it returns the all other attributes of the candidate
+      operationId: get_candidate_by_id
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: The secret key to access the api, starts with Basic
+        schema:
+          type: string
+      - name: include
+        in: query
+        description: if you want additional fields in the response, please specify comma separate values as resume,tags,applications
+        schema:
+          type: string
+          default: resume,tags,applications
+      - name: X-Fields
+        in: header
+        description: An optional fields mask
+        schema:
+          type: string
+          format: mask
+      tags:
+      - Candidate
+  /v1/candidate/{profile_id}/matched-jobs:
+    parameters:
+    - name: profile_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/matchJob'
+      summary: Get Matching Jobs
+      description: Given profile id of a candidate it returns the matching jobs for the given the candidate
+      operationId: get_matched_jobs_for_candidate
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: The secret key to access the api, starts with Basic
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: max number of results to be fetched
+        explode: true
+        schema:
+          type: integer
+          enum:
+          - 5
+          - 10
+      - name: start
+        in: query
+        description: starting index of the job to be fetched
+        schema:
+          type: integer
+          default: 0
+      - name: X-Fields
+        in: header
+        description: An optional fields mask
+        schema:
+          type: string
+          format: mask
+      tags:
+      - Candidate
+components:
+  schemas:
+    candidateProfile:
+      required:
+      - title
+      properties:
+        industries:
+          type: array
+          items:
+            type: string
+        title:
+          type: string
+          description: The job designation of the candidate
+        skills:
+          type: array
+          items:
+            type: string
+        highlights:
+          type: array
+          items:
+            type: string
+        summary:
+          type: string
+        experience:
+          type: array
+          items:
+            $ref: '#/components/schemas/candidateExperience'
+        email:
+          type: string
+        phone:
+          type: string
+        awards:
+          type: array
+          items:
+            type: string
+        location:
+          type: string
+        urls:
+          type: array
+          items:
+            type: string
+        gender:
+          type: string
+        race:
+          type: string
+        imageUrl:
+          type: string
+        fullName:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        education:
+          type: array
+          items:
+            $ref: '#/components/schemas/candidateEducation'
+        resume:
+          type: string
+          description: base 64 encoded string representing resume of the candidate
+        resumeFileName:
+          type: string
+          description: File name including extension such as txt, docx, pdf
+        id:
+          type: string
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/candidateTag'
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/candidateNote'
+        applications:
+          type: array
+          items:
+            $ref: '#/components/schemas/candidateApplication'
+        customFields:
+          type: object
+          description: custom fields key-value pairs, key is the field name
+        atsEntityId:
+          type: string
+        lastUpdated:
+          type: integer
+          description: Epoch timestamp of the last activity.
+      type: object
+    candidateEducationRequest:
+      required:
+      - degree
+      - description
+      - endDate
+      - location
+      - major
+      - school
+      - startDate
+      properties:
+        school:
+          type: string
+        degree:
+          type: string
+        major:
+          type: string
+        description:
+          type: string
+        location:
+          type: string
+        startDate:
+          type: integer
+        endDate:
+          type: integer
+      type: object
+    candidateExperienceRequest:
+      required:
+      - company
+      - description
+      - endDate
+      - isCurrent
+      - location
+      - startDate
+      - title
+      properties:
+        company:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        location:
+          type: string
+        isCurrent:
+          type: boolean
+        startDate:
+          type: integer
+        endDate:
+          type: integer
+        isInternal:
+          type: boolean
+      type: object
+    candidate_advance_application:
+      required:
+      - actionUserEmail
+      - newStage
+      properties:
+        atsCandidateId:
+          type: string
+          description: Candidate id in the ATS
+        profileId:
+          type: string
+          description: EF profile id
+        employeeEmail:
+          type: string
+          description: Employee email
+        atsJobId:
+          type: string
+          description: Job id in the ATS
+        positionId:
+          type: string
+          description: EF job id
+        applicationId:
+          type: string
+          description: Application id in the ATS
+        prevStage:
+          type: string
+          description: Previous stage of the application
+        prevSubStage:
+          type: string
+          description: Previous sub-stage of the application
+        newStage:
+          type: string
+          description: New stage of the application
+        newSubStage:
+          type: string
+          description: New sub-stage of the application
+        isReject:
+          type: string
+          description: If the stage corresponds to candidate rejection
+        actionUserEmail:
+          type: string
+          description: Email of the user which changed the stage
+        reason:
+          type: string
+          description: Reason for changing the candidate stage
+        comment:
+          type: string
+          description: Comment for changing the stage
+      type: object
+    candidateApplication:
+      properties:
+        sourceName:
+          type: string
+        applicationId:
+          type: string
+        candidateId:
+          type: string
+        visaStatus:
+          type: string
+        sourceType:
+          type: string
+        applicationTime:
+          type: integer
+        positionId:
+          type: string
+        positionTitle:
+          type: string
+        lastModifiedTime:
+          type: integer
+        currentStage:
+          type: string
+        applicationStatus:
+          type: string
+        applicationAnswers:
+          type: array
+          items:
+            $ref: '#/components/schemas/applicationQuestionAnswers'
+        atsJobId:
+          type: string
+        reason:
+          type: string
+        matchScore:
+          type: number
+      type: object
+    candidateTag:
+      properties:
+        tag:
+          type: string
+        type:
+          type: string
+        createdTime:
+          type: integer
+        creatorEmail:
+          type: string
+      type: object
+    applicationQuestionAnswers:
+      required:
+      - question
+      - questionId
+      properties:
+        questionId:
+          type: string
+        question:
+          type: string
+        answer:
+          type: string
+      type: object
+    candidateNote:
+      properties:
+        note:
+          type: string
+        noteType:
+          type: string
+        positionId:
+          type: string
+        createdTime:
+          type: integer
+        creatorEmail:
+          type: string
+      type: object
+    candidateAttachmentRequest:
+      required:
+      - content
+      - name
+      - type
+      properties:
+        type:
+          type: string
+        name:
+          type: string
+        url:
+          type: string
+        content:
+          type: string
+        isBase64Encoded:
+          type: boolean
+      type: object
+    candidateEducation:
+      properties:
+        school:
+          type: string
+        description:
+          type: string
+        degree:
+          type: string
+        major:
+          type: string
+        awards:
+          type: array
+          items:
+            type: string
+        startTime:
+          type: integer
+        endTime:
+          type: integer
+        imageUrl:
+          type: string
+        eduLevel:
+          type: string
+      type: object
+    candidate_add_request:
+      required:
+      - atsEntityId
+      - company
+      - firstName
+      - lastUpdated
+      - profileId
+      - title
+      properties:
+        firstName:
+          type: string
+          description: First name of the candidate
+        profileId:
+          type: string
+          description: Eightfold profile id of the candidate to look up for updating.
+        atsEntityId:
+          type: string
+          description: ATS Entity id of the candidate. Use to add a new profile to Eightfold or to look up and update an existing profile.
+        lastUpdated:
+          type: integer
+          description: Epoch timestamp of the last activity for the candidate
+        title:
+          type: string
+          description: Current title of the candidate
+        company:
+          type: string
+          description: Current company of the candidate
+        emails:
+          type: array
+          items:
+            type: string
+            description: Emails of the candidate
+        urls:
+          type: array
+          items:
+            type: string
+            description: Professional URLs for the candidate
+        lastName:
+          type: string
+          description: Last name of the candidate
+        phones:
+          type: array
+          items:
+            type: string
+            description: Phone numbers
+        skills:
+          type: array
+          items:
+            type: string
+            description: Skills associated with the candidate
+        tags:
+          type: array
+          items:
+            type: string
+            description: Tags related to the candidate
+        location:
+          type: string
+          description: Candidate location
+        isInternal:
+          type: boolean
+          description: Whether the candidate is an internal employee
+        photoUrl:
+          type: string
+          description: Image url of the candidate
+        gender:
+          type: string
+          description: Gender of the candidate
+        race:
+          type: string
+          description: Race of the candidate
+        address:
+          type: string
+          description: Complete address
+        summary:
+          type: string
+          description: Summary information of candidate in text format
+        visaStatus:
+          type: string
+          description: visa status of the candidate
+        dateOfBirth:
+          type: string
+          description: Date of birth of the candidate
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/candidateAttachmentRequest'
+        experiences:
+          type: array
+          items:
+            $ref: '#/components/schemas/candidateExperienceRequest'
+        educations:
+          type: array
+          items:
+            $ref: '#/components/schemas/candidateEducationRequest'
+        applications:
+          type: array
+          items:
+            $ref: '#/components/schemas/candidateApplicationRequest'
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/candidateNote'
+        customFields:
+          type: object
+          description: custom fields
+      type: object
+    candidate_join_talent_pool:
+      properties:
+        message:
+          type: string
+        profileEncId:
+          type: string
+      type: object
+    matchJob:
+      required:
+      - finalScore
+      - locationCountry
+      - positionId
+      - title
+      properties:
+        positionId:
+          type: integer
+          description: The job position id of the job
+        atsEntityId:
+          type: integer
+          description: The job position id of the job in the ATS system
+        locationCity:
+          type: string
+          description: The name of the city
+        postingUrl:
+          type: string
+          description: posting url of the system from external system
+        finalScore:
+          type: number
+          description: The matching score of job and candidate profile
+        locationCountry:
+          type: string
+          description: The name of the country of the job
+        title:
+          type: string
+          description: The job title
+        missingSkills:
+          type: array
+          description: A missing skill is missing in the profile, and others in  similar roles in the same organizations do not have this skill
+          items:
+            type: string
+      type: object
+    candidateExperience:
+      properties:
+        description:
+          type: string
+        title:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+        work:
+          type: string
+        location:
+          type: string
+        startTime:
+          type: integer
+        endTime:
+          type: integer
+        duration:
+          type: integer
+        isCurrent:
+          type: boolean
+        isInternal:
+          type: boolean
+      type: object
+    candidateApplicationRequest:
+      required:
+      - applicationId
+      - applicationStatus
+      - applicationTime
+      - atsJobId
+      - candidateId
+      - lastModifiedTime
+      - positionId
+      - positionTitle
+      properties:
+        sourceName:
+          type: string
+        applicationId:
+          type: string
+        candidateId:
+          type: string
+        applicationTime:
+          type: integer
+        positionId:
+          type: string
+        atsJobId:
+          type: string
+        lastModifiedTime:
+          type: integer
+        currentStage:
+          type: string
+        applicationStatus:
+          type: string
+        positionTitle:
+          type: string
+        hiredTime:
+          type: integer
+        rejectedTime:
+          type: integer
+        rejectionReason:
+          type: string
+        race:
+          type: string
+        gender:
+          type: string
+        veteranStatus:
+          type: string
+        disabilityStatus:
+          type: string
+        note:
+          $ref: '#/components/schemas/candidateNote'
+        applicationAnswers:
+          type: array
+          items:
+            $ref: '#/components/schemas/applicationQuestionAnswers'
+      type: object

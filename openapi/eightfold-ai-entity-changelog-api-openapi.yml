@@ -1,0 +1,125 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Entity Changelog API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Entity Changelog
+paths:
+  /api/v2/core/changelog/{entityType}:
+    get:
+      description: This API fetches modified entity ids given a time frame. Maximum duration of a time window is limited to 24 hrs. The supported entity types are 'profiles', 'positions', 'demands', 'users', 'profile-applications', 'profile-tags', 'profile-notes', 'profile-feedbacks', 'planned-events', 'user-campaigns', 'user-messages', 'event-candidate-activities', 'email-delivery-feedbacks', 'user-calendar-events', 'bookings', 'holidays', 'org-units', 'entity-profile-applications'
+      operationId: list_entity_changelog_changelog
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Entity type e.g. profiles, positions, users
+        in: path
+        name: entityType
+        required: true
+        schema:
+          type: string
+      - description: Timestamp to indicate time window's start time
+        in: query
+        name: startTime
+        required: true
+        schema:
+          type: string
+      - description: Timestamp to indicate time window's end time. This value should be at least 30 minutes less than the current time.
+        in: query
+        name: endTime
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/ModifiedEntityIdSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List Entity Changelogs
+      tags:
+      - Entity Changelog
+components:
+  schemas:
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+    ModifiedEntityIdSchema:
+      type: object
+      properties:
+        entityId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''

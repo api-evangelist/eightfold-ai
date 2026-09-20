@@ -1,0 +1,249 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Org Unit API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Org Unit
+paths:
+  /api/v2/t3s/org-units:
+    get:
+      description: Search org units using query parameters and get the complete org unit objects
+      operationId: list_org_unit
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Filter query using predefined filter arguments documented [here](https://apidocs.eightfold.ai/v2.0/docs#the-filterquery-parameter)
+        in: query
+        name: filterQuery
+        schema:
+          type: string
+      - description: any wildcard text to search in org unit
+        in: query
+        name: query
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/OrgUnitSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List Org Units
+      tags:
+      - Org Unit
+components:
+  schemas:
+    EntityTag:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - user
+          - system
+          description: Type of the tag (user/system)
+        name:
+          type: string
+          description: Name of the tag
+        category:
+          type:
+          - string
+          - 'null'
+          enum:
+          - inherited_tag
+          - null
+          description: Category of the tag (e.g. inherited_tag)
+      required:
+      - name
+      - type
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+    OrgUnitSchema:
+      type: object
+      properties:
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Org unit status
+        updatedBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Updated by
+        orgUnitId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Org unit id
+        userGroups:
+          readOnly: true
+          description: User groups associated with the org unit
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RmUserGroup'
+        extOrgUnitId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: External org unit id
+        endDate:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: End date timestamp
+        createdBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Created by
+        description:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Org unit description
+        parentExtId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Parent external id
+        startDate:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Start date timestamp
+        systemId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Org unit system id
+        type:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Org unit type
+        updatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Updated at timestamp
+        customFields:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Custom fields
+        title:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Org unit title
+        tags:
+          readOnly: true
+          description: Tags associated with the org unit
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EntityTag'
+      required:
+      - title
+      - type
+    RmUserGroup:
+      type: object
+      properties:
+        userGroupId:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier for the user group

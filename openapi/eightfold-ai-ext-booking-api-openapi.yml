@@ -1,0 +1,282 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Ext Booking API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Ext Booking
+paths:
+  /api/v2/resource_management/ext-systems/resourcing/ext-bookings/{extBookingId}:
+    get:
+      description: Given an external booking id, it returns all attributes of the external booking
+      operationId: get_external_booking_ext_bookings_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: External Booking ID
+        in: path
+        name: extBookingId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtBookingSchema'
+          description: OK
+      summary: Get External Booking
+      tags:
+      - Ext Booking
+    patch:
+      description: 'Patches external booking given its id. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.'
+      operationId: patch_external_booking_ext_bookings
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: External Booking ID
+        in: path
+        name: extBookingId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtBookingSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtBookingSchema'
+          description: OK
+      summary: Patch External Booking
+      tags:
+      - Ext Booking
+    put:
+      description: Updates external booking given its id.
+      operationId: update_external_booking_ext_bookings
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: External Booking ID
+        in: path
+        name: extBookingId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtBookingSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtBookingSchema'
+          description: OK
+      summary: Update External Booking
+      tags:
+      - Ext Booking
+    delete:
+      description: Deletes external booking given its id.
+      operationId: delete_external_booking_ext_bookings
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: External Booking ID
+        in: path
+        name: extBookingId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtBookingSchema'
+          description: OK
+      summary: Delete External Booking
+      tags:
+      - Ext Booking
+  /api/v2/resource_management/ext-systems/resourcing/ext-bookings:
+    post:
+      description: Create a new External Booking
+      operationId: create_external_booking_ext_bookings
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtBookingSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtBookingSchema'
+          description: OK
+      summary: Create External Booking
+      tags:
+      - Ext Booking
+components:
+  schemas:
+    ExtBookingCapacityData:
+      type: object
+      properties:
+        unit:
+          type: string
+          enum:
+          - hours
+          - percentage
+          - fraction
+          description: 'Unit of capacity. Possible values: [''hours'', ''percentage'', ''fraction'']'
+        timeGranularity:
+          type:
+          - string
+          - 'null'
+          enum:
+          - daily
+          - weekly
+          - monthly
+          description: 'Time granularity of capacity. Possible values: [''daily'', ''weekly'', ''monthly'']'
+        capacity:
+          type: number
+          format: float
+          description: Capacity value
+      required:
+      - capacity
+      - unit
+    ExtBookingSchema:
+      type: object
+      properties:
+        creatorEmail:
+          type: string
+          description: Email of the creator of the booking
+        createdAt:
+          type: integer
+          format: int32
+          description: Creation timestamp for the booking
+        bookingId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Internal booking ID
+        startDateIso:
+          type: string
+          description: Start date of the booking in ISO format (YYYY-MM-DD)
+        endDateIso:
+          type: string
+          description: End date of the booking in ISO format (YYYY-MM-DD)
+        bookedCapacity:
+          description: Booked capacity of employee
+          allOf:
+          - $ref: '#/components/schemas/ExtBookingCapacityData'
+        lastModifiedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Last modified timestamp for the booking
+        endDate:
+          type: integer
+          format: int32
+          description: '[DEPRECATED] End date of the booking in epoch timestamp format. Use endDateIso instead.'
+        lastModifierEmail:
+          type:
+          - string
+          - 'null'
+          description: Email of the last modifier of the booking
+        extBookingId:
+          type: string
+          description: External booking id
+        startDate:
+          type: integer
+          format: int32
+          description: '[DEPRECATED] Start date of the booking in epoch timestamp format. Use startDateIso instead.'
+        extDemandId:
+          type:
+          - string
+          - 'null'
+          description: External demand id for the demand associated with the booking
+        employeeId:
+          type: string
+          description: Employee id
+        bookingStatus:
+          type: string
+          enum:
+          - pending
+          - approved
+          - rejected
+          description: 'Status of the booking. Possible values: [''pending'', ''approved'', ''rejected'']'
+        bookingType:
+          type: string
+          enum:
+          - demand
+          - leave
+          - optional_holiday
+          - blocker
+          description: 'Type of the booking. Possible values: [''demand'', ''leave'', ''optional_holiday'', ''blocker'']'
+      required:
+      - bookingStatus
+      - bookingType
+      - createdAt
+      - creatorEmail
+      - employeeId
+      - extBookingId

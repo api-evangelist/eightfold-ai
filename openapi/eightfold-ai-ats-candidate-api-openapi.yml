@@ -1,0 +1,1885 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service ATS Candidate API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: ATS Candidate
+paths:
+  /api/v2/core/ats-systems/{systemId}/ats-candidates/{atsCandidateId}:
+    get:
+      description: Given an ats candidate id of a candidate, it returns the ats candidate object
+      operationId: get_ats_candidate_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ATS entity ID of candidate
+        in: path
+        name: atsCandidateId
+        required: true
+        schema:
+          type: string
+      - description: ATS system id of candidate
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are applications, tags, notes
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ATSProfileSchema'
+          description: OK
+      summary: Get ATS Candidate
+      tags:
+      - ATS Candidate
+    put:
+      description: 'To update the existing ats candidate, include the ats_candidate_id in the params. Please Note: Update will overwrite existing fields. If empty fields are sent during an update, those fields will be wiped out'
+      operationId: update_ats_candidate
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ATS entity ID of profile
+        in: path
+        name: atsCandidateId
+        required: true
+        schema:
+          type: string
+      - description: System ID of profile
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+      - description: Set to 'true' if updates need to be processed for this profile despite it being claimed. Defaults to false
+        in: query
+        name: refreshClaimedProfile
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ATSProfileSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileAsyncSchema'
+          description: OK
+      summary: Update ATS Candidate
+      tags:
+      - ATS Candidate
+    patch:
+      description: 'Given an ats candidate id and data that needs to be patched, it patches the ats candidate. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.'
+      operationId: patch_ats_candidate
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ATS entity ID of candidate
+        in: path
+        name: atsCandidateId
+        required: true
+        schema:
+          type: string
+      - description: System ID of profile
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+      - description: Set to 'true' if updates need to be processed for this profile despite it being claimed. Defaults to false
+        in: query
+        name: refreshClaimedProfile
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ATSProfileSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileAsyncSchema'
+          description: OK
+      summary: Patch ATS Candidate
+      tags:
+      - ATS Candidate
+  /api/v2/core/ats-systems/{systemId}/ats-candidates:
+    get:
+      description: Search ats candidates using query parameters and get the complete ats candidate objects
+      operationId: list_ats_candidate
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: filter query using predefined filter arguments documented [here](https://apidocs.eightfold.ai/v2.0/docs#the-filterquery-parameter)
+        in: query
+        name: filterQuery
+        schema:
+          type: string
+      - description: any wildcard text to search in position
+        in: query
+        name: query
+        schema:
+          type: string
+      - description: System ID of profile
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/ATSProfileSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List ATS Candidates
+      tags:
+      - ATS Candidate
+    post:
+      description: To add a new ats candidate in the system, send the candidate information in the payload. ats candidate id will be sent back in case of a successful response
+      operationId: create_ats_candidate
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: System ID of profile
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateATSProfileSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileAsyncSchema'
+          description: OK
+      summary: Create ATS Candidate
+      tags:
+      - ATS Candidate
+components:
+  schemas:
+    AtsUser:
+      type: object
+      properties:
+        userId:
+          type:
+          - string
+          - 'null'
+          description: user id
+        email:
+          type:
+          - string
+          - 'null'
+          description: email of user
+        name:
+          type:
+          - string
+          - 'null'
+          description: name of user
+        atsRoles:
+          type:
+          - array
+          - 'null'
+          description: list of ats roles
+          items:
+            type: string
+    LmsCourseAttendance:
+      type: object
+      properties:
+        durationHours:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Duration of the course (in hours)
+        percentageCompletion:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Percentage Completion
+        isInternal:
+          type:
+          - boolean
+          - 'null'
+          description: Is Internal
+        pointsEarned:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Points Earned
+        courseType:
+          type:
+          - string
+          - 'null'
+          description: Course type
+        difficulty:
+          type:
+          - string
+          - 'null'
+          description: difficulty
+        courseUrl:
+          type:
+          - string
+          - 'null'
+          description: Course Url
+        title:
+          type:
+          - string
+          - 'null'
+          description: 'Title. Note: Course Id or title must be present.'
+        completionTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Completion Timestamp
+        lmsCourseId:
+          type:
+          - string
+          - 'null'
+          description: 'LMS Course Id. Note: Course Id or title must be present.'
+        medium:
+          type:
+          - string
+          - 'null'
+          description: medium
+        language:
+          type:
+          - string
+          - 'null'
+          description: Language
+        dueTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Due Timestamp
+        assignedBy:
+          type:
+          - string
+          - 'null'
+          description: Email of who assigned this course
+        status:
+          type:
+          - string
+          - 'null'
+          description: status
+        startTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Start timestamp
+        isMandatory:
+          type:
+          - boolean
+          - 'null'
+          description: is course attendance mandatory ?
+        provider:
+          type:
+          - string
+          - 'null'
+          description: provider
+        verified:
+          type:
+          - string
+          - 'null'
+          description: verified
+        description:
+          type:
+          - string
+          - 'null'
+          description: description
+    AtsAttachment:
+      type: object
+      properties:
+        isBase64:
+          type:
+          - boolean
+          - 'null'
+          description: Denotes if the attachment base64 encoded
+        fileName:
+          type: string
+          description: File name of the attachment
+        lastModifiedTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Last Modified timestamp of the attachment
+        applicationMetadata:
+          description: application_metadata
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsAttachmentApplicationMetadata'
+        attachmentContent:
+          type:
+          - string
+          - 'null'
+          description: Content of the attachment
+        attachmentId:
+          type: string
+          description: Attachment id of the attachment
+        attachmentType:
+          type:
+          - string
+          - 'null'
+          description: 'Attachment type. Valid inputs: resume, others, photo, cover_letter'
+      required:
+      - attachmentContent
+      - attachmentId
+      - attachmentType
+      - fileName
+    ATSSkillDetail:
+      type: object
+      properties:
+        skillGroups:
+          description: Skill groups
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ATSSkillGroup'
+        proficiency:
+          type:
+          - string
+          - 'null'
+          description: 'Proficiency. Note: proficiency must be specified only for each skill group when skill groups are present'
+        evaluationTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Evaluation timestamp
+        dataSource:
+          type:
+          - string
+          - 'null'
+          description: Data source of the skill
+        skill:
+          type:
+          - string
+          - 'null'
+          description: Skill
+    AtsAttachmentApplicationMetadata:
+      type: object
+      properties:
+        applicationId:
+          type: string
+          description: application id for an attachment
+      required:
+      - applicationId
+    AtsEducation:
+      type: object
+      properties:
+        endTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: ending timestamp
+        verificationStatus:
+          type:
+          - string
+          - 'null'
+          description: verification status of the education details
+        degreeExternalId:
+          type:
+          - string
+          - 'null'
+          description: external id of the degree
+        attachmentIds:
+          type:
+          - array
+          - 'null'
+          description: List of attachment ids of the education
+          items:
+            type: string
+        startTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: starting timestamp of education
+        degree:
+          type:
+          - string
+          - 'null'
+          description: degree
+        major:
+          type:
+          - string
+          - 'null'
+          description: major
+        verificationBy:
+          type:
+          - string
+          - 'null'
+          description: email of the verifier
+        location:
+          type:
+          - string
+          - 'null'
+          description: location
+        isCurrent:
+          type:
+          - boolean
+          - 'null'
+          description: is current education
+        schoolExternalId:
+          type:
+          - string
+          - 'null'
+          description: external id of the school
+        majorExternalId:
+          type:
+          - string
+          - 'null'
+          description: external id of the major
+        verificationTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: verification timestamp
+        school:
+          type:
+          - string
+          - 'null'
+          description: school
+        nameAlias:
+          type:
+          - string
+          - 'null'
+          description: name of the candidate in the records if different from the name in the profile
+        isGraduated:
+          type:
+          - boolean
+          - 'null'
+          description: graduation status of the candidate
+        description:
+          type:
+          - string
+          - 'null'
+          description: description
+      required:
+      - degree
+      - description
+      - location
+      - major
+      - school
+      - startTs
+    AtsProject:
+      type: object
+      properties:
+        endTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: ending timestamp of a project
+        links:
+          type:
+          - array
+          - 'null'
+          description: links for a project
+          items:
+            type: string
+        startTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: start timestamp of a project
+        skills:
+          type:
+          - array
+          - 'null'
+          description: skills
+          items:
+            type: string
+        company:
+          type:
+          - string
+          - 'null'
+          description: company of a project
+        contributors:
+          type:
+          - array
+          - 'null'
+          description: contributors to a project
+          items:
+            type: string
+        description:
+          type:
+          - string
+          - 'null'
+          description: description
+        title:
+          type:
+          - string
+          - 'null'
+          description: title of a project
+      required:
+      - company
+      - startTs
+      - title
+    ATSScheduledInterview:
+      type: object
+      properties:
+        organizer:
+          type:
+          - string
+          - 'null'
+          description: Organizer
+        status:
+          type:
+          - string
+          - 'null'
+          description: Status
+        endTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: End Timestamp
+        interviewType:
+          type:
+          - string
+          - 'null'
+          description: Interview Type
+        interviewers:
+          type:
+          - array
+          - 'null'
+          description: Interviewers
+          items:
+            type: string
+        startTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Start Timestamp
+        location:
+          type:
+          - string
+          - 'null'
+          description: Location of interview
+        comment:
+          type:
+          - string
+          - 'null'
+          description: Comment
+        referenceId:
+          type:
+          - string
+          - 'null'
+          description: Reference ID
+    ATSScoreCardAttribute:
+      type: object
+      properties:
+        rating:
+          type:
+          - string
+          - 'null'
+          description: 'Rating. Valid inputs: strong_yes, yes, mixed, no, strong_no'
+        answer:
+          type:
+          - string
+          - 'null'
+          description: Answer
+        note:
+          type:
+          - string
+          - 'null'
+          description: Note
+        question:
+          type:
+          - string
+          - 'null'
+          description: Question
+        rating_label:
+          type:
+          - string
+          - 'null'
+          description: Rating label
+    AtsNote:
+      type: object
+      properties:
+        subject:
+          type:
+          - string
+          - 'null'
+          description: subject of a note
+        to:
+          type:
+          - string
+          - 'null'
+          description: email of reciever
+        noteType:
+          type:
+          - string
+          - 'null'
+          description: 'Note type of an ats note. Valid inputs: email, note, other'
+        visibility:
+          type:
+          - string
+          - 'null'
+          description: visibility of a note
+        creator:
+          type:
+          - string
+          - 'null'
+          description: creator of a note
+        cc:
+          type:
+          - array
+          - 'null'
+          description: email address for cc
+          items:
+            type: string
+        body:
+          type:
+          - string
+          - 'null'
+          description: body of a note
+        sender:
+          type:
+          - string
+          - 'null'
+          description: email of sender
+        creationTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: creation timestamp of a note
+    AtsCertification:
+      type: object
+      properties:
+        locationCountry:
+          type:
+          - string
+          - 'null'
+          description: Country where certification was issued
+        verificationStatus:
+          type:
+          - string
+          - 'null'
+          description: verification status of a certification
+        licenseNo:
+          type:
+          - string
+          - 'null'
+          description: License number of a certification
+        skills:
+          type:
+          - array
+          - 'null'
+          description: Skills associated with the certification
+          items:
+            type: string
+        validFromTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: validtion from timestamp of a certification
+        comments:
+          type:
+          - string
+          - 'null'
+          description: Comments on the certification
+        allText:
+          type:
+          - string
+          - 'null'
+          description: All text associated with the certification
+        endTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: ending timestamp of a certification
+        verificationBy:
+          type:
+          - string
+          - 'null'
+          description: email of the verifier
+        certificateName:
+          type:
+          - string
+          - 'null'
+          description: certificate name of a certification
+        verificationTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: verification timestamp
+        status:
+          type:
+          - string
+          - 'null'
+          description: Status of the certification
+        certificateType:
+          type:
+          - string
+          - 'null'
+          description: Type of the certification
+        proficiency:
+          type:
+          - string
+          - 'null'
+          description: proficiency of a certification
+        validToTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: validation till timestamp of a certification
+        attachmentIds:
+          type:
+          - array
+          - 'null'
+          description: List of attachment ids of a certification
+          items:
+            type: string
+        startTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: starting timestamp of a certification
+        certificateExternalId:
+          type:
+          - string
+          - 'null'
+          description: external id for the type of certification
+        locationState:
+          type:
+          - string
+          - 'null'
+          description: State where certification was issued
+        issuingAuthority:
+          type:
+          - string
+          - 'null'
+          description: issuing authority of a certification
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the certification
+      required:
+      - certificateName
+    Jobs:
+      type: object
+      properties:
+        atsJobId:
+          type:
+          - string
+          - 'null'
+          description: ATS Job id
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name
+    AtsTag:
+      type: object
+      properties:
+        tag:
+          type:
+          - string
+          - 'null'
+          description: tag of candidate
+        jobId:
+          type:
+          - string
+          - 'null'
+          description: job id for a tag
+        creator:
+          type:
+          - string
+          - 'null'
+          description: creator of tag
+        tagSubtype:
+          type:
+          - string
+          - 'null'
+          description: tag subtype
+        tagType:
+          type:
+          - string
+          - 'null'
+          description: tag type
+        creationTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: creation timestamp of tag
+      required:
+      - tag
+    ProfileAsyncSchema:
+      type: object
+      properties:
+        transactionId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+    AtsContent:
+      type: object
+      properties:
+        extension:
+          type:
+          - string
+          - 'null'
+          description: extension
+        content:
+          type:
+          - string
+          - 'null'
+          description: content
+        isBase64:
+          type:
+          - boolean
+          - 'null'
+          description: is base 64 encoded?
+    AtsStage:
+      type: object
+      properties:
+        stage:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: stage
+        user:
+          description: user
+          allOf:
+          - $ref: '#/components/schemas/AtsUser'
+        reason:
+          type: string
+          maxLength: 5000
+          description: reason
+        wfSubStage:
+          type: string
+          description: wf sub stage
+        wfStage:
+          type: string
+          description: wf stage
+        stageTs:
+          type: integer
+          format: int32
+          description: stage timestamp
+      required:
+      - reason
+      - stageTs
+      - user
+      - wfStage
+      - wfSubStage
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+    AtsApplication:
+      type: object
+      properties:
+        locationCountry:
+          type:
+          - string
+          - 'null'
+          description: location country of an application
+        reason:
+          type:
+          - string
+          - 'null'
+          maxLength: 5000
+          description: reason for an application
+        location:
+          type:
+          - string
+          - 'null'
+          description: location of an application
+        visaStatuses:
+          type:
+          - array
+          - 'null'
+          description: list of visa status
+          items:
+            type: string
+        veteranStatusStr:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: String value for veteran status of the applicant
+        jobs:
+          description: Jobs related to an application.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Jobs'
+        hiredTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: hired timestamp of an applicant
+        lastModifiedTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: last modified timestamp of an application
+        customInfo:
+          type:
+          - object
+          - 'null'
+          description: custom info for an application
+        note:
+          description: ats notes for an application
+          allOf:
+          - $ref: '#/components/schemas/AtsNote'
+        systemId:
+          type:
+          - string
+          - 'null'
+          description: system id of an application
+        creditor:
+          type:
+          - string
+          - 'null'
+          description: creditor of an application
+        candidateId:
+          type:
+          - string
+          - 'null'
+          description: candidate id of an applicant
+        rejectedTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: rejected timestamp of an applicant
+        veteranStatus:
+          type:
+          - boolean
+          - 'null'
+          description: Boolean value for veteran status of the applicant
+        applicationTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: application timestamp
+        pastStages:
+          description: past stages of an application
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsStage'
+        sourceName:
+          type:
+          - string
+          - 'null'
+          description: source name of an application
+        isProspect:
+          type:
+          - boolean
+          - 'null'
+          description: is prospective applicant
+        scorecards:
+          description: scorecards for an application
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsScorecard'
+        jobSystemId:
+          type:
+          - string
+          - 'null'
+          description: job system id for an application
+        disabilityStatus:
+          type:
+          - boolean
+          - 'null'
+          description: disability status of an applicant
+        currentStage:
+          description: current stage of an application
+          allOf:
+          - $ref: '#/components/schemas/AtsStage'
+        status:
+          type:
+          - string
+          - 'null'
+          description: 'Status of application.Valid inputs: active, hired, rejected, converted, withdrawn'
+        races:
+          type:
+          - array
+          - 'null'
+          description: list of races of an applicant
+          items:
+            type: string
+        sourceType:
+          type:
+          - string
+          - 'null'
+          description: source type of an application
+        gender:
+          type:
+          - string
+          - 'null'
+          description: gender of an applicant
+        questions:
+          description: questions
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsQuestionAnswer'
+        rejectedBy:
+          type:
+          - string
+          - 'null'
+          description: applicant rejected by
+        disabilityStatusStr:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: disability status of an applicant
+        applicationId:
+          type: string
+          description: application id
+      required:
+      - applicationId
+      - applicationTs
+      - candidateId
+      - lastModifiedTs
+    ATSProfileSchema:
+      type: object
+      properties:
+        locationCountry:
+          type:
+          - string
+          - 'null'
+          description: location country of candidate
+        contactConsent:
+          type:
+          - string
+          - 'null'
+          description: 'Contact consent for candidate. Valid inputs: applied_only, all, country_only'
+        isAnonymized:
+          type:
+          - boolean
+          - 'null'
+          description: is anonymized candidate
+        scheduledInterviews:
+          description: scheduled interviews of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ATSScheduledInterview'
+        skills:
+          type:
+          - array
+          - 'null'
+          description: skills of candidate
+          items:
+            type: string
+        location:
+          type:
+          - string
+          - 'null'
+          description: location of candidate
+        address:
+          type:
+          - string
+          - 'null'
+          description: address of candidate
+        firstName:
+          type: string
+          description: first name of candidate
+        emails:
+          type:
+          - string
+          - 'null'
+          description: email of candidate
+        detailTags:
+          description: detail tags of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsTag'
+        attachments:
+          description: Attachments of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsAttachment'
+        resumeContent:
+          description: Resume content for candidate.
+          allOf:
+          - $ref: '#/components/schemas/AtsContent'
+        visaStatuses:
+          type:
+          - array
+          - 'null'
+          description: visa statuses of candidate
+          items:
+            type: string
+        veteranStatusStr:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: String value for veteran status of the candidate
+        education:
+          description: education of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsEducation'
+        isInternal:
+          type:
+          - boolean
+          - 'null'
+          description: is internal candidate
+        customInfo:
+          type:
+          - object
+          - 'null'
+          description: custom info of candidate
+        courseAttendance:
+          description: course attandance of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/LmsCourseAttendance'
+        systemId:
+          type:
+          - string
+          - 'null'
+          description: system if of candidate
+        urls:
+          type:
+          - array
+          - 'null'
+          description: urls of candidate
+          items:
+            type: string
+        candidateId:
+          type:
+          - string
+          - 'null'
+          description: ATS Candidate id
+        title:
+          type:
+          - string
+          - 'null'
+          description: title of candidate
+        displayTags:
+          type:
+          - array
+          - 'null'
+          description: display tags for candidate
+          items:
+            type: string
+        tags:
+          type:
+          - array
+          - 'null'
+          description: tags of candidate
+          items:
+            type: string
+        veteranStatus:
+          type:
+          - boolean
+          - 'null'
+          description: Boolean value for veteran status of the candidate
+        highestEducationLevel:
+          type:
+          - string
+          - 'null'
+          description: highest education level of candidate
+        certifications:
+          description: certifications for candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsCertification'
+        lastActivityTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: last activity time stamp of candidate
+        summary:
+          type:
+          - string
+          - 'null'
+          description: summary of candidate
+        photoContent:
+          description: Photo content.
+          allOf:
+          - $ref: '#/components/schemas/AtsContent'
+        applications:
+          description: applications of candidates
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsApplication'
+        disabilityStatus:
+          type:
+          - boolean
+          - 'null'
+          description: disability status
+        phones:
+          type:
+          - string
+          - 'null'
+          description: comma separated phone numbers of candidate
+        experience:
+          description: experience of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsExperience'
+        races:
+          type:
+          - array
+          - 'null'
+          description: race of candidate
+          items:
+            type: string
+        dateOfBirth:
+          type:
+          - string
+          - 'null'
+          description: date of birth of candidate
+        project:
+          description: project of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsProject'
+        notes:
+          description: notes of candidates
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsNote'
+        gender:
+          type:
+          - string
+          - 'null'
+          description: gender of candidate
+        questions:
+          description: questions of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsQuestionAnswer'
+        skillDetails:
+          description: skill details of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ATSSkillDetail'
+        disabilityStatusStr:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: disability status of an applicant
+        lastName:
+          type:
+          - string
+          - 'null'
+          description: last name of candidate
+      required:
+      - candidateId
+      - emails
+      - firstName
+      - lastActivityTs
+    ATSSkillGroup:
+      type: object
+      properties:
+        proficiency:
+          type:
+          - string
+          - 'null'
+          description: Proficiency
+        skillGroup:
+          type:
+          - string
+          - 'null'
+          description: Skill Group
+    AtsQuestionAnswer:
+      type: object
+      properties:
+        formName:
+          type:
+          - string
+          - 'null'
+          description: form name for the question
+        choices:
+          type:
+          - array
+          - 'null'
+          description: choices of a question
+          items:
+            type: string
+        explanation:
+          type:
+          - string
+          - 'null'
+          description: explaination of the question
+        answer:
+          type:
+          - array
+          - 'null'
+          description: answer to the question
+          items:
+            type: string
+        formType:
+          type:
+          - string
+          - 'null'
+          description: form type for the question
+        questionId:
+          type: string
+          description: question id
+        displayOrder:
+          type:
+          - string
+          - 'null'
+          description: display order of the question
+        formId:
+          type:
+          - string
+          - 'null'
+          description: form id for the question
+        type:
+          type:
+          - string
+          - 'null'
+          description: 'Type of question. Valid inputs: text, choice, dropdown, date, multi_value, numeric'
+        question:
+          type:
+          - string
+          - 'null'
+          description: question data
+      required:
+      - questionId
+    AtsExperience:
+      type: object
+      properties:
+        endTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: end_ts of exp
+        industry:
+          type:
+          - string
+          - 'null'
+          description: industry of work
+        isInternal:
+          type:
+          - boolean
+          - 'null'
+          description: is internal employee
+        department:
+          type:
+          - string
+          - 'null'
+          description: department of work
+        startTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: start_ts of exp
+        location:
+          type:
+          - string
+          - 'null'
+          description: location of work
+        company:
+          type:
+          - string
+          - 'null'
+          description: company of a candidate
+        isCurrent:
+          type:
+          - boolean
+          - 'null'
+          description: is currentely employed
+        description:
+          type:
+          - string
+          - 'null'
+          description: description of the post/company
+        title:
+          type:
+          - string
+          - 'null'
+          description: title of post
+      required:
+      - company
+      - isCurrent
+      - isInternal
+      - location
+      - startTs
+      - title
+    CreateATSProfileSchema:
+      type: object
+      properties:
+        locationCountry:
+          type:
+          - string
+          - 'null'
+          description: location country of candidate
+        contactConsent:
+          type:
+          - string
+          - 'null'
+          description: 'Contact consent for candidate. Valid inputs: applied_only, all, country_only'
+        isAnonymized:
+          type:
+          - boolean
+          - 'null'
+          description: is anonymized candidate
+        scheduledInterviews:
+          description: scheduled interviews of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ATSScheduledInterview'
+        skills:
+          type:
+          - array
+          - 'null'
+          description: skills of candidate
+          items:
+            type: string
+        location:
+          type:
+          - string
+          - 'null'
+          description: location of candidate
+        address:
+          type:
+          - string
+          - 'null'
+          description: address of candidate
+        firstName:
+          type: string
+          description: first name of candidate
+        emails:
+          type:
+          - string
+          - 'null'
+          description: email of candidate
+        detailTags:
+          description: detail tags of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsTag'
+        attachments:
+          description: Attachments of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsAttachment'
+        resumeContent:
+          description: Resume content for candidate.
+          allOf:
+          - $ref: '#/components/schemas/AtsContent'
+        visaStatuses:
+          type:
+          - array
+          - 'null'
+          description: visa statuses of candidate
+          items:
+            type: string
+        veteranStatusStr:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: String value for veteran status of the candidate
+        education:
+          description: education of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsEducation'
+        isInternal:
+          type:
+          - boolean
+          - 'null'
+          description: is internal candidate
+        customInfo:
+          type:
+          - object
+          - 'null'
+          description: custom info of candidate
+        autoGenerateCandidateId:
+          type:
+          - boolean
+          - 'null'
+          writeOnly: true
+          description: When true, auto-generate the candidate_id; only supported for system_id=talent_tracking and only when candidateId is not provided. Must not be set for other systems.
+        courseAttendance:
+          description: course attandance of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/LmsCourseAttendance'
+        systemId:
+          type:
+          - string
+          - 'null'
+          description: system if of candidate
+        urls:
+          type:
+          - array
+          - 'null'
+          description: urls of candidate
+          items:
+            type: string
+        candidateId:
+          type:
+          - string
+          - 'null'
+          description: ATS Candidate id. Omit when autoGenerateCandidateId is true.
+        title:
+          type:
+          - string
+          - 'null'
+          description: title of candidate
+        displayTags:
+          type:
+          - array
+          - 'null'
+          description: display tags for candidate
+          items:
+            type: string
+        tags:
+          type:
+          - array
+          - 'null'
+          description: tags of candidate
+          items:
+            type: string
+        veteranStatus:
+          type:
+          - boolean
+          - 'null'
+          description: Boolean value for veteran status of the candidate
+        highestEducationLevel:
+          type:
+          - string
+          - 'null'
+          description: highest education level of candidate
+        certifications:
+          description: certifications for candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsCertification'
+        lastActivityTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: last activity time stamp of candidate
+        summary:
+          type:
+          - string
+          - 'null'
+          description: summary of candidate
+        photoContent:
+          description: Photo content.
+          allOf:
+          - $ref: '#/components/schemas/AtsContent'
+        applications:
+          description: applications of candidates
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsApplication'
+        disabilityStatus:
+          type:
+          - boolean
+          - 'null'
+          description: disability status
+        phones:
+          type:
+          - string
+          - 'null'
+          description: comma separated phone numbers of candidate
+        experience:
+          description: experience of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsExperience'
+        races:
+          type:
+          - array
+          - 'null'
+          description: race of candidate
+          items:
+            type: string
+        dateOfBirth:
+          type:
+          - string
+          - 'null'
+          description: date of birth of candidate
+        project:
+          description: project of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsProject'
+        notes:
+          description: notes of candidates
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsNote'
+        gender:
+          type:
+          - string
+          - 'null'
+          description: gender of candidate
+        questions:
+          description: questions of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsQuestionAnswer'
+        skillDetails:
+          description: skill details of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ATSSkillDetail'
+        disabilityStatusStr:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: disability status of an applicant
+        lastName:
+          type:
+          - string
+          - 'null'
+          description: last name of candidate
+      required:
+      - emails
+      - firstName
+      - lastActivityTs
+    AtsScorecard:
+      type: object
+      properties:
+        overallRatingLabel:
+          type:
+          - string
+          - 'null'
+          description: overall rating label
+        overallRating:
+          type:
+          - string
+          - 'null'
+          description: 'Overall rating. Valid inputs: strong_yes, yes, mixed, no, strong_no'
+        submittedBy:
+          description: submitted by
+          allOf:
+          - $ref: '#/components/schemas/AtsUser'
+        submittedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: submitted at timestamp
+        interviewedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: interview at timestamp
+        attributes:
+          description: attributes
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ATSScoreCardAttribute'
+        description:
+          type:
+          - string
+          - 'null'
+          description: description of interview
+        interviewName:
+          type:
+          - string
+          - 'null'
+          description: interview name

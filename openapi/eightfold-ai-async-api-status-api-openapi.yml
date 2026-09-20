@@ -1,0 +1,92 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Async API Status API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Async API Status
+paths:
+  /api/v2/core/transactions/{transactionId}:
+    get:
+      description: Given a transaction id, it returns the status and encoded entity id of the transaction, status can be PASS, IN PROGRESS or FAIL in the past 3 days
+      operationId: get_async_api_status_transactions_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: transaction id of the async api call that was made
+        in: path
+        name: transactionId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataTransactionSchema'
+          description: OK
+      summary: Get Async API Status
+      tags:
+      - Async API Status
+components:
+  schemas:
+    DataTransactionSchema:
+      type: object
+      properties:
+        data:
+          readOnly: true
+          description: Transaction Data
+          allOf:
+          - $ref: '#/components/schemas/ExternalTransaction'
+    ExternalTransaction:
+      type: object
+      properties:
+        efEntityId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Profile Id of the message
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Status of the message
+        externalEntityId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Profile Id of the message

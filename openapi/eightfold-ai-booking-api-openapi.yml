@@ -1,0 +1,567 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Booking API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Booking
+paths:
+  /api/v2/resource_management/bookings/{bookingId}:
+    get:
+      description: Given a Booking id, it returns all attributes of the Booking (Resource Management Entity)
+      operationId: get_booking_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ID of a booking in Eightfold
+        in: path
+        name: bookingId
+        required: true
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are extData
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingSchema'
+          description: OK
+      summary: Get Booking
+      tags:
+      - Booking
+    patch:
+      description: 'Patches a booking given its id. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.'
+      operationId: patch_booking
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold Booking ID
+        in: path
+        name: bookingId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingSchema'
+          description: OK
+      summary: Patch Booking
+      tags:
+      - Booking
+    put:
+      description: Updates a booking given its id.
+      operationId: update_booking
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold Booking ID
+        in: path
+        name: bookingId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingSchema'
+          description: OK
+      summary: Update Booking
+      tags:
+      - Booking
+    delete:
+      description: Deletes a booking given its id.
+      operationId: delete_booking
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold Booking ID
+        in: path
+        name: bookingId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingSchema'
+          description: OK
+      summary: Delete Booking
+      tags:
+      - Booking
+  /api/v2/resource_management/bookings:
+    post:
+      description: Create a new Booking
+      operationId: create_booking
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingSchema'
+          description: OK
+      summary: Create Booking
+      tags:
+      - Booking
+    get:
+      description: Search bookings using query parameters and get the complete booking objects. Atleast one of employeeEmail or demandId is required in filters.
+      operationId: list_booking
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Filter on employee's email
+        in: query
+        name: employeeEmail
+        schema:
+          type: string
+      - description: Filter on Eightfold demand id
+        in: query
+        name: demandId
+        schema:
+          type: string
+      - description: The start date of the period for which you want to filter bookings. This parameter accepts an epoch timestamp. Only bookings that end on or after this date will be included in the response.
+        in: query
+        name: startDate
+        schema:
+          type: string
+      - description: The end date of the period for which you want to filter bookings. This parameter accepts an epoch timestamp. Only bookings that start on or before this date will be included in the response.
+        in: query
+        name: endDate
+        schema:
+          type: string
+      - description: 'Filter on booking type. Possible values: [''demand'', ''leave'', ''optional_holiday'', ''blocker'']'
+        in: query
+        name: bookingType
+        schema:
+          type: string
+      - description: 'Filter on booking status. Possible values: [''pending'', ''approved'', ''rejected'']'
+        in: query
+        name: bookingStatus
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are extData
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/BookingSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List Bookings
+      tags:
+      - Booking
+  /api/v2/resource_management/bookings/batch-fetch:
+    post:
+      description: Batch fetch bookings for a given list of booking ids
+      operationId: booking_batch_fetch
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are extData
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchFetchEntityRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/BookingSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/BatchFetchMetaSchema'
+                type: object
+          description: OK
+      summary: Batch Fetch Bookings
+      tags:
+      - Booking
+components:
+  schemas:
+    ExtBookingCapacityData:
+      type: object
+      properties:
+        unit:
+          type: string
+          enum:
+          - hours
+          - percentage
+          - fraction
+          description: 'Unit of capacity. Possible values: [''hours'', ''percentage'', ''fraction'']'
+        timeGranularity:
+          type:
+          - string
+          - 'null'
+          enum:
+          - daily
+          - weekly
+          - monthly
+          description: 'Time granularity of capacity. Possible values: [''daily'', ''weekly'', ''monthly'']'
+        capacity:
+          type: number
+          format: float
+          description: Capacity value
+      required:
+      - capacity
+      - unit
+    BatchFetchMetaSchema:
+      type: object
+      properties:
+        missingEntityIds:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of entity ids for which no result was found
+          items:
+            type: string
+    ExtBooking:
+      type: object
+      properties:
+        creatorEmail:
+          type: string
+          description: Email of the creator of the booking
+        createdAt:
+          type: integer
+          format: int32
+          description: Creation timestamp for the booking
+        bookingId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Internal booking ID
+        startDateIso:
+          type: string
+          description: Start date of the booking in ISO format (YYYY-MM-DD)
+        endDateIso:
+          type: string
+          description: End date of the booking in ISO format (YYYY-MM-DD)
+        bookedCapacity:
+          description: Booked capacity of employee
+          allOf:
+          - $ref: '#/components/schemas/ExtBookingCapacityData'
+        lastModifiedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Last modified timestamp for the booking
+        endDate:
+          type: integer
+          format: int32
+          description: '[DEPRECATED] End date of the booking in epoch timestamp format. Use endDateIso instead.'
+        lastModifierEmail:
+          type:
+          - string
+          - 'null'
+          description: Email of the last modifier of the booking
+        extBookingId:
+          type: string
+          description: External booking id
+        startDate:
+          type: integer
+          format: int32
+          description: '[DEPRECATED] Start date of the booking in epoch timestamp format. Use startDateIso instead.'
+        extDemandId:
+          type:
+          - string
+          - 'null'
+          description: External demand id for the demand associated with the booking
+        employeeId:
+          type: string
+          description: Employee id
+        bookingStatus:
+          type: string
+          enum:
+          - pending
+          - approved
+          - rejected
+          description: 'Status of the booking. Possible values: [''pending'', ''approved'', ''rejected'']'
+        bookingType:
+          type: string
+          enum:
+          - demand
+          - leave
+          - optional_holiday
+          - blocker
+          description: 'Type of the booking. Possible values: [''demand'', ''leave'', ''optional_holiday'', ''blocker'']'
+      required:
+      - bookingStatus
+      - bookingType
+      - createdAt
+      - creatorEmail
+      - employeeId
+      - extBookingId
+    BatchFetchEntityRequestSchema:
+      type: object
+      properties:
+        entityIds:
+          type: array
+          description: list of entity ids to fetch the entity objects
+          items:
+            type: string
+      required:
+      - entityIds
+    BookingSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Created timestamp for the booking
+        updatedBy:
+          type:
+          - string
+          - 'null'
+          description: User who updated the booking
+        isArchived:
+          type:
+          - boolean
+          - 'null'
+          description: A flag indicating if booking is archived
+        startDateIso:
+          type: string
+          description: Start date of the booking in ISO format (YYYY-MM-DD)
+        extData:
+          readOnly: true
+          description: External data associated with the booking
+          allOf:
+          - $ref: '#/components/schemas/ExtBooking'
+        capacity:
+          type: number
+          format: float
+          description: Booked capacity of employee
+        startDate:
+          type: integer
+          format: int32
+          description: '[DEPRECATED] Start date of the booking. Use startDateIso instead.'
+        archivedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Archived timestamp for the booking
+        bookingStatus:
+          type: string
+          enum:
+          - pending
+          - approved
+          - rejected
+          description: 'Status of the booking. Possible values: [''pending'', ''approved'', ''rejected'']'
+        bookingId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Booking id
+        demandId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Demand id associated with the booking
+        endDate:
+          type: integer
+          format: int32
+          description: '[DEPRECATED] End date of the booking. Use endDateIso instead.'
+        updatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Updated timestamp for the booking
+        employeeProfileId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Profile ID of the employee
+        bookingType:
+          type: string
+          enum:
+          - demand
+          - leave
+          - optional_holiday
+          - blocker
+          description: 'Type of the booking. Possible values: [''demand'', ''leave'', ''optional_holiday'', ''blocker'']'
+        endDateIso:
+          type: string
+          description: End date of the booking in ISO format (YYYY-MM-DD)
+        createdBy:
+          type:
+          - string
+          - 'null'
+          description: User who created the booking
+        employeeEmail:
+          type: string
+          description: Email of employee
+      required:
+      - bookingStatus
+      - bookingType
+      - capacity
+      - employeeEmail
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''

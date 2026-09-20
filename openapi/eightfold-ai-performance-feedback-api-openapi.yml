@@ -1,0 +1,1742 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Performance Feedback API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Performance Feedback
+paths:
+  /api/v2/careerhub/performance-feedback:
+    get:
+      description: List performance feedbacks. At least one of `profileEncId`, `reviewerEmail`, `requesterEmail` is required so the result set is always scoped. Backed by `PerformanceReviewService.search_performance_reviews`.
+      operationId: list_careerhub_performance_feedback
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Encoded profile id of the candidate the feedback is about (one of profileEncId / reviewerEmail / requesterEmail is required)
+        in: query
+        name: profileEncId
+        schema:
+          type: string
+      - description: Filter on reviewer email (one of profileEncId / reviewerEmail / requesterEmail is required)
+        in: query
+        name: reviewerEmail
+        schema:
+          type: string
+      - description: Filter on requester email (one of profileEncId / reviewerEmail / requesterEmail is required)
+        in: query
+        name: requesterEmail
+        schema:
+          type: string
+      - description: Filter on status of the feedback
+        in: query
+        name: status
+        schema:
+          type: string
+      - description: When true, return only pending feedbacks
+        in: query
+        name: pendingOnly
+        schema:
+          type: boolean
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PerformanceFeedbackSchema'
+          description: OK
+      summary: List Performance Feedbacks
+      tags:
+      - Performance Feedback
+  /api/v2/careerhub/performance-feedback/request:
+    post:
+      description: 'Request performance feedback for a candidate from one or more reviewers (''Request Feedback''). Body: `{profileEncId, requesteeEmails, templateId, deadline?, contextPrompt?, onBehalfOf?}`.'
+      operationId: create_careerhub_request
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PerformanceFeedbackRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PerformanceFeedbackSchema'
+          description: OK
+      summary: Request Performance Feedback
+      tags:
+      - Performance Feedback
+  /api/v2/careerhub/performance-feedback/provide:
+    post:
+      description: 'Submit performance feedback (''Give Feedback''). Body: `{templateId, answers, profileEncId?, reviewRequestId?}`. `profileEncId` is required unless this is a self-submitted review.'
+      operationId: create_careerhub_provide
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PerformanceFeedbackProvideSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PerformanceFeedbackSchema'
+          description: OK
+      summary: Provide Performance Feedback
+      tags:
+      - Performance Feedback
+  /api/v2/careerhub/performance-feedback/{reviewId}:
+    get:
+      description: Fetch a performance feedback by `reviewId`.
+      operationId: get_careerhub_performance_feedback_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Performance review id
+        in: path
+        name: reviewId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PerformanceFeedbackSchema'
+          description: OK
+      summary: Get Performance Feedback
+      tags:
+      - Performance Feedback
+components:
+  schemas:
+    HomePageBanner:
+      type: object
+      properties:
+        useImage:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: boolean value for using image
+        image:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: image of home page banner
+        title:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: title for home page
+    LangMapping:
+      type: object
+      properties:
+        locale:
+          type:
+          - string
+          - 'null'
+          description: locale
+        label:
+          type:
+          - string
+          - 'null'
+          description: label
+    AtsOpenings:
+      type: object
+      properties:
+        closedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Closing timestamp in epoch format
+        openingDetails:
+          description: Details of the openings
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsOpeningDetail'
+        numOpenings:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of openings. Set to -1 for unlimited openings
+        openedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Opening timestamp in epoch format
+        numOpeningsFilled:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of openings filled
+    AtsOpeningDetail:
+      type: object
+      properties:
+        status:
+          type:
+          - string
+          - 'null'
+          description: Status of the opening
+        closedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Closing timestamp in epoch format
+        openingId:
+          type:
+          - string
+          - 'null'
+          description: Opening ID
+        openedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Opening timestamp in epoch format
+        closeReason:
+          type:
+          - string
+          - 'null'
+          description: Reason for closing the opening
+        candidateId:
+          type:
+          - string
+          - 'null'
+          description: List of candidate ID
+        applicationId:
+          type:
+          - string
+          - 'null'
+          description: List of application ID
+    ATSPositionData:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: creation timestamp in epoch format
+        locationCountry:
+          type:
+          - string
+          - 'null'
+          description: Country of the location
+        coordinators:
+          description: all the coordinators related to this position
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Person'
+        businessUnit:
+          type:
+          - string
+          - 'null'
+          description: business unit
+        isPrivate:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if a position is a private posting
+        workLocationOption:
+          type:
+          - string
+          - 'null'
+          description: Indicates the option for working location e.g. onsite, remote_global, remote_local, hybrid
+        atsEntityId:
+          type:
+          - string
+          - 'null'
+          description: position_id in the ats system
+        hiringManager:
+          description: Hiring Manager
+          allOf:
+          - $ref: '#/components/schemas/Person'
+        internalPostingUrl:
+          type:
+          - string
+          - 'null'
+          description: internal posting url
+        evergreen:
+          type:
+          - boolean
+          - 'null'
+          description: is evergreen
+        skills:
+          type:
+          - array
+          - 'null'
+          description: skills
+          items:
+            type: string
+        company:
+          type:
+          - string
+          - 'null'
+          description: company
+        locationCity:
+          type:
+          - string
+          - 'null'
+          description: City of the location
+        lastUpdated:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: last modified date time in epoch format
+        displayJobId:
+          type:
+          - string
+          - 'null'
+          description: display job id
+        openings:
+          description: Openings
+          allOf:
+          - $ref: '#/components/schemas/AtsOpenings'
+        hiringTeam:
+          readOnly: true
+          description: 'Unified hiring team array. Each entry: {role, roleKey, name, email}. Includes primary/secondary HMs, primary/secondary recruiters, and custom roles.'
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/HiringTeamMember'
+        followers:
+          description: all the followers of the positions as hiring managers etc.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Person'
+        startDate:
+          type:
+          - string
+          - 'null'
+          description: start date of the position in ISO 8601 format (e.g. 2024-05-01)
+        requisitionType:
+          type:
+          - string
+          - 'null'
+          description: Requisition Type
+        systemId:
+          type:
+          - string
+          - 'null'
+          description: system id
+        activities:
+          description: all the activities related to this positions
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PositionActivities'
+        postedFor:
+          type:
+          - string
+          - 'null'
+          description: 'internal for internal jobs, external for external jobs, or all for both. Can be omitted for unposted positions.Input values must be one of these: internal, external, all, None'
+        questionnaires:
+          description: questionnaires
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Questionnaire'
+        restrictAccess:
+          type:
+          - boolean
+          - 'null'
+          description: restrict access
+        title:
+          type:
+          - string
+          - 'null'
+          description: job title
+        templateId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Template id of the template used to create the position
+        recruiter:
+          description: recruiter
+          allOf:
+          - $ref: '#/components/schemas/Person'
+        jobPosts:
+          description: job postings
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/JobPost'
+        hiringBand:
+          type:
+          - string
+          - 'null'
+          description: hiring band
+        postingTitle:
+          type:
+          - string
+          - 'null'
+          description: posting title
+        employmentType:
+          type:
+          - string
+          - 'null'
+          description: Employment Type
+        posted:
+          type:
+          - boolean
+          - 'null'
+          description: status of the position posted or not
+        locationFlexibility:
+          type:
+          - string
+          - 'null'
+          description: Indicates the flexibility on location e.g. not_flexible, flexible_within_country, flexible_global
+        orgUnits:
+          type:
+          - object
+          - 'null'
+          description: Org units of the position
+        companyDescription:
+          type:
+          - string
+          - 'null'
+          description: Company description
+        customFields:
+          type:
+          - object
+          - 'null'
+          description: custom fields
+        sourcers:
+          description: all the recruiters/sourcers related to this positions
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Person'
+        workflowTemplateId:
+          type:
+          - string
+          - 'null'
+          description: Indicates which workflow this position belongs to
+        status:
+          type:
+          - string
+          - 'null'
+          description: status
+        jobCode:
+          type:
+          - string
+          - 'null'
+          description: ATS attribute which identifies the job this jobrequestion is mapped to
+        open:
+          type:
+          - boolean
+          - 'null'
+          description: status of the position open or not
+        postingUrl:
+          type:
+          - string
+          - 'null'
+          description: posting url
+        atsUserGroups:
+          description: ATS user groups
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsUserGroups'
+        createdBy:
+          type:
+          - string
+          - 'null'
+          description: Email of the user who created this position
+        function:
+          type:
+          - string
+          - 'null'
+          description: job function
+        jobStages:
+          type:
+          - array
+          - 'null'
+          description: job_stages
+          items:
+            type: string
+        requiredSkills:
+          type:
+          - array
+          - 'null'
+          description: required skills
+          items:
+            type: string
+        questions:
+          description: questions
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Questions'
+        locationState:
+          type:
+          - string
+          - 'null'
+          description: State of the location
+        locations:
+          type:
+          - array
+          - 'null'
+          description: location
+          items:
+            type: string
+        positionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: EF Position ID
+        description:
+          type:
+          - string
+          - 'null'
+          description: job description
+      required:
+      - atsEntityId
+      - company
+      - createdAt
+      - lastUpdated
+      - open
+      - posted
+      - recruiter
+      - status
+      - title
+    Questionnaire:
+      type: object
+      properties:
+        questionDependencies:
+          description: question dependencies
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/QuestionDependencies'
+        questionnaireId:
+          type:
+          - string
+          - 'null'
+          description: questionnaire id
+      required:
+      - questionnaireId
+    SkillProficiency:
+      type: object
+      properties:
+        proficiency:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: proficiency of the role
+        skillGroupList:
+          description: skill group list of a role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SkillGroupList'
+        level:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: level of the role
+        name:
+          type:
+          - string
+          - 'null'
+          description: name of the role
+    PositionActivities:
+      type: object
+      properties:
+        activityTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: activity time in epoch format
+        activityType:
+          type:
+          - string
+          - 'null'
+          description: activity type
+        changeLogs:
+          description: all the change logs for the activity
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChangeLog'
+        message:
+          type:
+          - string
+          - 'null'
+          description: message for the activity
+      required:
+      - activityTime
+      - activityType
+      - message
+    ProfileFeedbackQuestionAnswer:
+      type: object
+      properties:
+        answer:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Answer
+        label:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Label
+        questionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Question ID
+        comment:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Comment
+    PlannedEvent:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when this event was created
+        isCancelled:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: ''
+        eventSpeakers:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of speakers
+          items:
+            type: string
+        activeRegistrations:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: active registrations
+        registerButton:
+          readOnly: true
+          description: Registration button information
+          allOf:
+          - $ref: '#/components/schemas/RegisterButton'
+        eventTeamDataJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Event team data
+        eventBucket:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Bucket of the event
+        address:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Address of venue
+        eventCustomFieldsJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Event custom fields
+        eventType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+        institution:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Institution related to event
+        selectedTimezone:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Selected time zome
+        name:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Name of the event
+        homePageBanner:
+          readOnly: true
+          description: Home page banner information
+          allOf:
+          - $ref: '#/components/schemas/HomePageBanner'
+        eventLocationType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: id
+        parentId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Parent id of the event
+        venue:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Venue of the event
+        endTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Ending timestamp of event
+        isPublished:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: ''
+        eventLandingPage:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Event landing page
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+        createdBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User id which created this event
+        eventCategory:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Category of the event
+        startTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Starting time stamp of event
+        when:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: When tag of the event
+        description:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Description of event
+    ProfileFeedbackResponse:
+      type: object
+      properties:
+        overallFeedback:
+          readOnly: true
+          description: Overall Feedback (based on first boolean type question)
+          allOf:
+          - $ref: '#/components/schemas/ProfileFeedbackQuestionAnswer'
+        feedback:
+          readOnly: true
+          description: Ordered list of answers in the feedback (one per question on the form). Frontend should drive form rendering off this typed list rather than parsing the raw `feedbackJson` string.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProfileFeedbackQuestionAnswer'
+    AtsUserGroups:
+      type: object
+      properties:
+        userGroupId:
+          type:
+          - string
+          - 'null'
+          description: Ats Group of a user
+    CalibrationTemplate:
+      type: object
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: id of the calibration template
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the calibration template
+    RegisterButton:
+      type: object
+      properties:
+        textColor:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: text color for registration button
+        backgroundColor:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: background color of registration button
+        text:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Text of registration button
+    Role:
+      type: object
+      properties:
+        templates:
+          readOnly: true
+          description: all calibration templates associated with the role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CalibrationTemplate'
+        name:
+          type:
+          - string
+          - 'null'
+          description: name of the role
+    PerformanceFeedbackSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          readOnly: true
+          description: Datetime when this feedback was created
+        plannedEventId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Planned event id for candidate source
+        feedbackResponse:
+          readOnly: true
+          description: Received feedback's details
+          allOf:
+          - $ref: '#/components/schemas/ProfileFeedbackResponse'
+        followUpEnabled:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Denotes if the feedback follow up is enabled or not
+        profileId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Profile ID associated with the profile feedback
+        communityId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Community Id for candidate source
+        sharedFeedbackMessageId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Message Id for shared feedback
+        viewFeedbackUrl:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: URL to view feedback
+        requestedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when the feedback was requested
+        reminderCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Number of reminders sent
+        requester:
+          readOnly: true
+          description: Requester of the ProfileFeedback
+          allOf:
+          - $ref: '#/components/schemas/UserLogin'
+        submittedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when the feedback was first submitted
+        reviewerEmail:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Email of reviewer of the ProfileFeedback
+        feedbackType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: type of the feedback
+        feedbackTemplateId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Feedback template ID
+        feedbackEncId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Encoded ID of the ProfileFeedback
+        requesterEmail:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Email of requester of the ProfileFeedback
+        archiveFlag:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Denotes if the feedback is archived or not
+        position:
+          readOnly: true
+          description: Position for which feedback was given
+          allOf:
+          - $ref: '#/components/schemas/PositionSchema'
+        userCalendarEventId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: User calendar event id
+        feedbackId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ID of the ProfileFeedback
+        feedbackTemplateName:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Feedback template name
+        reviewer:
+          readOnly: true
+          description: Reviewer of the ProfileFeedback
+          allOf:
+          - $ref: '#/components/schemas/UserLogin'
+        plannedEvent:
+          readOnly: true
+          description: Planned event for candidate source
+          allOf:
+          - $ref: '#/components/schemas/PlannedEvent'
+        matchingData:
+          readOnly: true
+          description: Application matching information
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ApplicationMatchScore'
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: status of the feedback
+        feedbackJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Feedback JSON
+        feedbackUrl:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: URL to provide feedback
+        positionId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Position ID for which feedback was given
+    ChangeLog:
+      type: object
+      properties:
+        newValue:
+          type:
+          - string
+          - 'null'
+          description: new value
+        fieldName:
+          type:
+          - string
+          - 'null'
+          description: field name
+        prevValue:
+          type:
+          - string
+          - 'null'
+          description: previous value
+      required:
+      - fieldName
+      - newValue
+      - prevValue
+    QuestionLabel:
+      type: object
+      properties:
+        langMappingList:
+          description: lang_mapping_list
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/LangMapping'
+        label:
+          type:
+          - string
+          - 'null'
+          description: label
+        value:
+          type:
+          - string
+          - 'null'
+          description: value
+    QuestionDependencies:
+      type: object
+      properties:
+        questionId:
+          type:
+          - string
+          - 'null'
+          description: question id
+        questionSource:
+          type:
+          - string
+          - 'null'
+          description: question source
+        choiceValue:
+          type:
+          - string
+          - 'null'
+          description: choice value
+        dependencyType:
+          type:
+          - string
+          - 'null'
+          description: dependency type
+        childQuestionIds:
+          type:
+          - array
+          - 'null'
+          description: child question ids
+          items:
+            type: string
+      required:
+      - choiceValue
+      - questionId
+    PerformanceFeedbackAnswerSchema:
+      type: object
+      properties:
+        answer:
+          type: string
+          description: Answer payload — type depends on question (string, number, list, or dict)
+        label:
+          type:
+          - string
+          - 'null'
+          description: Optional label (e.g. for choice/scale questions)
+        questionId:
+          type: integer
+          format: int32
+          description: ID of the question being answered
+        comment:
+          type:
+          - string
+          - 'null'
+          description: Optional free-text comment accompanying the answer
+      required:
+      - answer
+      - questionId
+    HiringTeamMember:
+      type: object
+      properties:
+        role:
+          type:
+          - string
+          - 'null'
+          description: Role label (e.g. Hiring Manager, HRBP)
+        email:
+          type:
+          - string
+          - 'null'
+          description: Email of the team member
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the team member
+        roleKey:
+          type:
+          - string
+          - 'null'
+          description: Storage key for the role (e.g. hiring_manager, secondary_hiring_managers, cust_hrbp)
+    PositionSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Creation timestamp in epoch format
+        confidential:
+          type:
+          - boolean
+          - 'null'
+          description: if the position is confidential or not
+        hiringManager:
+          readOnly: true
+          description: Hiring Manager
+          allOf:
+          - $ref: '#/components/schemas/Person'
+        groupId:
+          type:
+          - string
+          - 'null'
+          description: group id
+        name:
+          type:
+          - string
+          - 'null'
+          description: Title of the Position
+        followers:
+          type:
+          - array
+          - 'null'
+          description: all the followers of the position
+          items:
+            type: string
+        jobDescription:
+          type:
+          - string
+          - 'null'
+          description: Detailed Job Description in a text format
+        systemId:
+          type:
+          - string
+          - 'null'
+          description: system id
+        positionDisplayId:
+          type:
+          - string
+          - 'null'
+          description: display job id
+        recruiter:
+          readOnly: true
+          description: Recruiter
+          allOf:
+          - $ref: '#/components/schemas/Person'
+        calibrationConfirmedBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User who confirmed the calibration
+        open:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: if the position is open or not
+        createdBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: source of the job
+        calibrationConfirmedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Confirmed timestamp for the calibration
+        atsData:
+          readOnly: true
+          description: ats data of the job
+          allOf:
+          - $ref: '#/components/schemas/ATSPositionData'
+        calibrationData:
+          description: calibration data of the job
+          allOf:
+          - $ref: '#/components/schemas/CalibrationData'
+        role:
+          readOnly: true
+          description: role associated with the position
+          allOf:
+          - $ref: '#/components/schemas/Role'
+        positionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: job id
+      required:
+      - name
+    QuestionChoice:
+      type: object
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+          description: label
+        value:
+          type:
+          - string
+          - 'null'
+          description: value
+    SkillGroupList:
+      type: object
+      properties:
+        proficiency:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: group proficiency of the skill group
+        groupName:
+          type:
+          - string
+          - 'null'
+          description: name of the skill group
+        level:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: level of the role
+        skillCategory:
+          type:
+          - string
+          - 'null'
+          description: skill category of the skill group
+    PerformanceFeedbackProvideSchema:
+      type: object
+      properties:
+        answers:
+          description: List of answers, one per question
+          type: array
+          items:
+            $ref: '#/components/schemas/PerformanceFeedbackAnswerSchema'
+        profileEncId:
+          type:
+          - string
+          - 'null'
+          description: Encoded profile ID of the candidate the feedback is about
+        templateId:
+          type: integer
+          format: int32
+          description: ID of the question template being answered
+        reviewRequestId:
+          type:
+          - string
+          - 'null'
+          description: Encoded review request ID — supply when responding to a previously requested review
+      required:
+      - answers
+      - templateId
+    ApplicationMatchScore:
+      type: object
+      properties:
+        topMatches:
+          type:
+          - array
+          - 'null'
+          description: The top few items driving this score (e.g. the matched skills or title terms), up to 3
+          items:
+            type: string
+        indeterminable:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: 1 when there wasn't enough data to compute this score (score will be -1), otherwise 0
+        score:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Match strength for this aspect on a 0-5 scale (higher is a better match); -1 when it could not be determined
+        relevantScoreTypeVal:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: 'A supporting count eg: matching skills (skill) or relevant years of experience (experience). Null when not applicable'
+        scoreRaw:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: The underlying un-rounded score behind the 0-5 rating (e.g. raw overall stars); may be null when not applicable
+        scoreType:
+          type:
+          - string
+          - 'null'
+          description: Which aspect of the match this score describes eg- overall fit, skill, title, or experience
+    Person:
+      type: object
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+          description: email
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name
+      required:
+      - name
+    JobPost:
+      type: object
+      properties:
+        publishedTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: published time in epoch format
+        expirationTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: expiration time in epoch format
+        postingTitle:
+          type:
+          - string
+          - 'null'
+          description: posting title
+        postingId:
+          type:
+          - string
+          - 'null'
+          description: posting id
+        locale:
+          type:
+          - string
+          - 'null'
+          description: locale of the ats job post
+        primaryPost:
+          type:
+          - boolean
+          - 'null'
+          description: is primary post
+        jobDescription:
+          type:
+          - string
+          - 'null'
+          description: job description
+        postedFor:
+          type:
+          - string
+          - 'null'
+          description: internal for internal jobs, external for external jobs, or all for both.
+      required:
+      - postedFor
+      - postingId
+      - postingTitle
+      - publishedTime
+    Questions:
+      type: object
+      properties:
+        choices:
+          description: Question choices
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/QuestionChoice'
+        choicesV2:
+          description: Question choices V2. It supports language mapping.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/QuestionLabel'
+        questionId:
+          type:
+          - string
+          - 'null'
+          description: question_id
+        help:
+          type:
+          - string
+          - 'null'
+          description: help
+        type:
+          type:
+          - string
+          - 'null'
+          description: type of the question. e.g.-choice, numeric or text
+        question:
+          description: question. It supports language mapping.
+          allOf:
+          - $ref: '#/components/schemas/QuestionLabel'
+        required:
+          type:
+          - boolean
+          - 'null'
+          description: required
+      required:
+      - questionId
+    CalibrationData:
+      type: object
+      properties:
+        flags:
+          type:
+          - array
+          - 'null'
+          description: flags
+          items:
+            type: string
+        graduationYear:
+          type:
+          - string
+          - 'null'
+          description: graduationYear
+        workCategories:
+          type:
+          - array
+          - 'null'
+          description: workCategories
+          items:
+            type: string
+        skills:
+          type:
+          - array
+          - 'null'
+          description: skills
+          items:
+            type: string
+        diversity:
+          type:
+          - array
+          - 'null'
+          description: diversity
+          items:
+            type: string
+        idealCandidates:
+          type:
+          - array
+          - 'null'
+          description: ideal_candidates
+          items:
+            type: string
+        companies:
+          type:
+          - array
+          - 'null'
+          description: companies
+          items:
+            type: string
+        titles:
+          type:
+          - array
+          - 'null'
+          description: titles
+          items:
+            type: string
+        educationLevel:
+          type:
+          - array
+          - 'null'
+          description: different education levels
+          items:
+            type: string
+        relocation:
+          type:
+          - array
+          - 'null'
+          description: relocation
+          items:
+            type: string
+        seniorities:
+          type:
+          - array
+          - 'null'
+          description: seniorities
+          items:
+            type: string
+        maxExperience:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: maxExperience
+        schools:
+          type:
+          - array
+          - 'null'
+          description: schools
+          items:
+            type: string
+        skillProficiencies:
+          writeOnly: true
+          description: skill proficiencies of the role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SkillProficiency'
+        idealCandidateUrls:
+          type:
+          - array
+          - 'null'
+          description: idealCandidatesUrls
+          items:
+            type: string
+        minExperience:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: minExperience
+        notes:
+          type:
+          - string
+          - 'null'
+          description: notes
+        locations:
+          type:
+          - array
+          - 'null'
+          description: locations
+          items:
+            type: string
+    UserLogin:
+      type: object
+      properties:
+        fullName:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Full name of User
+        redirectEmail:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Redirect Email
+        domain:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Domain name for User
+        email:
+          type:
+          - string
+          - 'null'
+          description: Email of User
+    PerformanceFeedbackRequestSchema:
+      type: object
+      properties:
+        deadline:
+          type:
+          - string
+          - 'null'
+          description: ISO datetime by which the reviewer should respond
+        requesteeEmails:
+          type: array
+          description: Reviewer emails to ask for feedback — one ProfileFeedback row is created per email
+          items:
+            type: string
+        onBehalfOf:
+          type:
+          - string
+          - 'null'
+          description: Email of the person on whose behalf this request is sent (delegation)
+        contextPrompt:
+          type:
+          - string
+          - 'null'
+          description: Free-text context shown to the reviewer
+        profileEncId:
+          type: string
+          description: Encoded profile ID of the candidate the feedback is about
+        templateId:
+          type: integer
+          format: int32
+          description: ID of the question template the reviewers should fill out
+      required:
+      - profileEncId
+      - requesteeEmails
+      - templateId

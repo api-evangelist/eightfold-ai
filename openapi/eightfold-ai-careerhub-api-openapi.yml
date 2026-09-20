@@ -1,0 +1,374 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Careerhub API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Careerhub
+paths:
+  /api/v2/careerhub/profiles/suggest-skills/{profileSection}:
+    get:
+      description: For a given profile id, fetch suggested skills for a particular profile section. Supported profile sections are 'experience', 'education', 'projects'.
+      operationId: get_careerhub_suggest_skills_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Profile section for which we want the suggested skills. Possible values are 'experience', 'education', 'projects'.
+        in: path
+        name: profileSection
+        required: true
+        schema:
+          type: string
+      - description: Term value for a particular section of the profile. e.g. if section is 'experience', the term can be 'Software Engineer'
+        in: query
+        name: term
+        required: true
+        schema:
+          type: string
+      - description: User's email id
+        in: query
+        name: userEmail
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileSuggestSkillSchema'
+          description: OK
+      summary: Get Skill Suggestions
+      tags:
+      - Careerhub
+  /api/v2/careerhub/career-planner/{userEmail}/roles/{roleSection}:
+    get:
+      description: Returns roles for a specified section. Possible values of sections are preferred-roles and recommended-roles
+      operationId: list_careerhub_roles
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: User Email
+        in: path
+        name: userEmail
+        required: true
+        schema:
+          type: string
+      - description: Role section e.g. preferred-roles and recommended-roles
+        in: path
+        name: roleSection
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CareerPlannerRoleSchema'
+          description: OK
+      summary: Get Career Planner Role
+      tags:
+      - Careerhub
+  /api/v2/careerhub/career-planner/{userEmail}/roles/:
+    patch:
+      description: 'Patch preferred role for a user. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.'
+      operationId: patch_careerhub_
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: User Email
+        in: path
+        name: userEmail
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CareerPlannerRoleSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CareerPlannerRoleSchema'
+          description: OK
+      summary: Patch Career Planner Role
+      tags:
+      - Careerhub
+  /api/v2/careerhub/career-planner/{userEmail}/skills/skill-gap-analysis:
+    get:
+      description: Skill gap analysis data which includes present skills and recommeded skills for the provided role and current user profile
+      operationId: list_careerhub_skill_gap_analysis
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: User Email
+        in: path
+        name: userEmail
+        required: true
+        schema:
+          type: string
+      - description: A role selected for current user profile and selected role skills gap recommendation
+        in: query
+        name: selectedRole
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CareerPlannerSkillGapSchema'
+          description: OK
+      summary: Get Skill Gap Analysis
+      tags:
+      - Careerhub
+  /api/v2/careerhub/career-planner/{userEmail}/courses/recommended-courses:
+    get:
+      description: Return recommended course for the current user and selected role pair
+      operationId: list_careerhub_recommended_courses
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: User Email
+        in: path
+        name: userEmail
+        required: true
+        schema:
+          type: string
+      - description: A role selected for current user profile to get course recommendation
+        in: query
+        name: selectedRole
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CareerPlannerRecommendedCourseSchema'
+          description: OK
+      summary: Get Recommended Courses
+      tags:
+      - Careerhub
+components:
+  schemas:
+    CareerPlannerRecommendedCourseSchema:
+      type: object
+      properties:
+        imageUrl:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Image url of course
+        missingSkills:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Missing Skills user will learm from the course
+          items:
+            type: string
+        duration:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: Duration of the course in hour
+        provider:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: A provider of the course
+        courseType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Course type
+        courseUrl:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: A link to the course
+        description:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Description of course
+        title:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: A title of the course
+    ProfileSuggestSkillSchema:
+      type: object
+      properties:
+        suggestedSkills:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of suggested skills for a given profile id and profile section pair
+          items:
+            type: string
+    CareerPlannerRoleSchema:
+      type: object
+      properties:
+        role:
+          type:
+          - string
+          - 'null'
+          description: A name of the role such as Software Engineer
+        salary:
+          readOnly: true
+          description: Salary data of the current role
+          allOf:
+          - $ref: '#/components/schemas/CareerPlannerSalarySchema'
+        isTrending:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: A flag indicating that the role is trending
+      required:
+      - role
+    CareerPlannerSkillGapSchema:
+      type: object
+      properties:
+        recommendedSkills:
+          readOnly: true
+          description: A list of recommended skills with score value
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NameValueItem'
+        presentSkills:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of present skills for a give user profile and selected role pair
+          items:
+            type: string
+    CareerPlannerSalarySchema:
+      type: object
+      properties:
+        count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: The number of salary reported
+        value:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Salary value
+    NameValueItem:
+      type: object
+      properties:
+        value:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: A value of item
+        name:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: A name of item
