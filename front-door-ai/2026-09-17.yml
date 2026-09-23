@@ -1,0 +1,29 @@
+# Front Door AI Index — eightfold-ai — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: eightfold-ai
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: eightfold.ai
+  final_host: eightfold.ai
+  ownership: own
+  owner: eightfold-ai
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 49
+  host_score: 49
+  density: 57.44
+  words: 853
+  tiers:
+    agentic: 8
+    core: 41
+    model: 0
+  ambiguous: 28
+  top_terms:
+    AI: 41
+    intelligence: 16
+    agent: 12
+    agentic: 7
+    AI agent: 1
