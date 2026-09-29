@@ -1,0 +1,528 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Comment API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Comment
+paths:
+  /api/v2/core/comments/{commentId}:
+    get:
+      description: Given a comment id, it returns all attributes of the comment
+      operationId: get_comments_comments_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ID of comment in Eightfold
+        in: path
+        name: commentId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentSchema'
+          description: OK
+      summary: Get Comment
+      tags:
+      - Comment
+  /api/v2/core/comments:
+    get:
+      description: Returns all comments for a given entity type and entity id
+      operationId: list_comments_comments
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: 'Type of entity to filter comments by. Supported entity types: demand'
+        in: query
+        name: entityType
+        required: true
+        schema:
+          type: string
+      - description: ID of entity to filter comments by
+        in: query
+        name: entityId
+        required: true
+        schema:
+          type: integer
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/CommentSchema'
+                    type: array
+                type: object
+          description: OK
+      summary: List Comments
+      tags:
+      - Comment
+  /api/v2/core/ext-entity-comments/{entityType}/{extEntityId}:
+    get:
+      description: Returns all comments for a given entity type and external entity id
+      operationId: list_comments_ext_entity_comments
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: External Entity ID
+        in: path
+        name: extEntityId
+        required: true
+        schema:
+          type: string
+      - description: 'Eightfold Entity Type. Supported entity types: demand'
+        in: path
+        name: entityType
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/CommentSchema'
+                    type: array
+                type: object
+          description: OK
+      summary: Get Comments By External Entity Id And Type
+      tags:
+      - Comment
+  /api/v2/core/entity-comments/{entityType}/{entityId}:
+    get:
+      description: Returns all comments for a given entity type and entity id
+      operationId: list_comments_entity_comments
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Eightfold Entity ID
+        in: path
+        name: entityId
+        required: true
+        schema:
+          type: integer
+      - description: 'Eightfold Entity Type. Supported entity types: demand'
+        in: path
+        name: entityType
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/CommentSchema'
+                    type: array
+                type: object
+          description: OK
+      summary: Get Comments By Entity Id And Type
+      tags:
+      - Comment
+    delete:
+      description: Deletes all comments for a given entity type and entity id
+      operationId: delete_comments_entity_comments
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Eightfold Entity ID
+        in: path
+        name: entityId
+        required: true
+        schema:
+          type: integer
+      - description: 'Eightfold Entity Type. Supported entity types: demand'
+        in: path
+        name: entityType
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteCommentsByEntityIdResponseSchema'
+          description: Successfully deleted all comments
+      summary: Delete All Comments By Entity Id
+      tags:
+      - Comment
+  /api/v2/core/entity-comments-batch-fetch:
+    post:
+      description: Fetches all comments for a given list of entity IDs
+      operationId: comments_entity__batch_fetch
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentBatchFetchByEntityIdsRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/FetchCommentsByEntityIdsResponseSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/BatchFetchMetaSchema'
+                type: object
+          description: OK
+      summary: Batch Fetch Comments By Entity IDs
+      tags:
+      - Comment
+  /api/v2/core/ext-entity-comments-batch-fetch:
+    post:
+      description: Fetches all comments for a given list of external entity IDs
+      operationId: comments_ext_entity__batch_fetch
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentBatchFetchByExternalEntityIdsRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/FetchCommentsByExternalEntityIdsResponseSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/BatchFetchMetaSchema'
+                type: object
+          description: OK
+      summary: Batch Fetch Comments By External Entity IDs
+      tags:
+      - Comment
+components:
+  schemas:
+    CommentSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Comment creation timestamp
+        entityType:
+          type:
+          - string
+          - 'null'
+          description: Type of entity the comment is associated with
+        commentId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Comment ID
+        isPrivate:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the comment is private
+        entityId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: ID of the entity the comment is associated with
+        createdBy:
+          type:
+          - string
+          - 'null'
+          description: Email of the user who created the comment
+        parentId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: ID of the parent comment
+        groupId:
+          type:
+          - string
+          - 'null'
+          description: Group ID
+        updatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Comment update timestamp
+        comment:
+          type:
+          - string
+          - 'null'
+          description: Comment content in text (HTML) format
+    DeleteCommentsByEntityIdResponseSchema:
+      type: object
+      properties:
+        comments:
+          readOnly: true
+          description: List of deleted comments
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CommentSchema'
+        numDeletedComments:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Number of comments deleted
+        entityId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ID of the entity whose comments were deleted
+        entityType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Type of entity whose comments were deleted
+    CommentBatchFetchByEntityIdsRequestSchema:
+      type: object
+      properties:
+        entityIds:
+          type: array
+          description: List of entity IDs to fetch comments for, limit of 100 entity IDs per request
+          items:
+            type: string
+        entityType:
+          type: string
+          description: 'Type of entity to fetch comments for. Supported entity types: demand'
+      required:
+      - entityIds
+      - entityType
+    FetchCommentsByEntityIdsResponseSchema:
+      type: object
+      properties:
+        comments:
+          readOnly: true
+          description: List of comments
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CommentSchema'
+        entityId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Entity ID
+        entityType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Entity Type
+    CommentBatchFetchByExternalEntityIdsRequestSchema:
+      type: object
+      properties:
+        entityType:
+          type: string
+          description: 'Type of entity to fetch comments for. Supported entity types: demand'
+        extEntityIds:
+          type: array
+          description: List of external entity IDs to fetch comments for, limit of 100 external entity IDs per request
+          items:
+            type: string
+      required:
+      - entityType
+      - extEntityIds
+    BatchFetchMetaSchema:
+      type: object
+      properties:
+        missingEntityIds:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of entity ids for which no result was found
+          items:
+            type: string
+    FetchCommentsByExternalEntityIdsResponseSchema:
+      type: object
+      properties:
+        comments:
+          readOnly: true
+          description: List of comments
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CommentSchema'
+        entityId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Entity ID
+        entityType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Entity Type
+        externalEntityId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: External Entity ID

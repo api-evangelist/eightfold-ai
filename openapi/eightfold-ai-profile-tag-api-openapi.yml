@@ -1,0 +1,275 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Profile Tag API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Profile Tag
+paths:
+  /api/v2/core/profile-tags/{profileTagId}:
+    get:
+      description: Given a profile tag id of a candidate, it returns all attributes of the profile tag
+      operationId: get_profile_tag_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: profile tag ID of tag in Eightfold
+        in: path
+        name: profileTagId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+          description: OK
+      summary: Get Profile Tag
+      tags:
+      - Profile Tag
+  /api/v2/core/profile-tags/batch-fetch:
+    post:
+      description: Batch fetch profile tags for a given list of tag ids (limit 100)
+      operationId: profile_tag_batch_fetch
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchFetchEntityRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/Tag'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/BatchFetchMetaSchema'
+                type: object
+          description: OK
+      summary: Batch Fetch Profile Tags
+      tags:
+      - Profile Tag
+  /api/v2/core/profile-tags:
+    get:
+      description: Search profile tags using specific filter parameters and get all profile tag objects
+      operationId: list_profile_tag
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Limit on the total number of search results, defaults to 100
+        in: query
+        name: queryLimit
+        schema:
+          type: string
+      - description: Filter on creator email of Profile Tag
+        in: query
+        name: creatorEmail
+        schema:
+          type: string
+      - description: Filter on profile id of the candidate
+        in: query
+        name: profileId
+        schema:
+          type: string
+      - description: Filter on position id associated with the tag
+        in: query
+        name: positionId
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/Tag'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List Profile Tags
+      tags:
+      - Profile Tag
+components:
+  schemas:
+    BatchFetchEntityRequestSchema:
+      type: object
+      properties:
+        entityIds:
+          type: array
+          description: list of entity ids to fetch the entity objects
+          items:
+            type: string
+      required:
+      - entityIds
+    Tag:
+      type: object
+      properties:
+        creatorEmail:
+          type:
+          - string
+          - 'null'
+          description: creator email of candidate Tag
+        id:
+          type: string
+          description: Tag id of candidate
+        tag:
+          type:
+          - string
+          - 'null'
+          description: candidate Tag
+        tagSubtype:
+          type:
+          - string
+          - 'null'
+          description: Tag subtype
+        profileId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: candidate profile Id
+        tagType:
+          type:
+          - string
+          - 'null'
+          description: Type of candidate Tag
+        url:
+          type:
+          - string
+          - 'null'
+          description: url
+        groupId:
+          type:
+          - string
+          - 'null'
+          description: group id
+        positionId:
+          type:
+          - string
+          - 'null'
+          description: position id
+        createdTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Created time of candidate Tag
+      required:
+      - createdTime
+      - id
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+    BatchFetchMetaSchema:
+      type: object
+      properties:
+        missingEntityIds:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of entity ids for which no result was found
+          items:
+            type: string

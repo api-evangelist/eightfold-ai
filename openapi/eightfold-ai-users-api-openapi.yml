@@ -1,0 +1,553 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Users API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Users
+paths:
+  /api/v2/core/users/{userId}:
+    get:
+      description: Given a user id of a user, it returns the user object
+      operationId: get_user_login_users_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ID of user in Eightfold
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are lastLoginTimeStamp
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoggedInUserSchema'
+          description: OK
+      summary: Get User
+      tags:
+      - Users
+    delete:
+      description: Deletes a specific user given a user id
+      operationId: delete_user_login_users
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ID of a user in Eightfold
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are lastLoginTimeStamp
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoggedInUserSchema'
+          description: OK
+      summary: Delete User
+      tags:
+      - Users
+    patch:
+      description: 'Given a user id of a user with user data, it patches the user object. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.'
+      operationId: patch_user_login_users
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: EF Entity ID of user
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are lastLoginTimeStamp
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoggedInUserPatchSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoggedInUserSchema'
+          description: OK
+      summary: Patch User
+      tags:
+      - Users
+  /api/v2/core/users:
+    get:
+      description: Returns a list of users
+      operationId: list_user_login_users
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: filter query using predefined filter arguments documented [here](https://apidocs.eightfold.ai/v2.0/docs#the-filterquery-parameter)
+        in: query
+        name: filterQuery
+        schema:
+          type: string
+      - description: any wildcard text to search in user data
+        in: query
+        name: query
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are lastLoginTimeStamp
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoggedInUserSchema'
+          description: OK
+      summary: List Users
+      tags:
+      - Users
+    post:
+      description: 'Create an User in Eightfold. email, firstName and lastName cannot be empty strings while creating an User. Note: It may take some time for the newly created users to start reflecting in LIST calls, as there may be indexing delays. You can still use the GET BY ID call right after creation of users.'
+      operationId: create_user_login_users
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoggedInUserSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoggedInUserSchema'
+          description: OK
+      summary: Create User
+      tags:
+      - Users
+  /api/v2/core/users/batch-fetch:
+    post:
+      description: Batch fetch users for a given list of user ids (limit 100)
+      operationId: user_login_batch_fetch
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are lastLoginTimeStamp
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchFetchEntityRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/LoggedInUserSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/BatchFetchMetaSchema'
+                type: object
+          description: OK
+      summary: Batch Fetch Users
+      tags:
+      - Users
+components:
+  schemas:
+    LoggedInUserSchema:
+      type: object
+      properties:
+        verifiedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Verified at timestamp of the User
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Create timestamp of the User
+        managerEmail:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Email of User's Manager
+        roles:
+          type:
+          - array
+          - 'null'
+          description: Roles of a user
+          items:
+            type: string
+        profileId:
+          type:
+          - string
+          - 'null'
+          description: ProfileId of User
+        firstName:
+          type: string
+          description: First Name of User
+        company:
+          type:
+          - string
+          - 'null'
+          description: Company of User
+        email:
+          type: string
+          description: Email of User
+        rmUserGroups:
+          description: RM user groups associated with the user
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RmUserGroup'
+        timezoneName:
+          type:
+          - string
+          - 'null'
+          description: Timezone name for a user
+        defaultAccessMode:
+          type: string
+          description: Access Mode of User
+        title:
+          type:
+          - string
+          - 'null'
+          description: Title of User
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Id of an User
+        language:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Language preference of the user
+        timezoneOffset:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timezone offset for a User
+        updatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Update timestamp of the User
+        hrbpData:
+          type:
+          - object
+          - 'null'
+          description: HRBP Data of an User
+        uuid:
+          type:
+          - string
+          - 'null'
+          description: External unique identifier such as UUID, Corporate ID and Employee ID
+        isDisabled:
+          type:
+          - boolean
+          - 'null'
+          description: If user is disabled or not
+        lastLoginTimeStamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Last login time stamp of a user
+        atsData:
+          description: Ats Data of an User
+          allOf:
+          - $ref: '#/components/schemas/UserAtsData'
+        manager:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Manager of User
+        lastName:
+          type: string
+          description: Last Name of User
+      required:
+      - email
+    BatchFetchMetaSchema:
+      type: object
+      properties:
+        missingEntityIds:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of entity ids for which no result was found
+          items:
+            type: string
+    BatchFetchEntityRequestSchema:
+      type: object
+      properties:
+        entityIds:
+          type: array
+          description: list of entity ids to fetch the entity objects
+          items:
+            type: string
+      required:
+      - entityIds
+    RmUserGroup:
+      type: object
+      properties:
+        userGroupId:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier for the user group
+    AtsUserGroups:
+      type: object
+      properties:
+        userGroupId:
+          type:
+          - string
+          - 'null'
+          description: Ats Group of a user
+    LoggedInUserPatchSchema:
+      type: object
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          description: External unique identifier such as UUID, Corporate ID and Employee ID
+        rmUserGroups:
+          writeOnly: true
+          description: RM user groups associated with the user
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RmUserGroup'
+        timezoneName:
+          type:
+          - string
+          - 'null'
+          description: timezone name fr a user
+        timezoneOffset:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: timezone offset for a User
+        roles:
+          type:
+          - array
+          - 'null'
+          description: Roles of a user
+          items:
+            type: string
+        profileId:
+          type:
+          - string
+          - 'null'
+          description: ProfileId of User
+        defaultAccessMode:
+          type: string
+          description: Access Mode of User
+        isDisabled:
+          type:
+          - boolean
+          - 'null'
+          description: Email of User
+        atsData:
+          description: Ats Data of an User
+          allOf:
+          - $ref: '#/components/schemas/UserAtsData'
+        firstName:
+          type:
+          - string
+          - 'null'
+          description: First Name of User
+        company:
+          type:
+          - string
+          - 'null'
+          description: company of User
+        hrbpData:
+          type:
+          - object
+          - 'null'
+          description: HRBP Data of an User
+        lastName:
+          type:
+          - string
+          - 'null'
+          description: Last Name of User
+        title:
+          type:
+          - string
+          - 'null'
+          description: title of User
+      required:
+      - defaultAccessMode
+    UserCountries:
+      type: object
+      properties:
+        userCountryId:
+          type:
+          - string
+          - 'null'
+          description: Country of a user
+    UserAtsData:
+      type: object
+      properties:
+        userCountries:
+          description: Countries of a User
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UserCountries'
+        atsUserGroups:
+          description: Ats Groups of a User
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsUserGroups'

@@ -1,0 +1,204 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Approval Workflow API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Approval Workflow
+paths:
+  /api/v2/ats/{entityType}/approval-workflow/{entityId}:
+    get:
+      description: Get an approval workflow by entity type and entity id
+      operationId: get_approval_workflow_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Entity type
+        in: path
+        name: entityType
+        required: true
+        schema:
+          type: string
+      - description: Entity id
+        in: path
+        name: entityId
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApprovalWorkflowSchema'
+          description: OK
+      summary: Get Approval Workflow
+      tags:
+      - Approval Workflow
+    post:
+      description: Create a new Approval Workflow and start approval process
+      operationId: create_approval_workflow
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Entity type
+        in: path
+        name: entityType
+        required: true
+        schema:
+          type: string
+      - description: Entity id
+        in: path
+        name: entityId
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApprovalWorkflowSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApprovalWorkflowSchema'
+          description: OK
+      summary: Create Approval Workflow
+      tags:
+      - Approval Workflow
+components:
+  schemas:
+    ApprovalStep:
+      type: object
+      properties:
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Status of the approval step.
+        approvers:
+          readOnly: true
+          description: List of approvers assigned to this step.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Approver'
+        approvalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Number of approvals required for this step to be considered approved.
+        approvalCondition:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Condition under which the step is considered approved.
+    Approver:
+      type: object
+      properties:
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Approval status for the approver.
+        email:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Email address of the approver.
+    ApprovalWorkflowSchema:
+      type: object
+      properties:
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Current status of the approval workflow.
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          readOnly: true
+          description: Datetime when the approval workflow was created
+        entityType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Type of the entity associated with the approval workflow.
+        entityId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ID of the entity associated with the approval workflow.
+        approvalWorkflowId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ID of the approval workflow.
+        steps:
+          readOnly: true
+          description: List of approval steps. The entity is considered approved only if all steps are approved.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ApprovalStep'
+        groupId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Group id
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          readOnly: true
+          description: Datetime when the approval workflow was last updated
+        triggerApproval:
+          type:
+          - boolean
+          - 'null'
+          writeOnly: true
+          description: Whether to initiate the approval process. If true, emails will be sent to approvers.

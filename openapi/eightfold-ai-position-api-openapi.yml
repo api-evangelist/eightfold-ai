@@ -1,0 +1,6995 @@
+openapi: 3.2.0
+info:
+  title: Eightfold Ai Position API
+  version: '1.0'
+  description: 'Operations tagged Position across 2 of this provider''s published API definitions: eightfold-ai-api-server-v2-service-service.yml, eightfold-ai-api.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+- url: //api.eightfold.ai
+tags:
+- name: Position
+paths:
+  /api/v2/core/profiles/{profileId}/matched-positions:
+    get:
+      description: Returns all the matching positions for a profile
+      operationId: list_position_matched
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Position Filter Query using predefined filter arguments documented [here](https://apidocs.eightfold.ai/v2.0/docs#the-filterquery-parameter)
+        in: query
+        name: filterQuery
+        schema:
+          type: string
+      - description: Profile Id
+        in: path
+        name: profileId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/MatchingPositionsSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List Matched Positions for Profile
+      tags:
+      - Position
+    servers:
+    - url: https://apiv2.{domain}.ai
+      variables:
+        domain:
+          default: eightfold
+          enum:
+          - eightfold
+          - eightfold-eu
+          - eightfold-gov
+          - eightfold-ca
+          - eightfold-me
+          - eightfold-wu
+          - eightfold-ap
+  /api/v2/core/positions/{positionId}:
+    get:
+      description: Given a position id, it returns all attributes of the position
+      operationId: get_position_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ID of position in Eightfold
+        in: path
+        name: positionId
+        required: true
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are atsData, calibrationData
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PositionSchema'
+          description: OK
+      summary: Get Position
+      tags:
+      - Position
+    put:
+      description: 'To update the existing Position in the System, include the positionId in the params. Please Note: Update will overwrite existing fields. If empty fields are sent during an update, those fields will be wiped out'
+      operationId: update_position
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: EF Entity ID of position
+        in: path
+        name: positionId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PositionSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PositionSchema'
+          description: OK
+      summary: Update Position
+      tags:
+      - Position
+    patch:
+      description: 'Given a position id and data that needs to be patched, it patches the position. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.'
+      operationId: patch_position
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: EF Entity ID of position
+        in: path
+        name: positionId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PositionSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PositionSchema'
+          description: OK
+      summary: Patch Position
+      tags:
+      - Position
+    servers:
+    - url: https://apiv2.{domain}.ai
+      variables:
+        domain:
+          default: eightfold
+          enum:
+          - eightfold
+          - eightfold-eu
+          - eightfold-gov
+          - eightfold-ca
+          - eightfold-me
+          - eightfold-wu
+          - eightfold-ap
+  /api/v2/core/positions/apply-form-questions/{positionId}:
+    get:
+      description: Returns the apply-form questions for a position, resolved for the requested apply context (userMode)
+      operationId: get_position_apply_form_questions_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ID of position in Eightfold
+        in: path
+        name: positionId
+        required: true
+        schema:
+          type: string
+      - description: 'Apply context to resolve questions for. One of: ''employee'' (internal/IJP form), ''logged_out_candidate'' (external form), or ''logged_in_candidate'' (external form for an authenticated candidate).'
+        in: query
+        name: userMode
+        required: true
+        schema:
+          enum:
+          - employee
+          - logged_out_candidate
+          - logged_in_candidate
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplyFormQuestionsSchema'
+          description: OK
+      summary: Get Position Apply Form Questions
+      tags:
+      - Position
+    servers:
+    - url: https://apiv2.{domain}.ai
+      variables:
+        domain:
+          default: eightfold
+          enum:
+          - eightfold
+          - eightfold-eu
+          - eightfold-gov
+          - eightfold-ca
+          - eightfold-me
+          - eightfold-wu
+          - eightfold-ap
+  /api/v2/core/positions:
+    get:
+      description: Search positions using query parameters and get the complete position objects
+      operationId: list_position
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: unique identifier in the ATS system
+        in: query
+        name: atsJobId
+        schema:
+          type: string
+      - description: Filter query using predefined filter arguments documented [here](https://apidocs.eightfold.ai/v2.0/docs#the-filterquery-parameter)
+        in: query
+        name: filterQuery
+        schema:
+          type: string
+      - description: any wildcard text to search in position
+        in: query
+        name: query
+        schema:
+          type: string
+      - description: show archived positions
+        in: query
+        name: includeArchived
+        schema:
+          type: boolean
+      - description: Comma-separated list of position ids to fetch. Can be combined with query/filterQuery to narrow within the set.
+        in: query
+        name: positionIds
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are atsData, calibrationData
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/PositionSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List Positions
+      tags:
+      - Position
+    post:
+      description: To add a new position in the system, send the position information in the payload. positionId will be sent back in case of a successful response
+      operationId: create_position
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PositionSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PositionSchema'
+          description: OK
+      summary: Create Position
+      tags:
+      - Position
+    servers:
+    - url: https://apiv2.{domain}.ai
+      variables:
+        domain:
+          default: eightfold
+          enum:
+          - eightfold
+          - eightfold-eu
+          - eightfold-gov
+          - eightfold-ca
+          - eightfold-me
+          - eightfold-wu
+          - eightfold-ap
+  /api/v2/core/positions/batch-fetch:
+    post:
+      description: Batch fetch positions for a given list of position ids (limit 100)
+      operationId: position_batch_fetch
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchFetchEntityRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/PositionSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/BatchFetchMetaSchema'
+                type: object
+          description: OK
+      summary: Batch Fetch Positions
+      tags:
+      - Position
+    servers:
+    - url: https://apiv2.{domain}.ai
+      variables:
+        domain:
+          default: eightfold
+          enum:
+          - eightfold
+          - eightfold-eu
+          - eightfold-gov
+          - eightfold-ca
+          - eightfold-me
+          - eightfold-wu
+          - eightfold-ap
+  /api/v2/core/positions/{positionId}/matched-candidates:
+    get:
+      description: 'Returns all the matching candidates for a position based on the filter query params provided in the API request. NOTE: The output may differ from UI pages as those pages may use additional configs, that are configured separately. Top 1000 Leads can be requested using the leads query parameter.'
+      operationId: list_profile_matched_candidates
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: filter query using predefined filter arguments documented [here](https://apidocs.eightfold.ai/v2.0/docs#the-filterquery-parameter)
+        in: query
+        name: filterQuery
+        schema:
+          type: string
+      - description: Position ID
+        in: path
+        name: positionId
+        required: true
+        schema:
+          type: string
+      - description: Request leads profiles for this position, as shown on the pipeline page
+        in: query
+        name: leads
+        schema:
+          type: string
+      - description: Request validated and missing skills, as shown on the profile page matching insights
+        in: query
+        name: validatedSkills
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/MatchingProfilesSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List Matched Candidates for Position
+      tags:
+      - Position
+    servers:
+    - url: https://apiv2.{domain}.ai
+      variables:
+        domain:
+          default: eightfold
+          enum:
+          - eightfold
+          - eightfold-eu
+          - eightfold-gov
+          - eightfold-ca
+          - eightfold-me
+          - eightfold-wu
+          - eightfold-ap
+  /api/v2/core/position/{positionId}/applicants:
+    get:
+      description: Returns all the matching applicants for a position
+      operationId: list_profile_applicants
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: unique identifier in the EF system
+        in: path
+        name: positionId
+        schema:
+          type: string
+        required: true
+      - description: filter query using predefined filter arguments documented [here](https://apidocs.eightfold.ai/v2.0/docs#the-filterquery-parameter)
+        in: query
+        name: filterQuery
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are resume, applications, tags, notes, attachmentsInfo, inferredSkills, careerSiteQuestions, deletedAt, demandExperiences, lastContact
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/ExternalProfileSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List Applicants
+      tags:
+      - Position
+    servers:
+    - url: https://apiv2.{domain}.ai
+      variables:
+        domain:
+          default: eightfold
+          enum:
+          - eightfold
+          - eightfold-eu
+          - eightfold-gov
+          - eightfold-ca
+          - eightfold-me
+          - eightfold-wu
+          - eightfold-ap
+  /v1/position:
+    post:
+      responses:
+        '200':
+          description: Success
+      summary: Post Job
+      description: Post the complete Job object to add a new Job Position or update the existing job in the System
+      operationId: post_position_post
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: The secret key to access the api, starts with Basic
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/position_post_request'
+        required: true
+      tags:
+      - Position
+    servers:
+    - url: //api.eightfold.ai
+  /v1/position/search:
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/matched_jobs'
+      summary: Search Position
+      description: Search a Job Position using query parameters and get the complete Position details
+      operationId: get_position_search
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: The secret key to access the api, starts with Basic
+        schema:
+          type: string
+      - name: atsEntityId
+        in: query
+        description: unique identifier in the ATS system
+        schema:
+          type: string
+      - name: query
+        in: query
+        description: any wildcard text to search in position
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: max number of results to be fetched
+        explode: true
+        schema:
+          type: integer
+          enum:
+          - 5
+          - 10
+      - name: start
+        in: query
+        description: starting index of the job to be fetched
+        schema:
+          type: integer
+          default: 0
+      - name: filterQuery
+        in: query
+        description: filter query using predefined filter arguments documented at https://apidocs.eightfold.ai/docs#the-filterquery-parameter
+        schema:
+          type: string
+      - name: include
+        in: query
+        description: if you want additional fields in the response, please specify comma separate values as calibration, atsdata
+        schema:
+          type: string
+      - name: X-Fields
+        in: header
+        description: An optional fields mask
+        schema:
+          type: string
+          format: mask
+      tags:
+      - Position
+    servers:
+    - url: //api.eightfold.ai
+  /v1/position/{job_position_id}/applicants:
+    parameters:
+    - name: job_position_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/candidateProfile'
+      summary: Get Applicants
+      description: Given a job id it returns the applicants for this job
+      operationId: get_applicants
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: The secret key to access the api, starts with Basic
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: max number of results to be fetched
+        explode: true
+        schema:
+          type: integer
+          enum:
+          - 10
+          - 50
+      - name: start
+        in: query
+        description: starting index of the page to be fetched
+        schema:
+          type: integer
+          default: 0
+      - name: include
+        in: query
+        description: if you want additional fields in the response, please specify comma separate values as tags,applications,notes,resume
+        schema:
+          type: string
+          default: tags,applications,notes
+      - name: filterQuery
+        in: query
+        description: filter query using predefined filter arguments documented at https://apidocs.eightfold.ai/docs#the-filterquery-parameter
+        schema:
+          type: string
+      - name: X-Fields
+        in: header
+        description: An optional fields mask
+        schema:
+          type: string
+          format: mask
+      tags:
+      - Position
+    servers:
+    - url: //api.eightfold.ai
+  /v1/position/{job_position_id}/matched-candidates:
+    parameters:
+    - name: job_position_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/matched_candidate'
+      summary: Get Matching Candidates
+      description: Given a job id it returns the matching candidates for this job
+      operationId: get_matched_candidates
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: The secret key to access the api, starts with Basic
+        schema:
+          type: string
+      - name: filterQuery
+        in: query
+        description: filter query using predefined filter arguments documented at https://apidocs.eightfold.ai/docs#the-filterquery-parameter
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: max number of results to be fetched
+        explode: true
+        schema:
+          type: integer
+          enum:
+          - 5
+          - 10
+      - name: start
+        in: query
+        description: starting index of the page to be fetched
+        schema:
+          type: integer
+          default: 0
+      - name: X-Fields
+        in: header
+        description: An optional fields mask
+        schema:
+          type: string
+          format: mask
+      tags:
+      - Position
+    servers:
+    - url: //api.eightfold.ai
+  /v1/position/{position_id}:
+    parameters:
+    - name: position_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/position'
+      summary: Get Position
+      description: Given a job id it returns other attributes of this job
+      operationId: get_position_by_id
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: The secret key to access the api, starts with Basic
+        schema:
+          type: string
+      - name: include
+        in: query
+        description: if you want additional fields in the response, please specify comma separate values as calibration, atsdata
+        schema:
+          type: string
+      - name: X-Fields
+        in: header
+        description: An optional fields mask
+        schema:
+          type: string
+          format: mask
+      tags:
+      - Position
+    servers:
+    - url: //api.eightfold.ai
+components:
+  schemas:
+    AtsUser:
+      type: object
+      properties:
+        userId:
+          type:
+          - string
+          - 'null'
+          description: user id
+        email:
+          type:
+          - string
+          - 'null'
+          description: email of user
+        name:
+          type:
+          - string
+          - 'null'
+          description: name of user
+        atsRoles:
+          type:
+          - array
+          - 'null'
+          description: list of ats roles
+          items:
+            type: string
+    InferredSkillsSchema:
+      type: object
+      properties:
+        skillType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The type of the skills, validated skills or likely skills
+        skills:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: The list of skills
+          items:
+            type: string
+    AtsOpenings:
+      type: object
+      properties:
+        closedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Closing timestamp in epoch format
+        openingDetails:
+          description: Details of the openings
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsOpeningDetail'
+        numOpenings:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of openings. Set to -1 for unlimited openings
+        openedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Opening timestamp in epoch format
+        numOpeningsFilled:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of openings filled
+    Note:
+      type: object
+      properties:
+        creatorEmail:
+          type:
+          - string
+          - 'null'
+          description: creator email of candidate
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Note id of candidate
+        noteType:
+          type:
+          - string
+          - 'null'
+          description: Note type of candidate
+        note:
+          type:
+          - string
+          - 'null'
+          description: Note of candidate
+        profileId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Profile id of candidate
+        positionId:
+          type:
+          - string
+          - 'null'
+          description: Position id associated with the note
+        createdTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: created time of candidate in datetime format
+    ProfileSuccessionPlanMetric:
+      type: object
+      properties:
+        readiness:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: readiness of succession plan
+    ATSSkillDetail:
+      type: object
+      properties:
+        skillGroups:
+          description: Skill groups
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ATSSkillGroup'
+        proficiency:
+          type:
+          - string
+          - 'null'
+          description: 'Proficiency. Note: proficiency must be specified only for each skill group when skill groups are present'
+        evaluationTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Evaluation timestamp
+        dataSource:
+          type:
+          - string
+          - 'null'
+          description: Data source of the skill
+        skill:
+          type:
+          - string
+          - 'null'
+          description: Skill
+    SkillProficiency:
+      type: object
+      properties:
+        proficiency:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: proficiency of the role
+        skillGroupList:
+          description: skill group list of a role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SkillGroupList'
+        level:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: level of the role
+        name:
+          type:
+          - string
+          - 'null'
+          description: name of the role
+    ProfileReviewer:
+      type: object
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Email of the user who reviewed the profile
+        profileId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Profile Id of the user who reviewed the profile
+    ATSScoreCardAttribute:
+      type: object
+      properties:
+        rating:
+          type:
+          - string
+          - 'null'
+          description: 'Rating. Valid inputs: strong_yes, yes, mixed, no, strong_no'
+        answer:
+          type:
+          - string
+          - 'null'
+          description: Answer
+        note:
+          type:
+          - string
+          - 'null'
+          description: Note
+        question:
+          type:
+          - string
+          - 'null'
+          description: Question
+        rating_label:
+          type:
+          - string
+          - 'null'
+          description: Rating label
+    RegisterButton:
+      type: object
+      properties:
+        textColor:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: text color for registration button
+        backgroundColor:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: background color of registration button
+        text:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Text of registration button
+    Jobs:
+      type: object
+      properties:
+        atsJobId:
+          type:
+          - string
+          - 'null'
+          description: ATS Job id
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name
+    ProfileStagedSections:
+      type: object
+      properties:
+        education:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Education of candidate
+        awards:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Awards of candidate
+        certificates:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Certificates
+        publications:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: publications of candidate
+        languageProficiencies:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: language proficiences for employee
+        endorsements:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: endorsements of candidate
+        experiences:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: List of candidate's past experiences
+        courses:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: course attendance of employee
+        skills:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: List of candidate's skills
+        patents:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: patents of candidate
+        projects:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: projects of candidate
+    ApplyFormQuestionsSchema:
+      type: object
+      properties:
+        positionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Eightfold position id the questions belong to.
+        applyFormQuestions:
+          readOnly: true
+          description: Apply-form question sections for this position and apply context, as produced by the apply-form pipeline. Returned without candidate prepopulation.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ApplyFormQuestionSection'
+    Patent:
+      type: object
+      properties:
+        date:
+          type: string
+          description: Patent date
+        allText:
+          type:
+          - string
+          - 'null'
+          description: Patent title
+        skills:
+          type:
+          - array
+          - 'null'
+          description: Patent skills
+          items:
+            type: string
+        description:
+          type:
+          - string
+          - 'null'
+          description: Patent description
+        title:
+          type: string
+          description: Patent title
+      required:
+      - date
+      - title
+    QuestionDependencies:
+      type: object
+      properties:
+        questionId:
+          type:
+          - string
+          - 'null'
+          description: question id
+        questionSource:
+          type:
+          - string
+          - 'null'
+          description: question source
+        choiceValue:
+          type:
+          - string
+          - 'null'
+          description: choice value
+        dependencyType:
+          type:
+          - string
+          - 'null'
+          description: dependency type
+        childQuestionIds:
+          type:
+          - array
+          - 'null'
+          description: child question ids
+          items:
+            type: string
+      required:
+      - choiceValue
+      - questionId
+    ProfileSuccessors:
+      type: object
+      properties:
+        successorProfileId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: profile id of the successor
+        successorReadiness:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: readiness state of the successor
+    ApplicationQuestionAnswers:
+      type: object
+      properties:
+        answer:
+          type:
+          - string
+          - 'null'
+          description: Answer of candidate Application question answers
+        questionId:
+          type:
+          - string
+          - 'null'
+          description: question ID of candidate Application question answers
+        question:
+          type:
+          - string
+          - 'null'
+          description: question of candidate Application question answers
+      required:
+      - question
+      - questionId
+    Questions:
+      type: object
+      properties:
+        choices:
+          description: Question choices
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/QuestionChoice'
+        choicesV2:
+          description: Question choices V2. It supports language mapping.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/QuestionLabel'
+        questionId:
+          type:
+          - string
+          - 'null'
+          description: question_id
+        help:
+          type:
+          - string
+          - 'null'
+          description: help
+        type:
+          type:
+          - string
+          - 'null'
+          description: type of the question. e.g.-choice, numeric or text
+        question:
+          description: question. It supports language mapping.
+          allOf:
+          - $ref: '#/components/schemas/QuestionLabel'
+        required:
+          type:
+          - boolean
+          - 'null'
+          description: required
+      required:
+      - questionId
+    MatchingPositionsSchema:
+      type: object
+      properties:
+        missingSkills:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Position skills missing in candidate's profile
+          items:
+            type: string
+        position:
+          readOnly: true
+          description: Position information in concise format
+          allOf:
+          - $ref: '#/components/schemas/ConcisePositionSchema'
+        skillScoreRelevance:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: Skill relevance score based on matching of job and candidate profile
+        validatedSkills:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Position skills validated in candidate's profile
+          items:
+            type: string
+        finalScore:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: The matching score (range 0 to 5) of job and candidate profile
+        titleScoreRelevance:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: Title relevance score based on matching of job and candidate profile
+    ATSSkillGroup:
+      type: object
+      properties:
+        proficiency:
+          type:
+          - string
+          - 'null'
+          description: Proficiency
+        skillGroup:
+          type:
+          - string
+          - 'null'
+          description: Skill Group
+    CareerSiteQuestionsSchema:
+      type: object
+      properties:
+        timestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when questions were answered
+        positionIdList:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of position ids questions are answers for
+          items:
+            type: string
+        mode:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Mode of the questions
+        questions:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Question and Answers details
+    ApplyFormParentDependency:
+      type: object
+      properties:
+        operator:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Comparison operator for a non-equals dependency (operator variant).
+        questionId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Parent question id this dependency is keyed on.
+        value:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Comparison value for an operator dependency; a string, number, or list.
+        values:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Parent answer values that satisfy the dependency (equals variant).
+          items:
+            type: string
+    Publication:
+      type: object
+      properties:
+        date:
+          type:
+          - string
+          - 'null'
+          description: Patent date
+        skills:
+          type:
+          - array
+          - 'null'
+          description: Publication skills
+          items:
+            type: string
+        publisher:
+          type:
+          - string
+          - 'null'
+          description: Patent publisher
+        description:
+          type: string
+          description: Patent description
+        title:
+          type:
+          - string
+          - 'null'
+          description: Patent title
+      required:
+      - description
+    CandidateEducation:
+      type: object
+      properties:
+        verificationStatus:
+          type:
+          - string
+          - 'null'
+          description: verification status of the education details
+        location:
+          type:
+          - string
+          - 'null'
+          description: Location of Candidate Education
+        school:
+          type:
+          - string
+          - 'null'
+          description: School of candidate
+        isCurrent:
+          type:
+          - boolean
+          - 'null'
+          description: Currently working in an organization
+        isGraduated:
+          type:
+          - boolean
+          - 'null'
+          description: graduation status of the candidate
+        endTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: end time of candidate
+        awards:
+          type:
+          - array
+          - 'null'
+          description: Awards of candidate
+          items:
+            type: string
+        source:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: source
+        degree:
+          type:
+          - string
+          - 'null'
+          description: Degree of candidate
+        startTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: start time of candidate
+        verificationBy:
+          type:
+          - string
+          - 'null'
+          description: email of the verifier
+        major:
+          type:
+          - string
+          - 'null'
+          description: major of candidate
+        majorExternalId:
+          type:
+          - string
+          - 'null'
+          description: external id of the major
+        verificationTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: verification timestamp
+        degreeExternalId:
+          type:
+          - string
+          - 'null'
+          description: external id of the degree
+        attachmentIds:
+          type:
+          - array
+          - 'null'
+          description: List of attachment ids of the education
+          items:
+            type: string
+        schoolExternalId:
+          type:
+          - string
+          - 'null'
+          description: external id of the school
+        nameAlias:
+          type:
+          - string
+          - 'null'
+          description: name of the candidate in the records if different from the name in the profile
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of candidate
+      required:
+      - degree
+      - description
+      - endTime
+      - location
+      - major
+      - school
+      - startTime
+    JTNAnswersSchema:
+      type: object
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Label of the question
+        questionId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Question Id of the question
+        type:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Type of the question
+        values:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: List of answers to the question
+    ExperienceSchema:
+      type: object
+      properties:
+        industry:
+          type:
+          - string
+          - 'null'
+          description: industry of the candidate/organization
+        endTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: End time of employee in an organization
+        durationMonths:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Duration of work experience in months
+        isInternal:
+          type:
+          - boolean
+          - 'null'
+          description: is internal for candidate
+        addlJson:
+          type:
+          - object
+          - 'null'
+          description: Additional json data
+        department:
+          type:
+          - string
+          - 'null'
+          description: Department of the candidate
+        work:
+          type:
+          - string
+          - 'null'
+          description: Organization or Company of work
+        userVerifiedSkills:
+          type:
+          - boolean
+          - 'null'
+          description: any verified skills
+        experienceKey:
+          type:
+          - string
+          - 'null'
+          description: Unique key for each experience
+        skills:
+          type: array
+          description: Skills invovled
+          items:
+            type: string
+        location:
+          type:
+          - string
+          - 'null'
+          description: Location of the organization
+        startTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Start time of employee in an organization
+        edited:
+          type:
+          - boolean
+          - 'null'
+          description: is edited candidate?
+        isCurrent:
+          type:
+          - boolean
+          - 'null'
+          description: Currently working in an organization
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of work
+        title:
+          type:
+          - string
+          - 'null'
+          description: Title of work experience
+      required:
+      - description
+      - edited
+      - endTime
+      - isCurrent
+      - isInternal
+      - location
+      - startTime
+      - title
+      - work
+    AtsAttachment:
+      type: object
+      properties:
+        isBase64:
+          type:
+          - boolean
+          - 'null'
+          description: Denotes if the attachment base64 encoded
+        fileName:
+          type: string
+          description: File name of the attachment
+        lastModifiedTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Last Modified timestamp of the attachment
+        applicationMetadata:
+          description: application_metadata
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsAttachmentApplicationMetadata'
+        attachmentContent:
+          type:
+          - string
+          - 'null'
+          description: Content of the attachment
+        attachmentId:
+          type: string
+          description: Attachment id of the attachment
+        attachmentType:
+          type:
+          - string
+          - 'null'
+          description: 'Attachment type. Valid inputs: resume, others, photo, cover_letter'
+      required:
+      - attachmentContent
+      - attachmentId
+      - attachmentType
+      - fileName
+    AtsCertification:
+      type: object
+      properties:
+        locationCountry:
+          type:
+          - string
+          - 'null'
+          description: Country where certification was issued
+        verificationStatus:
+          type:
+          - string
+          - 'null'
+          description: verification status of a certification
+        licenseNo:
+          type:
+          - string
+          - 'null'
+          description: License number of a certification
+        skills:
+          type:
+          - array
+          - 'null'
+          description: Skills associated with the certification
+          items:
+            type: string
+        validFromTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: validtion from timestamp of a certification
+        comments:
+          type:
+          - string
+          - 'null'
+          description: Comments on the certification
+        allText:
+          type:
+          - string
+          - 'null'
+          description: All text associated with the certification
+        endTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: ending timestamp of a certification
+        verificationBy:
+          type:
+          - string
+          - 'null'
+          description: email of the verifier
+        certificateName:
+          type:
+          - string
+          - 'null'
+          description: certificate name of a certification
+        verificationTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: verification timestamp
+        status:
+          type:
+          - string
+          - 'null'
+          description: Status of the certification
+        certificateType:
+          type:
+          - string
+          - 'null'
+          description: Type of the certification
+        proficiency:
+          type:
+          - string
+          - 'null'
+          description: proficiency of a certification
+        validToTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: validation till timestamp of a certification
+        attachmentIds:
+          type:
+          - array
+          - 'null'
+          description: List of attachment ids of a certification
+          items:
+            type: string
+        startTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: starting timestamp of a certification
+        certificateExternalId:
+          type:
+          - string
+          - 'null'
+          description: external id for the type of certification
+        locationState:
+          type:
+          - string
+          - 'null'
+          description: State where certification was issued
+        issuingAuthority:
+          type:
+          - string
+          - 'null'
+          description: issuing authority of a certification
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the certification
+      required:
+      - certificateName
+    ProfileSuccessionPlanNote:
+      type: object
+      properties:
+        managerName:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: name of the manager
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: status of the note
+        noteType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Type of note. Eg:- general assessment
+        managerProfileId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: encoded profile id of the manager
+        noteId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: noteId of the note
+        content:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: content of the note
+    ProfileSuccessionPlan:
+      type: object
+      properties:
+        successionPlanRole:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: succession plan Role
+        successionPlanNotes:
+          readOnly: true
+          description: succession plan notes
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProfileSuccessionPlanNote'
+        successors:
+          readOnly: true
+          description: The successors of the profile
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProfileSuccessors'
+        leaderWithoutPathForward:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: leader without path forward(succession count)
+        successionPlanId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: succession plan ID
+        successionPlanMetrics:
+          readOnly: true
+          description: Some metrics on succession plan. Eg- Readiness Count, Female Percentage etc
+          allOf:
+          - $ref: '#/components/schemas/ProfileSuccessionPlanMetric'
+    Role:
+      type: object
+      properties:
+        templates:
+          readOnly: true
+          description: all calibration templates associated with the role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CalibrationTemplate'
+        name:
+          type:
+          - string
+          - 'null'
+          description: name of the role
+    MatchingProfilesSchema:
+      type: object
+      properties:
+        missingSkills:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Position skills missing in candidate's profile
+          items:
+            type: string
+        skillScoreRelevance:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: Skill relevance score based on matching of job and candidate profile
+        fullName:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: full name of the matching profile
+        matchScore:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: match score of the candidate for a position, with range (0-5)
+        atsEntityId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: candidate ID from the connected ATS system
+        profileId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: unique identifier for profile
+        candidateInsights:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: indicates whether profile is employee, alumni, competitor or other.
+          items:
+            type: string
+        validatedSkills:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Position skills validated in candidate's profile
+          items:
+            type: string
+        titleScoreRelevance:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: Title relevance score based on matching of job and candidate profile
+    Position:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Creation timestamp in epoch format
+        confidential:
+          type:
+          - boolean
+          - 'null'
+          description: if the position is confidential or not
+        hiringManager:
+          readOnly: true
+          description: Hiring Manager
+          allOf:
+          - $ref: '#/components/schemas/Person'
+        groupId:
+          type:
+          - string
+          - 'null'
+          description: group id
+        name:
+          type:
+          - string
+          - 'null'
+          description: Title of the Position
+        followers:
+          type:
+          - array
+          - 'null'
+          description: all the followers of the position
+          items:
+            type: string
+        jobDescription:
+          type:
+          - string
+          - 'null'
+          description: Detailed Job Description in a text format
+        systemId:
+          type:
+          - string
+          - 'null'
+          description: system id
+        positionDisplayId:
+          type:
+          - string
+          - 'null'
+          description: display job id
+        recruiter:
+          readOnly: true
+          description: Recruiter
+          allOf:
+          - $ref: '#/components/schemas/Person'
+        calibrationConfirmedBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User who confirmed the calibration
+        open:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: if the position is open or not
+        createdBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: source of the job
+        calibrationConfirmedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Confirmed timestamp for the calibration
+        atsData:
+          readOnly: true
+          description: ats data of the job
+          allOf:
+          - $ref: '#/components/schemas/ATSPositionData'
+        calibrationData:
+          description: calibration data of the job
+          allOf:
+          - $ref: '#/components/schemas/CalibrationData'
+        role:
+          readOnly: true
+          description: role associated with the position
+          allOf:
+          - $ref: '#/components/schemas/Role'
+        positionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: job id
+      required:
+      - name
+    AtsTag:
+      type: object
+      properties:
+        tag:
+          type:
+          - string
+          - 'null'
+          description: tag of candidate
+        jobId:
+          type:
+          - string
+          - 'null'
+          description: job id for a tag
+        creator:
+          type:
+          - string
+          - 'null'
+          description: creator of tag
+        tagSubtype:
+          type:
+          - string
+          - 'null'
+          description: tag subtype
+        tagType:
+          type:
+          - string
+          - 'null'
+          description: tag type
+        creationTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: creation timestamp of tag
+      required:
+      - tag
+    ProfileApplicationSchema:
+      type: object
+      properties:
+        stage:
+          type:
+          - string
+          - 'null'
+          description: ''
+        lastModifiedTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Last Modified time stamp of candidate application
+        applicationAnswers:
+          readOnly: true
+          description: application answers of candidate application
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ApplicationQuestionAnswers'
+        refereeEmail:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: referee email for referred candidate application
+        profileId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: profile id of candidate application
+        utm_source:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: utm source for the application
+        feedback:
+          readOnly: true
+          description: Latest feedback of candidate application
+          allOf:
+          - $ref: '#/components/schemas/ProfileFeedback'
+        groupId:
+          type:
+          - string
+          - 'null'
+          description: ''
+        applicationStatus:
+          type:
+          - string
+          - 'null'
+          description: application status of candidate application
+        isInternal:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Is application internal one
+        isReferral:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Is application a referral one
+        customInfo:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: custom info for the application
+        candidateId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: candidate id of candidate application
+        visaStatus:
+          type:
+          - string
+          - 'null'
+          description: visa status of candidate application
+        comment:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Comment added during stage advance
+        positionTitle:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Position title of candidate application
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: object id of the profile application
+        position:
+          readOnly: true
+          description: ''
+          allOf:
+          - $ref: '#/components/schemas/Position'
+        applicationTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: application time of candidate application
+        sourceName:
+          type:
+          - string
+          - 'null'
+          description: source name of candidate application
+        utm_campaign:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: utm campaign for the application
+        matchingData:
+          readOnly: true
+          description: ''
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ApplicationMatchScore'
+        currentStage:
+          type:
+          - string
+          - 'null'
+          description: Current stage of candidate application
+        sourceType:
+          type:
+          - string
+          - 'null'
+          description: source type of candidate application
+        isInTalentNetwork:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Is candidate in talent network
+        isCareerSite:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Is application from career site
+        actionUser:
+          readOnly: true
+          description: User who advanced the stage
+          allOf:
+          - $ref: '#/components/schemas/Person'
+        atsJobId:
+          type:
+          - string
+          - 'null'
+          description: name of candidate application
+        positionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Position id of candidate application
+        applicationId:
+          type: string
+          description: application id of candidate application
+      required:
+      - applicationId
+      - applicationStatus
+      - applicationTime
+      - atsJobId
+      - candidateId
+      - groupId
+      - lastModifiedTime
+      - positionId
+      - positionTitle
+    ProfileRelocation:
+      type: object
+      properties:
+        comments:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: comments
+        travelPercentageMin:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: Minimum Travel percentage for profile
+        relocationLocations:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: list of relocation preferences of the profile
+          items:
+            type: string
+        externalKey:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: external Key
+        relocation:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: relocation needed Yes/No
+        travel:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: travel
+        travelPercentageMax:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: Maximum Travel percentage for profile
+    AtsStage:
+      type: object
+      properties:
+        stage:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: stage
+        user:
+          description: user
+          allOf:
+          - $ref: '#/components/schemas/AtsUser'
+        reason:
+          type: string
+          maxLength: 5000
+          description: reason
+        wfSubStage:
+          type: string
+          description: wf sub stage
+        wfStage:
+          type: string
+          description: wf stage
+        stageTs:
+          type: integer
+          format: int32
+          description: stage timestamp
+      required:
+      - reason
+      - stageTs
+      - user
+      - wfStage
+      - wfSubStage
+    ApplicationMatchScore:
+      type: object
+      properties:
+        topMatches:
+          type:
+          - array
+          - 'null'
+          description: The top few items driving this score (e.g. the matched skills or title terms), up to 3
+          items:
+            type: string
+        indeterminable:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: 1 when there wasn't enough data to compute this score (score will be -1), otherwise 0
+        score:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Match strength for this aspect on a 0-5 scale (higher is a better match); -1 when it could not be determined
+        relevantScoreTypeVal:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: 'A supporting count eg: matching skills (skill) or relevant years of experience (experience). Null when not applicable'
+        scoreRaw:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: The underlying un-rounded score behind the 0-5 rating (e.g. raw overall stars); may be null when not applicable
+        scoreType:
+          type:
+          - string
+          - 'null'
+          description: Which aspect of the match this score describes eg- overall fit, skill, title, or experience
+    AtsApplication:
+      type: object
+      properties:
+        locationCountry:
+          type:
+          - string
+          - 'null'
+          description: location country of an application
+        reason:
+          type:
+          - string
+          - 'null'
+          maxLength: 5000
+          description: reason for an application
+        location:
+          type:
+          - string
+          - 'null'
+          description: location of an application
+        visaStatuses:
+          type:
+          - array
+          - 'null'
+          description: list of visa status
+          items:
+            type: string
+        veteranStatusStr:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: String value for veteran status of the applicant
+        jobs:
+          description: Jobs related to an application.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Jobs'
+        hiredTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: hired timestamp of an applicant
+        lastModifiedTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: last modified timestamp of an application
+        customInfo:
+          type:
+          - object
+          - 'null'
+          description: custom info for an application
+        note:
+          description: ats notes for an application
+          allOf:
+          - $ref: '#/components/schemas/AtsNote'
+        systemId:
+          type:
+          - string
+          - 'null'
+          description: system id of an application
+        creditor:
+          type:
+          - string
+          - 'null'
+          description: creditor of an application
+        candidateId:
+          type:
+          - string
+          - 'null'
+          description: candidate id of an applicant
+        rejectedTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: rejected timestamp of an applicant
+        veteranStatus:
+          type:
+          - boolean
+          - 'null'
+          description: Boolean value for veteran status of the applicant
+        applicationTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: application timestamp
+        pastStages:
+          description: past stages of an application
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsStage'
+        sourceName:
+          type:
+          - string
+          - 'null'
+          description: source name of an application
+        isProspect:
+          type:
+          - boolean
+          - 'null'
+          description: is prospective applicant
+        scorecards:
+          description: scorecards for an application
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsScorecard'
+        jobSystemId:
+          type:
+          - string
+          - 'null'
+          description: job system id for an application
+        disabilityStatus:
+          type:
+          - boolean
+          - 'null'
+          description: disability status of an applicant
+        currentStage:
+          description: current stage of an application
+          allOf:
+          - $ref: '#/components/schemas/AtsStage'
+        status:
+          type:
+          - string
+          - 'null'
+          description: 'Status of application.Valid inputs: active, hired, rejected, converted, withdrawn'
+        races:
+          type:
+          - array
+          - 'null'
+          description: list of races of an applicant
+          items:
+            type: string
+        sourceType:
+          type:
+          - string
+          - 'null'
+          description: source type of an application
+        gender:
+          type:
+          - string
+          - 'null'
+          description: gender of an applicant
+        questions:
+          description: questions
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsQuestionAnswer'
+        rejectedBy:
+          type:
+          - string
+          - 'null'
+          description: applicant rejected by
+        disabilityStatusStr:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: disability status of an applicant
+        applicationId:
+          type: string
+          description: application id
+      required:
+      - applicationId
+      - applicationTs
+      - candidateId
+      - lastModifiedTs
+    ATSProfileSchema:
+      type: object
+      properties:
+        locationCountry:
+          type:
+          - string
+          - 'null'
+          description: location country of candidate
+        contactConsent:
+          type:
+          - string
+          - 'null'
+          description: 'Contact consent for candidate. Valid inputs: applied_only, all, country_only'
+        isAnonymized:
+          type:
+          - boolean
+          - 'null'
+          description: is anonymized candidate
+        scheduledInterviews:
+          description: scheduled interviews of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ATSScheduledInterview'
+        skills:
+          type:
+          - array
+          - 'null'
+          description: skills of candidate
+          items:
+            type: string
+        location:
+          type:
+          - string
+          - 'null'
+          description: location of candidate
+        address:
+          type:
+          - string
+          - 'null'
+          description: address of candidate
+        firstName:
+          type: string
+          description: first name of candidate
+        emails:
+          type:
+          - string
+          - 'null'
+          description: email of candidate
+        detailTags:
+          description: detail tags of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsTag'
+        attachments:
+          description: Attachments of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsAttachment'
+        resumeContent:
+          description: Resume content for candidate.
+          allOf:
+          - $ref: '#/components/schemas/AtsContent'
+        visaStatuses:
+          type:
+          - array
+          - 'null'
+          description: visa statuses of candidate
+          items:
+            type: string
+        veteranStatusStr:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: String value for veteran status of the candidate
+        education:
+          description: education of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsEducation'
+        isInternal:
+          type:
+          - boolean
+          - 'null'
+          description: is internal candidate
+        customInfo:
+          type:
+          - object
+          - 'null'
+          description: custom info of candidate
+        courseAttendance:
+          description: course attandance of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/LmsCourseAttendance'
+        systemId:
+          type:
+          - string
+          - 'null'
+          description: system if of candidate
+        urls:
+          type:
+          - array
+          - 'null'
+          description: urls of candidate
+          items:
+            type: string
+        candidateId:
+          type:
+          - string
+          - 'null'
+          description: ATS Candidate id
+        title:
+          type:
+          - string
+          - 'null'
+          description: title of candidate
+        displayTags:
+          type:
+          - array
+          - 'null'
+          description: display tags for candidate
+          items:
+            type: string
+        tags:
+          type:
+          - array
+          - 'null'
+          description: tags of candidate
+          items:
+            type: string
+        veteranStatus:
+          type:
+          - boolean
+          - 'null'
+          description: Boolean value for veteran status of the candidate
+        highestEducationLevel:
+          type:
+          - string
+          - 'null'
+          description: highest education level of candidate
+        certifications:
+          description: certifications for candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsCertification'
+        lastActivityTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: last activity time stamp of candidate
+        summary:
+          type:
+          - string
+          - 'null'
+          description: summary of candidate
+        photoContent:
+          description: Photo content.
+          allOf:
+          - $ref: '#/components/schemas/AtsContent'
+        applications:
+          description: applications of candidates
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsApplication'
+        disabilityStatus:
+          type:
+          - boolean
+          - 'null'
+          description: disability status
+        phones:
+          type:
+          - string
+          - 'null'
+          description: comma separated phone numbers of candidate
+        experience:
+          description: experience of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsExperience'
+        races:
+          type:
+          - array
+          - 'null'
+          description: race of candidate
+          items:
+            type: string
+        dateOfBirth:
+          type:
+          - string
+          - 'null'
+          description: date of birth of candidate
+        project:
+          description: project of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsProject'
+        notes:
+          description: notes of candidates
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsNote'
+        gender:
+          type:
+          - string
+          - 'null'
+          description: gender of candidate
+        questions:
+          description: questions of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsQuestionAnswer'
+        skillDetails:
+          description: skill details of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ATSSkillDetail'
+        disabilityStatusStr:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: disability status of an applicant
+        lastName:
+          type:
+          - string
+          - 'null'
+          description: last name of candidate
+      required:
+      - candidateId
+      - emails
+      - firstName
+      - lastActivityTs
+    AtsQuestionAnswer:
+      type: object
+      properties:
+        formName:
+          type:
+          - string
+          - 'null'
+          description: form name for the question
+        choices:
+          type:
+          - array
+          - 'null'
+          description: choices of a question
+          items:
+            type: string
+        explanation:
+          type:
+          - string
+          - 'null'
+          description: explaination of the question
+        answer:
+          type:
+          - array
+          - 'null'
+          description: answer to the question
+          items:
+            type: string
+        formType:
+          type:
+          - string
+          - 'null'
+          description: form type for the question
+        questionId:
+          type: string
+          description: question id
+        displayOrder:
+          type:
+          - string
+          - 'null'
+          description: display order of the question
+        formId:
+          type:
+          - string
+          - 'null'
+          description: form id for the question
+        type:
+          type:
+          - string
+          - 'null'
+          description: 'Type of question. Valid inputs: text, choice, dropdown, date, multi_value, numeric'
+        question:
+          type:
+          - string
+          - 'null'
+          description: question data
+      required:
+      - questionId
+    AtsScorecard:
+      type: object
+      properties:
+        overallRatingLabel:
+          type:
+          - string
+          - 'null'
+          description: overall rating label
+        overallRating:
+          type:
+          - string
+          - 'null'
+          description: 'Overall rating. Valid inputs: strong_yes, yes, mixed, no, strong_no'
+        submittedBy:
+          description: submitted by
+          allOf:
+          - $ref: '#/components/schemas/AtsUser'
+        submittedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: submitted at timestamp
+        interviewedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: interview at timestamp
+        attributes:
+          description: attributes
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ATSScoreCardAttribute'
+        description:
+          type:
+          - string
+          - 'null'
+          description: description of interview
+        interviewName:
+          type:
+          - string
+          - 'null'
+          description: interview name
+    ProjectFeedback:
+      type: object
+      properties:
+        imageUrl:
+          type:
+          - string
+          - 'null'
+          description: Image url
+        rating:
+          type:
+          - string
+          - 'null'
+          description: Rating
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name
+        projectId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Project Id
+        timestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Feedback Timestamp in epoch seconds
+        profileId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Profile Id
+        comment:
+          type:
+          - string
+          - 'null'
+          description: Feedback Comment
+      required:
+      - comment
+      - imageUrl
+      - name
+      - profileId
+      - projectId
+      - rating
+      - timestamp
+    HomePageBanner:
+      type: object
+      properties:
+        useImage:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: boolean value for using image
+        image:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: image of home page banner
+        title:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: title for home page
+    LmsCourseAttendance:
+      type: object
+      properties:
+        durationHours:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Duration of the course (in hours)
+        percentageCompletion:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Percentage Completion
+        isInternal:
+          type:
+          - boolean
+          - 'null'
+          description: Is Internal
+        pointsEarned:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Points Earned
+        courseType:
+          type:
+          - string
+          - 'null'
+          description: Course type
+        difficulty:
+          type:
+          - string
+          - 'null'
+          description: difficulty
+        courseUrl:
+          type:
+          - string
+          - 'null'
+          description: Course Url
+        title:
+          type:
+          - string
+          - 'null'
+          description: 'Title. Note: Course Id or title must be present.'
+        completionTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Completion Timestamp
+        lmsCourseId:
+          type:
+          - string
+          - 'null'
+          description: 'LMS Course Id. Note: Course Id or title must be present.'
+        medium:
+          type:
+          - string
+          - 'null'
+          description: medium
+        language:
+          type:
+          - string
+          - 'null'
+          description: Language
+        dueTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Due Timestamp
+        assignedBy:
+          type:
+          - string
+          - 'null'
+          description: Email of who assigned this course
+        status:
+          type:
+          - string
+          - 'null'
+          description: status
+        startTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Start timestamp
+        isMandatory:
+          type:
+          - boolean
+          - 'null'
+          description: is course attendance mandatory ?
+        provider:
+          type:
+          - string
+          - 'null'
+          description: provider
+        verified:
+          type:
+          - string
+          - 'null'
+          description: verified
+        description:
+          type:
+          - string
+          - 'null'
+          description: description
+    Award:
+      type: object
+      properties:
+        entity:
+          type:
+          - string
+          - 'null'
+          description: award entity
+        date:
+          type: string
+          description: date for award
+        allText:
+          type:
+          - string
+          - 'null'
+          description: all text data for award
+        skills:
+          type:
+          - array
+          - 'null'
+          description: Award skills
+          items:
+            type: string
+        description:
+          type:
+          - string
+          - 'null'
+          description: description for award
+        title:
+          type: string
+          description: award title
+      required:
+      - date
+      - title
+    Tag:
+      type: object
+      properties:
+        creatorEmail:
+          type:
+          - string
+          - 'null'
+          description: creator email of candidate Tag
+        id:
+          type: string
+          description: Tag id of candidate
+        tag:
+          type:
+          - string
+          - 'null'
+          description: candidate Tag
+        tagSubtype:
+          type:
+          - string
+          - 'null'
+          description: Tag subtype
+        profileId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: candidate profile Id
+        tagType:
+          type:
+          - string
+          - 'null'
+          description: Type of candidate Tag
+        url:
+          type:
+          - string
+          - 'null'
+          description: url
+        groupId:
+          type:
+          - string
+          - 'null'
+          description: group id
+        positionId:
+          type:
+          - string
+          - 'null'
+          description: position id
+        createdTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Created time of candidate Tag
+      required:
+      - createdTime
+      - id
+    ProfilePerformanceRating:
+      type: object
+      properties:
+        rating:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: The rating given
+        reviewedBy:
+          readOnly: true
+          description: The reviewer info
+          allOf:
+          - $ref: '#/components/schemas/ProfileReviewer'
+        performancePeriodEndDate:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The performance period end date
+        ratingLabel:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The rating label
+        reviewComments:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: The review comments
+          items:
+            type: string
+        reviewType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The review type
+        performancePeriodStartDate:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The performance period start date
+    CertificateSchema:
+      type: object
+      properties:
+        verificationStatus:
+          type:
+          - string
+          - 'null'
+          description: verification status of a certification
+        country:
+          type:
+          - string
+          - 'null'
+          description: Certificate issued country
+        skills:
+          type:
+          - array
+          - 'null'
+          description: Skills associated with the certification
+          items:
+            type: string
+        comments:
+          type:
+          - string
+          - 'null'
+          description: Comments on the certification
+        validFromDate:
+          type:
+          - string
+          - 'null'
+          description: Valid From Date
+        date:
+          type:
+          - string
+          - 'null'
+          description: Certificate issue date
+        allText:
+          type:
+          - array
+          - 'null'
+          description: All text associated with the certification
+          items:
+            type: string
+        source:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: source
+        startDate:
+          type:
+          - string
+          - 'null'
+          description: Start date
+        validToDate:
+          type:
+          - string
+          - 'null'
+          description: Valid To Date
+        certificateId:
+          type:
+          - string
+          - 'null'
+          description: License number of a certification
+        state:
+          type:
+          - string
+          - 'null'
+          description: Certificate issued state
+        title:
+          type:
+          - string
+          - 'null'
+          description: Title of certificate
+        endDate:
+          type:
+          - string
+          - 'null'
+          description: End date
+        verificationBy:
+          type:
+          - string
+          - 'null'
+          description: email of the verifier
+        externalKey:
+          type:
+          - string
+          - 'null'
+          description: External key
+        verificationTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: verification timestamp
+        status:
+          type:
+          - string
+          - 'null'
+          description: Certificate status
+        certificateType:
+          type:
+          - string
+          - 'null'
+          description: Type of certificate
+        proficiency:
+          type:
+          - string
+          - 'null'
+          description: proficiency of a certification
+        attachmentIds:
+          type:
+          - array
+          - 'null'
+          description: List of attachment ids of the certification
+          items:
+            type: string
+        certificateExternalId:
+          type:
+          - string
+          - 'null'
+          description: external id for the type of certification
+        issuingAuthority:
+          type:
+          - string
+          - 'null'
+          description: Certificate issuing authority
+        description:
+          type:
+          - string
+          - 'null'
+          description: Certificate description
+      required:
+      - title
+    AtsAttachmentApplicationMetadata:
+      type: object
+      properties:
+        applicationId:
+          type: string
+          description: application id for an attachment
+      required:
+      - applicationId
+    AtsEducation:
+      type: object
+      properties:
+        endTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: ending timestamp
+        verificationStatus:
+          type:
+          - string
+          - 'null'
+          description: verification status of the education details
+        degreeExternalId:
+          type:
+          - string
+          - 'null'
+          description: external id of the degree
+        attachmentIds:
+          type:
+          - array
+          - 'null'
+          description: List of attachment ids of the education
+          items:
+            type: string
+        startTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: starting timestamp of education
+        degree:
+          type:
+          - string
+          - 'null'
+          description: degree
+        major:
+          type:
+          - string
+          - 'null'
+          description: major
+        verificationBy:
+          type:
+          - string
+          - 'null'
+          description: email of the verifier
+        location:
+          type:
+          - string
+          - 'null'
+          description: location
+        isCurrent:
+          type:
+          - boolean
+          - 'null'
+          description: is current education
+        schoolExternalId:
+          type:
+          - string
+          - 'null'
+          description: external id of the school
+        majorExternalId:
+          type:
+          - string
+          - 'null'
+          description: external id of the major
+        verificationTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: verification timestamp
+        school:
+          type:
+          - string
+          - 'null'
+          description: school
+        nameAlias:
+          type:
+          - string
+          - 'null'
+          description: name of the candidate in the records if different from the name in the profile
+        isGraduated:
+          type:
+          - boolean
+          - 'null'
+          description: graduation status of the candidate
+        description:
+          type:
+          - string
+          - 'null'
+          description: description
+      required:
+      - degree
+      - description
+      - location
+      - major
+      - school
+      - startTs
+    Questionnaire:
+      type: object
+      properties:
+        questionDependencies:
+          description: question dependencies
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/QuestionDependencies'
+        questionnaireId:
+          type:
+          - string
+          - 'null'
+          description: questionnaire id
+      required:
+      - questionnaireId
+    SourceSchema:
+      type: object
+      properties:
+        sourceType:
+          type:
+          - string
+          - 'null'
+          description: ''
+        datetime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: ''
+        sourceName:
+          type:
+          - string
+          - 'null'
+          description: ''
+    Endorsement:
+      type: object
+      properties:
+        work:
+          type:
+          - string
+          - 'null'
+          description: Endorsements work
+        description:
+          type:
+          - string
+          - 'null'
+          description: Endorsements description
+        metadata:
+          type:
+          - string
+          - 'null'
+          description: Endorsements metadata
+    ProfileLastContactSchema:
+      type: object
+      properties:
+        senderEmail:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Email of the user who last contacted the candidate
+        senderUserId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: EF user id of the user who initiated the last contact
+        lastContactTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Unix epoch timestamp of the last contact event
+    BatchFetchEntityRequestSchema:
+      type: object
+      properties:
+        entityIds:
+          type: array
+          description: list of entity ids to fetch the entity objects
+          items:
+            type: string
+      required:
+      - entityIds
+    ProfileFeedbackResponse:
+      type: object
+      properties:
+        overallFeedback:
+          readOnly: true
+          description: Overall Feedback (based on first boolean type question)
+          allOf:
+          - $ref: '#/components/schemas/ProfileFeedbackQuestionAnswer'
+        feedback:
+          readOnly: true
+          description: Ordered list of answers in the feedback (one per question on the form). Frontend should drive form rendering off this typed list rather than parsing the raw `feedbackJson` string.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProfileFeedbackQuestionAnswer'
+    AtsUserGroups:
+      type: object
+      properties:
+        userGroupId:
+          type:
+          - string
+          - 'null'
+          description: Ats Group of a user
+    AtsNote:
+      type: object
+      properties:
+        subject:
+          type:
+          - string
+          - 'null'
+          description: subject of a note
+        to:
+          type:
+          - string
+          - 'null'
+          description: email of reciever
+        noteType:
+          type:
+          - string
+          - 'null'
+          description: 'Note type of an ats note. Valid inputs: email, note, other'
+        visibility:
+          type:
+          - string
+          - 'null'
+          description: visibility of a note
+        creator:
+          type:
+          - string
+          - 'null'
+          description: creator of a note
+        cc:
+          type:
+          - array
+          - 'null'
+          description: email address for cc
+          items:
+            type: string
+        body:
+          type:
+          - string
+          - 'null'
+          description: body of a note
+        sender:
+          type:
+          - string
+          - 'null'
+          description: email of sender
+        creationTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: creation timestamp of a note
+    ConcisePositionSchema:
+      type: object
+      properties:
+        postingUrl:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: posting Url
+        atsEntityId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: atsEntityId in the ats system
+        locations:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: The name of the location of the job
+          items:
+            type: string
+        positionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: job id
+        title:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The job title
+    ProfilePromotionReadiness:
+      type: object
+      properties:
+        managerProfileId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Profile Id of the manager
+        readiness:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Readiness for Promotion
+    EmployeeInfo:
+      type: object
+      properties:
+        successionPlan:
+          readOnly: true
+          description: The succession plan of the employee
+          allOf:
+          - $ref: '#/components/schemas/ProfileSuccessionPlan'
+        employeeId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Employee Id of the profile
+        relocationPreferences:
+          readOnly: true
+          description: list of relocation preferences of the profile
+          allOf:
+          - $ref: '#/components/schemas/ProfileRelocation'
+        performanceManagement:
+          readOnly: true
+          description: Performance Management of the profile
+          allOf:
+          - $ref: '#/components/schemas/ProfilePerformanceManagement'
+    AtsContent:
+      type: object
+      properties:
+        extension:
+          type:
+          - string
+          - 'null'
+          description: extension
+        content:
+          type:
+          - string
+          - 'null'
+          description: content
+        isBase64:
+          type:
+          - boolean
+          - 'null'
+          description: is base 64 encoded?
+    QuestionLabel:
+      type: object
+      properties:
+        langMappingList:
+          description: lang_mapping_list
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/LangMapping'
+        label:
+          type:
+          - string
+          - 'null'
+          description: label
+        value:
+          type:
+          - string
+          - 'null'
+          description: value
+    HiringTeamMember:
+      type: object
+      properties:
+        role:
+          type:
+          - string
+          - 'null'
+          description: Role label (e.g. Hiring Manager, HRBP)
+        email:
+          type:
+          - string
+          - 'null'
+          description: Email of the team member
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the team member
+        roleKey:
+          type:
+          - string
+          - 'null'
+          description: Storage key for the role (e.g. hiring_manager, secondary_hiring_managers, cust_hrbp)
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+    QuestionChoice:
+      type: object
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+          description: label
+        value:
+          type:
+          - string
+          - 'null'
+          description: value
+    SkillGroupList:
+      type: object
+      properties:
+        proficiency:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: group proficiency of the skill group
+        groupName:
+          type:
+          - string
+          - 'null'
+          description: name of the skill group
+        level:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: level of the role
+        skillCategory:
+          type:
+          - string
+          - 'null'
+          description: skill category of the skill group
+    ProfileAddressSchema:
+      type: object
+      properties:
+        zip:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Postal code
+        country:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Country
+        city:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: City
+        street:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Street / house number
+        state:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: State / region
+    Person:
+      type: object
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+          description: email
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name
+      required:
+      - name
+    ApplyFormAutoGeneratedResume:
+      type: object
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: True when the Eightfold-generated resume option is offered.
+        text:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Label shown for the auto-generated resume option.
+    AtsExperience:
+      type: object
+      properties:
+        endTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: end_ts of exp
+        industry:
+          type:
+          - string
+          - 'null'
+          description: industry of work
+        isInternal:
+          type:
+          - boolean
+          - 'null'
+          description: is internal employee
+        department:
+          type:
+          - string
+          - 'null'
+          description: department of work
+        startTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: start_ts of exp
+        location:
+          type:
+          - string
+          - 'null'
+          description: location of work
+        company:
+          type:
+          - string
+          - 'null'
+          description: company of a candidate
+        isCurrent:
+          type:
+          - boolean
+          - 'null'
+          description: is currentely employed
+        description:
+          type:
+          - string
+          - 'null'
+          description: description of the post/company
+        title:
+          type:
+          - string
+          - 'null'
+          description: title of post
+      required:
+      - company
+      - isCurrent
+      - isInternal
+      - location
+      - startTs
+      - title
+    UserLogin:
+      type: object
+      properties:
+        fullName:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Full name of User
+        redirectEmail:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Redirect Email
+        domain:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Domain name for User
+        email:
+          type:
+          - string
+          - 'null'
+          description: Email of User
+    Preferences:
+      type: object
+      properties:
+        contactConsent:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Candidate consent
+    ApplyFormQuestionOptions:
+      type: object
+      properties:
+        previewUrl:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Resume preview document URL. Resume questions.
+        today:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: True for a date question that defaults to today. Date questions.
+        acceptedFileTypes:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Accepted resume file types. Resume questions.
+          items:
+            type: string
+        choices:
+          readOnly: true
+          description: Selectable choices, each {label, value}. Select/radio/checkbox/skill-suggester questions.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/QuestionChoice'
+        inputType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: HTML input type for a text question (e.g. number). Text questions.
+        fileFormats:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Comma-separated list of accepted file extensions. File-upload questions.
+        hasPredefinedSelector:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: True when choices are populated dynamically by Eightfold rather than statically listed. Select questions.
+        fileTypesText:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Human-readable accepted file types. File-upload and resume questions.
+        subType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: File-upload sub-type (e.g. profileFileUpload, anonymousFileUpload). File-upload questions.
+        autocomplete:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: HTML autocomplete hint. Text and phone questions.
+        multiple:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: True when multiple choices may be selected. Select questions.
+        maxFiles:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Maximum number of files allowed. File-upload questions.
+        awliOptions:
+          readOnly: true
+          description: Apply-with-LinkedIn integration config. Resume questions.
+          allOf:
+          - $ref: '#/components/schemas/ApplyFormAwliOptions'
+        autoGeneratedResume:
+          readOnly: true
+          description: Auto-generated resume config. Resume questions.
+          allOf:
+          - $ref: '#/components/schemas/ApplyFormAutoGeneratedResume'
+        choicesSortOrder:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Sort order applied to choices (ascending/descending). Select questions.
+        requiredFields:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Profile fields and question ids required before the survey runs. External-survey questions.
+          items:
+            type: string
+        fallbackFormat:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Fallback date display format (e.g. MM/DD/YYYY). Date questions.
+        maxFileSizeMB:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: Maximum file size in megabytes. File-upload questions.
+    ApplyFormQuestionSection:
+      type: object
+      properties:
+        questions:
+          readOnly: true
+          description: Questions in this section.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ApplyFormQuestion'
+        countries:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Country codes this section applies to, when scoped by location.
+          items:
+            type: string
+        title:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Section title.
+    LangMapping:
+      type: object
+      properties:
+        locale:
+          type:
+          - string
+          - 'null'
+          description: locale
+        label:
+          type:
+          - string
+          - 'null'
+          description: label
+    Source1:
+      type: object
+      properties:
+        entityId:
+          type:
+          - string
+          - 'null'
+          description: 'The id of the entity that is attributed for gaining this skill in the external system (eg: course id for a completed course)'
+        name:
+          type:
+          - string
+          - 'null'
+          description: The external system that added this skill to the profile
+    AtsOpeningDetail:
+      type: object
+      properties:
+        status:
+          type:
+          - string
+          - 'null'
+          description: Status of the opening
+        closedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Closing timestamp in epoch format
+        openingId:
+          type:
+          - string
+          - 'null'
+          description: Opening ID
+        openedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Opening timestamp in epoch format
+        closeReason:
+          type:
+          - string
+          - 'null'
+          description: Reason for closing the opening
+        candidateId:
+          type:
+          - string
+          - 'null'
+          description: List of candidate ID
+        applicationId:
+          type:
+          - string
+          - 'null'
+          description: List of application ID
+    ProfileSkillEvaluation:
+      type: object
+      properties:
+        skillSubGroup:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The sub group within the skill group assigned to the skill. This is available only if the skill taxonomy is setup
+        level:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: Normalized proficiency level on the scale of 0-1
+        proficiency:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The display value of the assessed proficiency for the skill
+        skillGroup:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The skill group assigned to the skill. This is availalble only if skill taxonomy is setup
+        skillGroupDescription:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Description of the skill group. This is available only if skill taxonomy is setup
+        source:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Indicates who made the assessment for the skill - self/manager
+        skillCategoryDescription:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Description of the skill category. This is available only if skill taxonomy is setup
+        assessmentProvider:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Name of the assessment provider/vendor if assessments are made in a 3rd party tool and ingested into Eightfold
+        skillCategory:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The category of the skill group. This is available only if skill taxonomy is setup
+    ATSPositionData:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: creation timestamp in epoch format
+        locationCountry:
+          type:
+          - string
+          - 'null'
+          description: Country of the location
+        coordinators:
+          description: all the coordinators related to this position
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Person'
+        businessUnit:
+          type:
+          - string
+          - 'null'
+          description: business unit
+        isPrivate:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if a position is a private posting
+        workLocationOption:
+          type:
+          - string
+          - 'null'
+          description: Indicates the option for working location e.g. onsite, remote_global, remote_local, hybrid
+        atsEntityId:
+          type:
+          - string
+          - 'null'
+          description: position_id in the ats system
+        hiringManager:
+          description: Hiring Manager
+          allOf:
+          - $ref: '#/components/schemas/Person'
+        internalPostingUrl:
+          type:
+          - string
+          - 'null'
+          description: internal posting url
+        evergreen:
+          type:
+          - boolean
+          - 'null'
+          description: is evergreen
+        skills:
+          type:
+          - array
+          - 'null'
+          description: skills
+          items:
+            type: string
+        company:
+          type:
+          - string
+          - 'null'
+          description: company
+        locationCity:
+          type:
+          - string
+          - 'null'
+          description: City of the location
+        lastUpdated:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: last modified date time in epoch format
+        displayJobId:
+          type:
+          - string
+          - 'null'
+          description: display job id
+        openings:
+          description: Openings
+          allOf:
+          - $ref: '#/components/schemas/AtsOpenings'
+        hiringTeam:
+          readOnly: true
+          description: 'Unified hiring team array. Each entry: {role, roleKey, name, email}. Includes primary/secondary HMs, primary/secondary recruiters, and custom roles.'
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/HiringTeamMember'
+        followers:
+          description: all the followers of the positions as hiring managers etc.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Person'
+        startDate:
+          type:
+          - string
+          - 'null'
+          description: start date of the position in ISO 8601 format (e.g. 2024-05-01)
+        requisitionType:
+          type:
+          - string
+          - 'null'
+          description: Requisition Type
+        systemId:
+          type:
+          - string
+          - 'null'
+          description: system id
+        activities:
+          description: all the activities related to this positions
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PositionActivities'
+        postedFor:
+          type:
+          - string
+          - 'null'
+          description: 'internal for internal jobs, external for external jobs, or all for both. Can be omitted for unposted positions.Input values must be one of these: internal, external, all, None'
+        questionnaires:
+          description: questionnaires
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Questionnaire'
+        restrictAccess:
+          type:
+          - boolean
+          - 'null'
+          description: restrict access
+        title:
+          type:
+          - string
+          - 'null'
+          description: job title
+        templateId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Template id of the template used to create the position
+        recruiter:
+          description: recruiter
+          allOf:
+          - $ref: '#/components/schemas/Person'
+        jobPosts:
+          description: job postings
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/JobPost'
+        hiringBand:
+          type:
+          - string
+          - 'null'
+          description: hiring band
+        postingTitle:
+          type:
+          - string
+          - 'null'
+          description: posting title
+        employmentType:
+          type:
+          - string
+          - 'null'
+          description: Employment Type
+        posted:
+          type:
+          - boolean
+          - 'null'
+          description: status of the position posted or not
+        locationFlexibility:
+          type:
+          - string
+          - 'null'
+          description: Indicates the flexibility on location e.g. not_flexible, flexible_within_country, flexible_global
+        orgUnits:
+          type:
+          - object
+          - 'null'
+          description: Org units of the position
+        companyDescription:
+          type:
+          - string
+          - 'null'
+          description: Company description
+        customFields:
+          type:
+          - object
+          - 'null'
+          description: custom fields
+        sourcers:
+          description: all the recruiters/sourcers related to this positions
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Person'
+        workflowTemplateId:
+          type:
+          - string
+          - 'null'
+          description: Indicates which workflow this position belongs to
+        status:
+          type:
+          - string
+          - 'null'
+          description: status
+        jobCode:
+          type:
+          - string
+          - 'null'
+          description: ATS attribute which identifies the job this jobrequestion is mapped to
+        open:
+          type:
+          - boolean
+          - 'null'
+          description: status of the position open or not
+        postingUrl:
+          type:
+          - string
+          - 'null'
+          description: posting url
+        atsUserGroups:
+          description: ATS user groups
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsUserGroups'
+        createdBy:
+          type:
+          - string
+          - 'null'
+          description: Email of the user who created this position
+        function:
+          type:
+          - string
+          - 'null'
+          description: job function
+        jobStages:
+          type:
+          - array
+          - 'null'
+          description: job_stages
+          items:
+            type: string
+        requiredSkills:
+          type:
+          - array
+          - 'null'
+          description: required skills
+          items:
+            type: string
+        questions:
+          description: questions
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Questions'
+        locationState:
+          type:
+          - string
+          - 'null'
+          description: State of the location
+        locations:
+          type:
+          - array
+          - 'null'
+          description: location
+          items:
+            type: string
+        positionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: EF Position ID
+        description:
+          type:
+          - string
+          - 'null'
+          description: job description
+      required:
+      - atsEntityId
+      - company
+      - createdAt
+      - lastUpdated
+      - open
+      - posted
+      - recruiter
+      - status
+      - title
+    ProfileSkill:
+      type: object
+      properties:
+        displayName:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Display name of the skill
+        evaluations:
+          description: Latest assessments of the skill as provided by the employee/candidate or the employee's manager
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProfileSkillEvaluation'
+        source:
+          description: Source of skill, if this was sent by an external system other than the primary HRIS
+          allOf:
+          - $ref: '#/components/schemas/Source1'
+        name:
+          type:
+          - string
+          - 'null'
+          description: Normalized skill name
+    ProfileSkillGoal:
+      type: object
+      properties:
+        goalType:
+          type:
+          - string
+          - 'null'
+          description: goal type of the skill
+        skill:
+          type:
+          - string
+          - 'null'
+          description: name of the skill
+    ProfileAttachmentSchema:
+      type: object
+      properties:
+        lastModifiedTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Last modified timestamp of the attachment
+        attachmentID:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Id of the attachment
+        attachmentType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Type of the attachment e.g.resume, photo, others
+        filename:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Name of the file
+    AtsProject:
+      type: object
+      properties:
+        endTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: ending timestamp of a project
+        links:
+          type:
+          - array
+          - 'null'
+          description: links for a project
+          items:
+            type: string
+        startTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: start timestamp of a project
+        skills:
+          type:
+          - array
+          - 'null'
+          description: skills
+          items:
+            type: string
+        company:
+          type:
+          - string
+          - 'null'
+          description: company of a project
+        contributors:
+          type:
+          - array
+          - 'null'
+          description: contributors to a project
+          items:
+            type: string
+        description:
+          type:
+          - string
+          - 'null'
+          description: description
+        title:
+          type:
+          - string
+          - 'null'
+          description: title of a project
+      required:
+      - company
+      - startTs
+      - title
+    ProfileFeedbackQuestionAnswer:
+      type: object
+      properties:
+        answer:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Answer
+        label:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Label
+        questionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Question ID
+        comment:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Comment
+    PlannedEvent:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when this event was created
+        isCancelled:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: ''
+        eventSpeakers:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of speakers
+          items:
+            type: string
+        activeRegistrations:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: active registrations
+        registerButton:
+          readOnly: true
+          description: Registration button information
+          allOf:
+          - $ref: '#/components/schemas/RegisterButton'
+        eventTeamDataJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Event team data
+        eventBucket:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Bucket of the event
+        address:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Address of venue
+        eventCustomFieldsJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Event custom fields
+        eventType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+        institution:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Institution related to event
+        selectedTimezone:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Selected time zome
+        name:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Name of the event
+        homePageBanner:
+          readOnly: true
+          description: Home page banner information
+          allOf:
+          - $ref: '#/components/schemas/HomePageBanner'
+        eventLocationType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: id
+        parentId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Parent id of the event
+        venue:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Venue of the event
+        endTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Ending timestamp of event
+        isPublished:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: ''
+        eventLandingPage:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Event landing page
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+        createdBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User id which created this event
+        eventCategory:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Category of the event
+        startTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Starting time stamp of event
+        when:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: When tag of the event
+        description:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Description of event
+    ATSScheduledInterview:
+      type: object
+      properties:
+        organizer:
+          type:
+          - string
+          - 'null'
+          description: Organizer
+        status:
+          type:
+          - string
+          - 'null'
+          description: Status
+        endTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: End Timestamp
+        interviewType:
+          type:
+          - string
+          - 'null'
+          description: Interview Type
+        interviewers:
+          type:
+          - array
+          - 'null'
+          description: Interviewers
+          items:
+            type: string
+        startTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Start Timestamp
+        location:
+          type:
+          - string
+          - 'null'
+          description: Location of interview
+        comment:
+          type:
+          - string
+          - 'null'
+          description: Comment
+        referenceId:
+          type:
+          - string
+          - 'null'
+          description: Reference ID
+    PositionActivities:
+      type: object
+      properties:
+        activityTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: activity time in epoch format
+        activityType:
+          type:
+          - string
+          - 'null'
+          description: activity type
+        changeLogs:
+          description: all the change logs for the activity
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChangeLog'
+        message:
+          type:
+          - string
+          - 'null'
+          description: message for the activity
+      required:
+      - activityTime
+      - activityType
+      - message
+    BatchFetchMetaSchema:
+      type: object
+      properties:
+        missingEntityIds:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of entity ids for which no result was found
+          items:
+            type: string
+    CalibrationTemplate:
+      type: object
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: id of the calibration template
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the calibration template
+    ProfileFeedback:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          readOnly: true
+          description: Datetime when this feedback was created
+        plannedEventId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Planned event id for candidate source
+        feedbackResponse:
+          readOnly: true
+          description: Received feedback's details
+          allOf:
+          - $ref: '#/components/schemas/ProfileFeedbackResponse'
+        followUpEnabled:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Denotes if the feedback follow up is enabled or not
+        profileId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Profile ID associated with the profile feedback
+        communityId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Community Id for candidate source
+        sharedFeedbackMessageId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Message Id for shared feedback
+        viewFeedbackUrl:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: URL to view feedback
+        requestedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when the feedback was requested
+        reminderCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Number of reminders sent
+        requester:
+          readOnly: true
+          description: Requester of the ProfileFeedback
+          allOf:
+          - $ref: '#/components/schemas/UserLogin'
+        submittedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when the feedback was first submitted
+        reviewerEmail:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Email of reviewer of the ProfileFeedback
+        feedbackType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: type of the feedback
+        feedbackTemplateId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Feedback template ID
+        feedbackEncId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Encoded ID of the ProfileFeedback
+        requesterEmail:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Email of requester of the ProfileFeedback
+        archiveFlag:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Denotes if the feedback is archived or not
+        position:
+          readOnly: true
+          description: Position for which feedback was given
+          allOf:
+          - $ref: '#/components/schemas/Position'
+        userCalendarEventId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: User calendar event id
+        feedbackId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ID of the ProfileFeedback
+        feedbackTemplateName:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Feedback template name
+        reviewer:
+          readOnly: true
+          description: Reviewer of the ProfileFeedback
+          allOf:
+          - $ref: '#/components/schemas/UserLogin'
+        plannedEvent:
+          readOnly: true
+          description: Planned event for candidate source
+          allOf:
+          - $ref: '#/components/schemas/PlannedEvent'
+        matchingData:
+          readOnly: true
+          description: Application matching information
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ApplicationMatchScore'
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: status of the feedback
+        feedbackJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Feedback JSON
+        feedbackUrl:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: URL to provide feedback
+        positionId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Position ID for which feedback was given
+    ApplyFormQuestion:
+      type: object
+      properties:
+        options:
+          readOnly: true
+          description: Type-specific question options; the populated sub-keys depend on `type`.
+          allOf:
+          - $ref: '#/components/schemas/ApplyFormQuestionOptions'
+        countries:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Country codes this question applies to, when scoped by location.
+          items:
+            type: string
+        parentDependencies:
+          readOnly: true
+          description: Parent questions this question depends on.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ApplyFormParentDependency'
+        isContactInfoQuestion:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: True for contact-information questions.
+        questionId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Question identifier.
+        configType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Configured question type (raw type before render mapping).
+        hasDependents:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: True when other questions depend on this question.
+        help:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Help text for the question.
+        questionnaireId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Identifier of the questionnaire this question belongs to.
+        readonly:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Whether the question is read-only.
+        type:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Rendered question type (e.g. text, select, radio, fileUpload).
+        requiredErrorMessage:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Error message shown when a required question is left blank.
+        label:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Question label shown on the form.
+        required:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Whether an answer is required.
+    ApplyFormAwliOptions:
+      type: object
+      properties:
+        clientId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: LinkedIn integration client id.
+    Project:
+      type: object
+      properties:
+        addlJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Additional Json Data
+        projectId:
+          type: string
+          description: Project projectid
+        duration:
+          type: integer
+          format: int32
+          description: Project duration in months
+        links:
+          type:
+          - array
+          - 'null'
+          description: Project links
+          items:
+            type: string
+        personal_description:
+          type:
+          - string
+          - 'null'
+          description: Project personal description
+        skills:
+          type: array
+          description: Project skills
+          items:
+            type: string
+        time:
+          type: string
+          description: Project time
+        feedback:
+          description: Project feedback
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProjectFeedback'
+        company:
+          type:
+          - string
+          - 'null'
+          description: Project company
+        contributors:
+          type:
+          - array
+          - 'null'
+          description: Project contributors
+          items:
+            type: string
+        description:
+          type:
+          - string
+          - 'null'
+          description: Project description
+        title:
+          type: string
+          description: Project title
+      required:
+      - company
+      - contributors
+      - duration
+      - projectId
+      - skills
+      - time
+      - title
+    ChangeLog:
+      type: object
+      properties:
+        newValue:
+          type:
+          - string
+          - 'null'
+          description: new value
+        fieldName:
+          type:
+          - string
+          - 'null'
+          description: field name
+        prevValue:
+          type:
+          - string
+          - 'null'
+          description: previous value
+      required:
+      - fieldName
+      - newValue
+      - prevValue
+    InternalGroupAffiliation:
+      type: object
+      properties:
+        endTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Membership/Position end timestamp in seconds
+        startTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Membership/Position start timestamp in seconds
+        positionType:
+          type:
+          - string
+          - 'null'
+          description: Type of the membership/position
+        internalGroup:
+          type:
+          - string
+          - 'null'
+          description: Internal group of the membership/position
+        isCurrent:
+          type:
+          - boolean
+          - 'null'
+          description: Whether profile is currently affiliated to this Membership/Position
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the membership/position
+        title:
+          type:
+          - string
+          - 'null'
+          description: Title of the membership/position
+    PositionSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Creation timestamp in epoch format
+        confidential:
+          type:
+          - boolean
+          - 'null'
+          description: if the position is confidential or not
+        hiringManager:
+          readOnly: true
+          description: Hiring Manager
+          allOf:
+          - $ref: '#/components/schemas/Person'
+        groupId:
+          type:
+          - string
+          - 'null'
+          description: group id
+        name:
+          type:
+          - string
+          - 'null'
+          description: Title of the Position
+        followers:
+          type:
+          - array
+          - 'null'
+          description: all the followers of the position
+          items:
+            type: string
+        jobDescription:
+          type:
+          - string
+          - 'null'
+          description: Detailed Job Description in a text format
+        systemId:
+          type:
+          - string
+          - 'null'
+          description: system id
+        positionDisplayId:
+          type:
+          - string
+          - 'null'
+          description: display job id
+        recruiter:
+          readOnly: true
+          description: Recruiter
+          allOf:
+          - $ref: '#/components/schemas/Person'
+        calibrationConfirmedBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User who confirmed the calibration
+        open:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: if the position is open or not
+        createdBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: source of the job
+        calibrationConfirmedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Confirmed timestamp for the calibration
+        atsData:
+          readOnly: true
+          description: ats data of the job
+          allOf:
+          - $ref: '#/components/schemas/ATSPositionData'
+        calibrationData:
+          description: calibration data of the job
+          allOf:
+          - $ref: '#/components/schemas/CalibrationData'
+        role:
+          readOnly: true
+          description: role associated with the position
+          allOf:
+          - $ref: '#/components/schemas/Role'
+        positionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: job id
+      required:
+      - name
+    JobPost:
+      type: object
+      properties:
+        publishedTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: published time in epoch format
+        expirationTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: expiration time in epoch format
+        postingTitle:
+          type:
+          - string
+          - 'null'
+          description: posting title
+        postingId:
+          type:
+          - string
+          - 'null'
+          description: posting id
+        locale:
+          type:
+          - string
+          - 'null'
+          description: locale of the ats job post
+        primaryPost:
+          type:
+          - boolean
+          - 'null'
+          description: is primary post
+        jobDescription:
+          type:
+          - string
+          - 'null'
+          description: job description
+        postedFor:
+          type:
+          - string
+          - 'null'
+          description: internal for internal jobs, external for external jobs, or all for both.
+      required:
+      - postedFor
+      - postingId
+      - postingTitle
+      - publishedTime
+    CalibrationData:
+      type: object
+      properties:
+        flags:
+          type:
+          - array
+          - 'null'
+          description: flags
+          items:
+            type: string
+        graduationYear:
+          type:
+          - string
+          - 'null'
+          description: graduationYear
+        workCategories:
+          type:
+          - array
+          - 'null'
+          description: workCategories
+          items:
+            type: string
+        skills:
+          type:
+          - array
+          - 'null'
+          description: skills
+          items:
+            type: string
+        diversity:
+          type:
+          - array
+          - 'null'
+          description: diversity
+          items:
+            type: string
+        idealCandidates:
+          type:
+          - array
+          - 'null'
+          description: ideal_candidates
+          items:
+            type: string
+        companies:
+          type:
+          - array
+          - 'null'
+          description: companies
+          items:
+            type: string
+        titles:
+          type:
+          - array
+          - 'null'
+          description: titles
+          items:
+            type: string
+        educationLevel:
+          type:
+          - array
+          - 'null'
+          description: different education levels
+          items:
+            type: string
+        relocation:
+          type:
+          - array
+          - 'null'
+          description: relocation
+          items:
+            type: string
+        seniorities:
+          type:
+          - array
+          - 'null'
+          description: seniorities
+          items:
+            type: string
+        maxExperience:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: maxExperience
+        schools:
+          type:
+          - array
+          - 'null'
+          description: schools
+          items:
+            type: string
+        skillProficiencies:
+          writeOnly: true
+          description: skill proficiencies of the role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SkillProficiency'
+        idealCandidateUrls:
+          type:
+          - array
+          - 'null'
+          description: idealCandidatesUrls
+          items:
+            type: string
+        minExperience:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: minExperience
+        notes:
+          type:
+          - string
+          - 'null'
+          description: notes
+        locations:
+          type:
+          - array
+          - 'null'
+          description: locations
+          items:
+            type: string
+    ProfilePerformanceManagement:
+      type: object
+      properties:
+        promotionReadiness:
+          readOnly: true
+          description: Promotion Readiness of the profile
+          allOf:
+          - $ref: '#/components/schemas/ProfilePromotionReadiness'
+        performanceRatings:
+          readOnly: true
+          description: Performance ratings of the profile
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProfilePerformanceRating'
+    ExternalProfileSchema:
+      type: object
+      properties:
+        preferences:
+          readOnly: true
+          description: User preferences
+          allOf:
+          - $ref: '#/components/schemas/Preferences'
+        jtnSubmissions:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Join talent network submissions
+        internalGroupAffiliation:
+          description: Group memberships and affiliations to internal groups
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/InternalGroupAffiliation'
+        atsEntityId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Ats Entity Id of candidate
+        endorsements:
+          description: endorsements of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Endorsement'
+        profileId:
+          type: integer
+          format: int32
+          readOnly: true
+          description: Raw ID of the profile
+        seniorityLevel:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Seniority level of candidate
+        skills:
+          readOnly: true
+          description: List of profile skills
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProfileSkill'
+        location:
+          type:
+          - string
+          - 'null'
+          description: Location associated with the candidate
+        careerSiteQuestions:
+          readOnly: true
+          description: Questions and answers from career site applications
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CareerSiteQuestionsSchema'
+        firstName:
+          type: string
+          description: First Name of candidate
+        address:
+          readOnly: true
+          description: Structured candidate address
+          allOf:
+          - $ref: '#/components/schemas/ProfileAddressSchema'
+        lastContact:
+          readOnly: true
+          description: Latest outbound contact event for the candidate.
+          allOf:
+          - $ref: '#/components/schemas/ProfileLastContactSchema'
+        resumeContent:
+          writeOnly: true
+          description: Resume content for candidate
+          allOf:
+          - $ref: '#/components/schemas/AtsContent'
+        employeeInfo:
+          readOnly: true
+          description: Employee Information
+          allOf:
+          - $ref: '#/components/schemas/EmployeeInfo'
+        email:
+          type:
+          - string
+          - 'null'
+          description: Emails of the candidate comma seperated format
+        lastUpdated:
+          type: integer
+          format: int32
+          readOnly: true
+          description: Last updated time stamp of profile
+        imageUrl:
+          type:
+          - string
+          - 'null'
+          description: Image Url of candidate
+        roleId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: role id associated with the profile
+        workExperienceYears:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: Total work experience in years (float)
+        resumeFileName:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Latest resume file name
+        awards:
+          description: Awards of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Award'
+        education:
+          description: Education of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CandidateEducation'
+        efRace:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Race inferred by Eightfold
+        fullName:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Full name of candidate
+        resume:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: base 64 encoded string representing resume of the candidate
+        profileStagedSections:
+          readOnly: true
+          description: The schema for the staged profile data
+          allOf:
+          - $ref: '#/components/schemas/ProfileStagedSections'
+        skillGoals:
+          readOnly: true
+          description: List of profile skill goals
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProfileSkillGoal'
+        customInfo:
+          type:
+          - object
+          - 'null'
+          description: Custom information for Eightfold Profile (not same as product custom information)
+        experiences:
+          description: List of candidate's past experiences
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ExperienceSchema'
+        isConfidential:
+          type:
+          - boolean
+          - 'null'
+          description: Flag indicating whether the candidate profile is confidential. Setting this to true will add the Confidential tag to the profile.
+        isCurrentEmployee:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: True if this profile is a current employee of the tenant
+        urls:
+          type:
+          - array
+          - 'null'
+          description: urls for candidate's online profiles
+          items:
+            type: string
+        demandExperiences:
+          readOnly: true
+          description: List of candidate's past demand experiences
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ExperienceSchema'
+        phone:
+          type:
+          - string
+          - 'null'
+          description: Phone of candidate
+        title:
+          type:
+          - string
+          - 'null'
+          description: Work title of candidate
+        tags:
+          readOnly: true
+          description: Tags of profile
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Tag'
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Encoded Id of candidate
+        deletedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Deleted at time stamp of the profile
+        race:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: race value fetched from ATS data if available otherwise inferred if inference is enabled
+        jtnAnswers:
+          readOnly: true
+          description: Join talent network answers
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/JTNAnswersSchema'
+        additionalSections:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Additional section defined by the customer
+        sources:
+          readOnly: true
+          description: Sourcing data of candidate
+          type: array
+          items:
+            $ref: '#/components/schemas/SourceSchema'
+        currentCompany:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Current employer of the candidate
+        socialMediaLinks:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Social-media profile URLs (filtered subset of `urls`)
+          items:
+            type: string
+        language:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Predicted language of the candidate
+        educationLevel:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Education Level
+        patents:
+          description: patents of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Patent'
+        efCustomInfo:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Custom information for Eightfold Profile. This will be the same information as product custom information
+        dupeData:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Information related to duplicate profile ids
+        highlights:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: list of highlights for the profile
+          items:
+            type: string
+        summary:
+          type:
+          - string
+          - 'null'
+          description: Summary of candidate
+        projects:
+          description: projects of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Project'
+        applications:
+          readOnly: true
+          description: Application of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProfileApplicationSchema'
+        customFields:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: ats custom fields key-value pairs, key is the field name
+        certificates:
+          description: Certificates
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CertificateSchema'
+        publications:
+          description: publications of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Publication'
+        notes:
+          readOnly: true
+          description: Image Url of candidate
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Note'
+        gender:
+          type:
+          - string
+          - 'null'
+          description: Gender of candidate
+        atsData:
+          readOnly: true
+          description: ats data of candidate
+          allOf:
+          - $ref: '#/components/schemas/ATSProfileSchema'
+        industries:
+          type:
+          - array
+          - 'null'
+          description: Industries in which candidate has worked
+          items:
+            type: string
+        efGender:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Gender inferred by Eightfold
+        inferredSkills:
+          readOnly: true
+          description: List of inferred skills for each experience of profile
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/InferredSkillsSchema'
+        attachmentsInfo:
+          readOnly: true
+          description: Attachments metadata of the profile
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProfileAttachmentSchema'
+        lastName:
+          type:
+          - string
+          - 'null'
+          description: Last Name of candidate
+      required:
+      - educationLevel
+      - firstName
+    candidateProfile:
+      required:
+      - title
+      properties:
+        industries:
+          type: array
+          items:
+            type: string
+        title:
+          type: string
+          description: The job designation of the candidate
+        skills:
+          type: array
+          items:
+            type: string
+        highlights:
+          type: array
+          items:
+            type: string
+        summary:
+          type: string
+        experience:
+          type: array
+          items:
+            $ref: '#/components/schemas/candidateExperience'
+        email:
+          type: string
+        phone:
+          type: string
+        awards:
+          type: array
+          items:
+            type: string
+        location:
+          type: string
+        urls:
+          type: array
+          items:
+            type: string
+        gender:
+          type: string
+        race:
+          type: string
+        imageUrl:
+          type: string
+        fullName:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        education:
+          type: array
+          items:
+            $ref: '#/components/schemas/candidateEducation'
+        resume:
+          type: string
+          description: base 64 encoded string representing resume of the candidate
+        resumeFileName:
+          type: string
+          description: File name including extension such as txt, docx, pdf
+        id:
+          type: string
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/candidateTag'
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/candidateNote'
+        applications:
+          type: array
+          items:
+            $ref: '#/components/schemas/candidateApplication'
+        customFields:
+          type: object
+          description: custom fields key-value pairs, key is the field name
+        atsEntityId:
+          type: string
+        lastUpdated:
+          type: integer
+          description: Epoch timestamp of the last activity.
+      type: object
+    job_post:
+      required:
+      - postedFor
+      - postingId
+      - postingTitle
+      - publishedTime
+      properties:
+        postingTitle:
+          type: string
+          description: posting title
+        postingId:
+          type: string
+          description: posting id
+        postedFor:
+          type: string
+          description: internal for internal jobs, external for external jobs, or all for both.
+        jobDescription:
+          type: string
+          description: job description
+        isPrimaryPost:
+          type: boolean
+          description: is primary post
+        publishedTime:
+          type: integer
+          description: published time in epoch format
+        expirationTime:
+          type: integer
+          description: expiration time in epoch format
+      type: object
+    candidateTag:
+      properties:
+        tag:
+          type: string
+        type:
+          type: string
+        createdTime:
+          type: integer
+        creatorEmail:
+          type: string
+      type: object
+    position:
+      required:
+      - isProspecting
+      - recruiter
+      - status
+      - type
+      properties:
+        createdBy:
+          type: string
+          description: source of the job
+        name:
+          type: string
+          description: job title
+        groupId:
+          type: string
+          description: group id
+        atsJobId:
+          type: string
+          description: job id from ATS if source for job is a ATS, Application Tracking System
+        jobDescription:
+          type: string
+          description: delailed job description in a text format
+        positionId:
+          type: string
+          description: job id
+        positionDisplayId:
+          type: string
+          description: display job id
+        hiringManager:
+          description: hiring manager
+          allOf:
+          - $ref: '#/components/schemas/person_contact'
+        recruiter:
+          description: recruiter
+          allOf:
+          - $ref: '#/components/schemas/person_contact'
+        hot:
+          type: boolean
+          description: if the position is hot
+        isOpen:
+          type: boolean
+          description: if the position is open or not
+        calibrationData:
+          description: 'calibration data of the job '
+          allOf:
+          - $ref: '#/components/schemas/calibrationData'
+        locations:
+          type: array
+          description: locations
+          items:
+            type: string
+        atsData:
+          description: 'ats data of the job '
+          allOf:
+          - $ref: '#/components/schemas/atsData'
+        isConfidential:
+          type: boolean
+          description: if the position is confidential or not
+        followers:
+          type: array
+          description: all the followers of the position
+          items:
+            type: string
+        atsStatus:
+          type: string
+          description: status of job in ATS
+        applicationUrl:
+          type: string
+        isProspecting:
+          type: boolean
+          description: Is Prospecting Pipeline
+        type:
+          type: string
+          description: Pipeline Type
+        status:
+          type: string
+          description: Pipeline Status
+      type: object
+    position_activity:
+      required:
+      - activityTime
+      - activityType
+      - message
+      properties:
+        activityTime:
+          type: integer
+          description: activity time in epoch format
+        activityType:
+          type: string
+          description: activity type
+        message:
+          type: string
+          description: message for the activity
+        changeLogs:
+          type: array
+          items:
+            description: all the change logs for the activity
+            allOf:
+            - $ref: '#/components/schemas/position_activity_change_log'
+      type: object
+    calibrationData:
+      properties:
+        educationLevel:
+          type: array
+          description: different education levels
+          items:
+            type: string
+        diversity:
+          type: array
+          description: diversity
+          items:
+            type: string
+        skills:
+          type: array
+          description: skills
+          items:
+            type: string
+        companies:
+          type: array
+          description: companies
+          items:
+            type: string
+        notes:
+          type: string
+          description: notes
+        relocation:
+          type: array
+          description: relocation
+          items:
+            type: string
+        locations:
+          type: array
+          description: locations
+          items:
+            type: string
+        minExperience:
+          type: integer
+          description: minExperience
+        graduationYear:
+          type: string
+          description: graduationYear
+        idealCandidates:
+          type: array
+          description: ideal_candidates
+          items:
+            type: string
+        titles:
+          type: array
+          description: titles
+          items:
+            type: string
+        seniorities:
+          type: array
+          description: seniorities
+          items:
+            type: string
+        schools:
+          type: array
+          description: schools
+          items:
+            type: string
+        workCategories:
+          type: array
+          description: workCategories
+          items:
+            type: string
+        maxExperience:
+          type: integer
+          description: maxExperience
+        idealCandidateUrls:
+          type: array
+          description: idealCandidatesUrls
+          items:
+            type: string
+      type: object
+    atsData:
+      required:
+      - atsEntityId
+      - company
+      - createdAt
+      - isPosted
+      - lastUpdated
+      - open
+      - recruiter
+      - status
+      - title
+      properties:
+        atsEntityId:
+          type: string
+          description: position_id in the ats system
+        title:
+          type: string
+          description: job title
+        description:
+          type: string
+          description: job description
+        postingTitle:
+          type: string
+          description: posting title
+        department:
+          type: string
+          description: department of the job
+        postingUrl:
+          type: string
+          description: posting url
+        internalPostingUrl:
+          type: string
+          description: internal posting url
+        company:
+          type: string
+          description: company
+        status:
+          type: string
+          description: status
+        open:
+          type: boolean
+          description: status of the position open or not
+        isPosted:
+          type: boolean
+          description: status of the position posted or not
+        createdAt:
+          type: integer
+          description: creation timestamp in epoch format
+        lastUpdated:
+          type: integer
+          description: last modified date time in epoch format
+        location:
+          type: array
+          description: location
+          items:
+            type: string
+        postedFor:
+          type: string
+          description: internal for internal jobs, external for external jobs, or all for both. Can be omitted for unposted positions.
+        hiringManager:
+          description: hiring manager
+          allOf:
+          - $ref: '#/components/schemas/person_contact'
+        recruiter:
+          description: recruiter
+          allOf:
+          - $ref: '#/components/schemas/person_contact'
+        jobStages:
+          type: array
+          description: job_stages
+          items:
+            type: string
+        function:
+          type: string
+          description: function
+        businessUnit:
+          type: string
+          description: business unit
+        companyDescription:
+          type: string
+          description: function
+        hiringBand:
+          type: string
+          description: hiring band
+        isEvergreen:
+          type: boolean
+          description: is evergreen
+        displayJobId:
+          type: string
+          description: display job id
+        restrictAccess:
+          type: boolean
+          description: restrict access
+        sourcers:
+          type: array
+          items:
+            description: all the recruiters/sourcers related to this positions
+            allOf:
+            - $ref: '#/components/schemas/person_contact'
+        followers:
+          type: array
+          items:
+            description: all the followers of the postions as hiring managers etc.
+            allOf:
+            - $ref: '#/components/schemas/person_contact'
+        questions:
+          type: array
+          items:
+            description: questions
+            allOf:
+            - $ref: '#/components/schemas/position_question'
+        jobPosts:
+          type: array
+          items:
+            description: job postings
+            allOf:
+            - $ref: '#/components/schemas/job_post'
+        skills:
+          type: array
+          description: skills
+          items:
+            type: string
+        requiredSkills:
+          type: array
+          description: required skills
+          items:
+            type: string
+        activities:
+          type: array
+          items:
+            description: all the activities related to this positions
+            allOf:
+            - $ref: '#/components/schemas/position_activity'
+        customFields:
+          type: object
+          description: custom fields
+      type: object
+    matched_candidate:
+      properties:
+        candidateId:
+          type: string
+          description: unique identifier for candidate
+        fullName:
+          type: string
+          description: full name of the matching candidate
+        candidateInsights:
+          type: array
+          items:
+            type: string
+            description: indicates whether candidate is employee, alumni, competitor or other.
+      type: object
+    matched_jobs:
+      properties:
+        results:
+          type: array
+          items:
+            description: List of Matching jobs
+            allOf:
+            - $ref: '#/components/schemas/position'
+      type: object
+    candidateNote:
+      properties:
+        note:
+          type: string
+        noteType:
+          type: string
+        positionId:
+          type: string
+        createdTime:
+          type: integer
+        creatorEmail:
+          type: string
+      type: object
+    person_contact:
+      properties:
+        email:
+          type: string
+          description: value
+        name:
+          type: string
+          description: label
+      type: object
+    position_activity_change_log:
+      required:
+      - fieldName
+      - newValue
+      - prevValue
+      properties:
+        fieldName:
+          type: string
+          description: field name
+        prevValue:
+          type: string
+          description: previous value
+        newValue:
+          type: string
+          description: new value
+      type: object
+    position_post_request:
+      required:
+      - atsEntityId
+      - company
+      - createdAt
+      - isPosted
+      - lastUpdated
+      - open
+      - recruiter
+      - status
+      - title
+      properties:
+        atsEntityId:
+          type: string
+          description: position_id in the ats system
+        title:
+          type: string
+          description: job title
+        description:
+          type: string
+          description: job description
+        postingTitle:
+          type: string
+          description: posting title
+        department:
+          type: string
+          description: department of the job
+        postingUrl:
+          type: string
+          description: posting url
+        internalPostingUrl:
+          type: string
+          description: internal posting url
+        company:
+          type: string
+          description: company
+        status:
+          type: string
+          description: status
+        open:
+          type: boolean
+          description: status of the position open or not
+        isPosted:
+          type: boolean
+          description: status of the position posted or not
+        createdAt:
+          type: integer
+          description: creation timestamp in epoch format
+        lastUpdated:
+          type: integer
+          description: last modified date time in epoch format
+        location:
+          type: array
+          description: location
+          items:
+            type: string
+        postedFor:
+          type: string
+          description: internal for internal jobs, external for external jobs, or all for both. Can be omitted for unposted positions.
+        hiringManager:
+          description: hiring manager
+          allOf:
+          - $ref: '#/components/schemas/person_contact'
+        recruiter:
+          description: recruiter
+          allOf:
+          - $ref: '#/components/schemas/person_contact'
+        jobStages:
+          type: array
+          description: job_stages
+          items:
+            type: string
+        function:
+          type: string
+          description: function
+        businessUnit:
+          type: string
+          description: business unit
+        companyDescription:
+          type: string
+          description: function
+        hiringBand:
+          type: string
+          description: hiring band
+        isEvergreen:
+          type: boolean
+          description: is evergreen
+        displayJobId:
+          type: string
+          description: display job id
+        restrictAccess:
+          type: boolean
+          description: restrict access
+        sourcers:
+          type: array
+          items:
+            description: all the recruiters/sourcers related to this positions
+            allOf:
+            - $ref: '#/components/schemas/person_contact'
+        followers:
+          type: array
+          items:
+            description: all the followers of the postions as hiring managers etc.
+            allOf:
+            - $ref: '#/components/schemas/person_contact'
+        questions:
+          type: array
+          items:
+            description: questions
+            allOf:
+            - $ref: '#/components/schemas/position_question'
+        jobPosts:
+          type: array
+          items:
+            description: job postings
+            allOf:
+            - $ref: '#/components/schemas/job_post'
+        skills:
+          type: array
+          description: skills
+          items:
+            type: string
+        requiredSkills:
+          type: array
+          description: required skills
+          items:
+            type: string
+        activities:
+          type: array
+          items:
+            description: all the activities related to this positions
+            allOf:
+            - $ref: '#/components/schemas/position_activity'
+        customFields:
+          type: object
+          description: custom fields
+      type: object
+    question_choice:
+      properties:
+        value:
+          type: integer
+          description: value
+        label:
+          type: string
+          description: label
+      type: object
+    position_question:
+      required:
+      - question_id
+      properties:
+        question_id:
+          type: string
+          description: question_id
+        required:
+          type: boolean
+          description: required
+        label:
+          type: string
+          description: label
+        type:
+          type: string
+          description: type
+        description:
+          type: string
+          description: description
+        choices:
+          type: array
+          description: idealCandidatesUrls
+          items:
+            $ref: '#/components/schemas/question_choice'
+      type: object
+    candidateApplication:
+      properties:
+        sourceName:
+          type: string
+        applicationId:
+          type: string
+        candidateId:
+          type: string
+        visaStatus:
+          type: string
+        sourceType:
+          type: string
+        applicationTime:
+          type: integer
+        positionId:
+          type: string
+        positionTitle:
+          type: string
+        lastModifiedTime:
+          type: integer
+        currentStage:
+          type: string
+        applicationStatus:
+          type: string
+        applicationAnswers:
+          type: array
+          items:
+            $ref: '#/components/schemas/applicationQuestionAnswers'
+        atsJobId:
+          type: string
+        reason:
+          type: string
+        matchScore:
+          type: number
+      type: object
+    applicationQuestionAnswers:
+      required:
+      - question
+      - questionId
+      properties:
+        questionId:
+          type: string
+        question:
+          type: string
+        answer:
+          type: string
+      type: object
+    candidateEducation:
+      properties:
+        school:
+          type: string
+        description:
+          type: string
+        degree:
+          type: string
+        major:
+          type: string
+        awards:
+          type: array
+          items:
+            type: string
+        startTime:
+          type: integer
+        endTime:
+          type: integer
+        imageUrl:
+          type: string
+        eduLevel:
+          type: string
+      type: object
+    candidateExperience:
+      properties:
+        description:
+          type: string
+        title:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+        work:
+          type: string
+        location:
+          type: string
+        startTime:
+          type: integer
+        endTime:
+          type: integer
+        duration:
+          type: integer
+        isCurrent:
+          type: boolean
+        isInternal:
+          type: boolean
+      type: object
+x-refined-from:
+- eightfold-ai-api-server-v2-service-service.yml
+- eightfold-ai-api.yml

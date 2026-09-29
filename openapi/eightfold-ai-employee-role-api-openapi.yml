@@ -1,0 +1,479 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Employee Role API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Employee Role
+paths:
+  /api/v2/core/employee-roles/{roleId}:
+    get:
+      description: Given a role Id of a role, it returns the employee role
+      operationId: get_employee_role_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Role ID of a role
+        in: path
+        name: roleId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeRoleSchema'
+          description: OK
+      summary: Get Employee Role
+      tags:
+      - Employee Role
+  /api/v2/core/employee-roles:
+    post:
+      description: Create an employee role in Eightfold
+      operationId: create_employee_role
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExternalRoleSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalRoleSchema'
+          description: OK
+      summary: Create Employee Role
+      tags:
+      - Employee Role
+components:
+  schemas:
+    RoleTag:
+      type: object
+      properties:
+        tagValues:
+          type:
+          - array
+          - 'null'
+          description: value of the tag
+          items:
+            type: string
+        tagName:
+          type:
+          - string
+          - 'null'
+          description: name of the tag
+    CalibrationDataSchema:
+      type: object
+      properties:
+        flags:
+          type:
+          - array
+          - 'null'
+          description: flags
+          items:
+            type: string
+        graduationYear:
+          type:
+          - string
+          - 'null'
+          description: graduationYear
+        workCategories:
+          type:
+          - array
+          - 'null'
+          description: workCategories
+          items:
+            type: string
+        skills:
+          type:
+          - array
+          - 'null'
+          description: skills
+          items:
+            type: string
+        diversity:
+          type:
+          - array
+          - 'null'
+          description: diversity
+          items:
+            type: string
+        idealCandidates:
+          type:
+          - array
+          - 'null'
+          description: ideal_candidates
+          items:
+            type: string
+        companies:
+          type:
+          - array
+          - 'null'
+          description: companies
+          items:
+            type: string
+        titles:
+          type:
+          - array
+          - 'null'
+          description: titles
+          items:
+            type: string
+        educationLevel:
+          type:
+          - array
+          - 'null'
+          description: different education levels
+          items:
+            type: string
+        relocation:
+          type:
+          - array
+          - 'null'
+          description: relocation
+          items:
+            type: string
+        seniorities:
+          type:
+          - array
+          - 'null'
+          description: seniorities
+          items:
+            type: string
+        maxExperience:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: maxExperience
+        schools:
+          type:
+          - array
+          - 'null'
+          description: schools
+          items:
+            type: string
+        skillProficiencies:
+          writeOnly: true
+          description: skill proficiencies of the role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SkillProficiency'
+        idealCandidateUrls:
+          type:
+          - array
+          - 'null'
+          description: idealCandidatesUrls
+          items:
+            type: string
+        minExperience:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: minExperience
+        notes:
+          type:
+          - string
+          - 'null'
+          description: notes
+        locations:
+          type:
+          - array
+          - 'null'
+          description: locations
+          items:
+            type: string
+    SkillProficiency:
+      type: object
+      properties:
+        proficiency:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: proficiency of the role
+        skillGroupList:
+          description: skill group list of a role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SkillGroupList'
+        level:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: level of the role
+        name:
+          type:
+          - string
+          - 'null'
+          description: name of the role
+    EmployeeRoleSchema:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Role Id
+        skillProficiencies:
+          readOnly: true
+          description: Skill Proficiency
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SkillProficiency1'
+        band:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Job Band
+        workCategories:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Work Categories
+          items:
+            type: string
+        function:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Job Function
+        code:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Job code
+        seniorityLevel:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Seniority Level
+        educationLevel:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Education Level
+          items:
+            type: string
+        notes:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Notes
+        skillDescription:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Skills description
+        titles:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Titles
+          items:
+            type: string
+        seniorities:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: seniorities
+          items:
+            type: string
+        degrees:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Degrees
+          items:
+            type: string
+        jobFamily:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Job Family
+        hiringTitle:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Hiring Title
+    SkillProficiency1:
+      type: object
+      properties:
+        level:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Level
+        name:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: name
+        proficiency:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Proficiency
+        skillGroupList:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: Skill Group List
+          items:
+            type: string
+        tUpdate:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Update Timestamp
+    ExternalRoleSchema:
+      type: object
+      properties:
+        calibration:
+          writeOnly: true
+          description: 'Calibration of the role; Note: you can provide with only calibration or skill proficiencies'
+          allOf:
+          - $ref: '#/components/schemas/CalibrationDataSchema'
+        roleSource:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: source of the role
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: id of the role
+        skillProficiencies:
+          description: skill proficiencies of the role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SkillProficiency'
+        associatedTags:
+          description: associated tags with the role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RoleTag'
+        parentRoleId:
+          type:
+          - string
+          - 'null'
+          description: parent role id of the role
+        childrenRoleId:
+          type:
+          - array
+          - 'null'
+          description: children of role
+          items:
+            type: string
+        title:
+          type:
+          - string
+          - 'null'
+          description: title of the role
+        displayTags:
+          description: display tags of the role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RoleTag'
+    SkillGroupList:
+      type: object
+      properties:
+        proficiency:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: group proficiency of the skill group
+        groupName:
+          type:
+          - string
+          - 'null'
+          description: name of the skill group
+        level:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: level of the role
+        skillCategory:
+          type:
+          - string
+          - 'null'
+          description: skill category of the skill group

@@ -1,0 +1,183 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Hiring Company API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Hiring Company
+paths:
+  /api/v2/etx/hiring_company/{hiringCompanyGroupId}:
+    get:
+      description: Given a Hiring Company Group Id, it returns all attributes of the Hiring Company
+      operationId: get_workforce_exchange_hiring_company_hiring_company_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: GroupID of a Hiring Company in Eightfold
+        in: path
+        name: hiringCompanyGroupId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HiringCompanySchema'
+          description: OK
+      summary: Get Hiring Company
+      tags:
+      - Hiring Company
+    patch:
+      description: 'Given a Hiring Company and data that needs to be patched, it patches the Hiring Company. Note: All required body params in the schema are not enforced in PATCH request, unlike path params.'
+      operationId: patch_workforce_exchange_hiring_company_hiring_company
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Group ID of a HiringCompany in Eightfold
+        in: path
+        name: hiringCompanyGroupId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HiringCompanySchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HiringCompanySchema'
+          description: OK
+      summary: Patch HiringCompany
+      tags:
+      - Hiring Company
+components:
+  schemas:
+    HiringCompanySchema:
+      type: object
+      properties:
+        createdTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Datetime when the Hiring Company was created
+        rejectReason:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Reason for rejecting the Hiring Company
+        onholdReason:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Reason for putting the Hiring Company on hold
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Status of the Hiring Company
+        verifiedInfo:
+          type:
+          - object
+          - 'null'
+          description: Verified information of the Hiring Company
+        statusChangeBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User who changed the status of the Hiring Company
+        updatedTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Datetime when the Hiring Company was updated
+        organizationName:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Name of the Hiring Company
+        hiringCompanyGroupId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Group Id of the Hiring Company
+        deletedTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Datetime when the Hiring Company was deleted
+        onholdStatus:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Status of the Hiring Company when on hold
+        primaryExchangeAdmin:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Primary Exchange Admin
+        unverifiedInfo:
+          type:
+          - object
+          - 'null'
+          description: Unverified information of the Hiring Company
+        statusChangeTs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Datetime when the status of the Hiring Company was changed

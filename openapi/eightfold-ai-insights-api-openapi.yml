@@ -1,0 +1,593 @@
+openapi: 3.2.0
+info:
+  title: Eightfold Ai Insights API
+  version: '1.0'
+  description: 'Operations tagged Insights across 2 of this provider''s published API definitions: eightfold-ai-api-server-v2-service-service.yml, eightfold-ai-api.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+- url: //api.eightfold.ai
+tags:
+- name: Insights
+paths:
+  /api/v2/insights/profile-insights:
+    get:
+      description: Returns profile insights
+      operationId: list_insights_profile_insights
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Specifies the count of top values of a particular field
+        in: query
+        name: distributionFieldsLimit
+        schema:
+          type: integer
+      - description: Eightfold position ID for candidates to match
+        in: query
+        name: positionMatchedFor
+        schema:
+          type: string
+      - description: filter query using predefined candidate field query parameters documented [here](https://apidocs.eightfold.ai/v2.0/docs#the-filterquery-parameter)
+        in: query
+        name: filterQuery
+        schema:
+          type: string
+      - description: any wildcard text to search in candidate data
+        in: query
+        name: query
+        schema:
+          type: string
+      - description: comma separated list of fields to get distributions for
+        in: query
+        name: fields
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsightsSchema'
+          description: OK
+      summary: List Profile Insights
+      tags:
+      - Insights
+    servers:
+    - url: https://apiv2.{domain}.ai
+      variables:
+        domain:
+          default: eightfold
+          enum:
+          - eightfold
+          - eightfold-eu
+          - eightfold-gov
+          - eightfold-ca
+          - eightfold-me
+          - eightfold-wu
+          - eightfold-ap
+  /api/v2/insights/talent-traits:
+    post:
+      description: Post a query with different filters for talent traits. All the values in the same filter is treated as an OR operation, while all the values in a different filter is treated as an AND operation.
+      operationId: create_insights_talent_traits
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TalentTraitsRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TalentTraitSchema'
+          description: OK
+      summary: Create Talent Traits
+      tags:
+      - Insights
+    servers:
+    - url: https://apiv2.{domain}.ai
+      variables:
+        domain:
+          default: eightfold
+          enum:
+          - eightfold
+          - eightfold-eu
+          - eightfold-gov
+          - eightfold-ca
+          - eightfold-me
+          - eightfold-wu
+          - eightfold-ap
+  /api/v2/insights/diversity/employees:
+    get:
+      description: Returns Diversity insights of employees of an organization
+      operationId: list_insights_employees
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeDiversityInsightsSchema'
+          description: OK
+      summary: Get Employee Diversity Insights
+      tags:
+      - Insights
+    servers:
+    - url: https://apiv2.{domain}.ai
+      variables:
+        domain:
+          default: eightfold
+          enum:
+          - eightfold
+          - eightfold-eu
+          - eightfold-gov
+          - eightfold-ca
+          - eightfold-me
+          - eightfold-wu
+          - eightfold-ap
+  /v1/insights/candidates:
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/entityInsights'
+      summary: Insights for Candidates
+      description: Retrieve insights (field distributions) for candidates given a query
+      operationId: get_candidate_insights
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: The secret key to access the api, starts with Basic
+        schema:
+          type: string
+      - name: query
+        in: query
+        description: any wildcard text to search in candidate data
+        schema:
+          type: string
+      - name: filterQuery
+        in: query
+        description: filter query using predefined filter arguments documented at https://apidocs.eightfold.ai/docs#the-filterquery-parameter
+        schema:
+          type: string
+      - name: fields
+        in: query
+        description: comma separated list of fields to get distributions for
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: number of unique values per field to get counts
+        schema:
+          type: string
+      - name: positionMatchedFor
+        in: query
+        description: Eightfold position ID for candidates to match
+        schema:
+          type: string
+      - name: X-Fields
+        in: header
+        description: An optional fields mask
+        schema:
+          type: string
+          format: mask
+      tags:
+      - Insights
+    servers:
+    - url: //api.eightfold.ai
+  /v1/insights/talent-traits:
+    post:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/talentTraits'
+      summary: Get Talent Trait Analytics
+      description: 'Post a query with different filters for talent traits. All the values in the same filter is treated as a
+
+        or operation, while all the values in a different filter is treated as a and operation.'
+      operationId: post_talent_traits
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: The secret key to access the api, starts with Basic
+        schema:
+          type: string
+      - name: X-Fields
+        in: header
+        description: An optional fields mask
+        schema:
+          type: string
+          format: mask
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/talentTraitsFilter'
+        required: true
+      tags:
+      - Insights
+    servers:
+    - url: //api.eightfold.ai
+components:
+  schemas:
+    TalentTraitSchema:
+      type: object
+      properties:
+        correctedQuery:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: corrected query for given query
+        query:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: query for traits
+        workCategories:
+          readOnly: true
+          description: work categories traits
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TalentField'
+        work:
+          readOnly: true
+          description: work distribution
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TalentField'
+        count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: total count
+        school:
+          readOnly: true
+          description: school distribution
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TalentField'
+        title:
+          readOnly: true
+          description: title for talent traits
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TalentField'
+        skill:
+          readOnly: true
+          description: skills traits
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TalentField'
+    fieldInsight:
+      type: object
+      properties:
+        field:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: field name for insight
+        values:
+          readOnly: true
+          description: value dictionary for insight.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CountValue'
+    CountValue:
+      type: object
+      properties:
+        count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Count of fields for a value
+        value:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: value of field.
+    TalentTraitsRequestSchema:
+      type: object
+      properties:
+        includeModels:
+          type:
+          - array
+          - 'null'
+          writeOnly: true
+          description: models that should be included
+          items:
+            type: string
+        query:
+          type:
+          - string
+          - 'null'
+          writeOnly: true
+          description: query to be provided, can not be null
+        filterLocation:
+          type:
+          - string
+          - 'null'
+          writeOnly: true
+          description: To be provided to filter by Location
+        filterSeniority:
+          type:
+          - array
+          - 'null'
+          writeOnly: true
+          description: To be provided to filter by Seniority
+          items:
+            type: string
+        filterTitle:
+          type:
+          - array
+          - 'null'
+          writeOnly: true
+          description: To be provided to filter by Title
+          items:
+            type: string
+        filterCompany:
+          type:
+          - array
+          - 'null'
+          writeOnly: true
+          description: To be provided to filter by Company
+          items:
+            type: string
+    TalentField:
+      type: object
+      properties:
+        score:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: score of the parameter
+        name:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: name for param
+        logo:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: logo name for parent param
+    EmployeeDiversityInsightsSchema:
+      type: object
+      properties:
+        genderDiversity:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Gender diversity of employees in an organization. Gender inferred by eightfold if not declared
+        ethnicDiversity:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: ethenic diversity of employees in an organization. Ethnicity inferred by Eightfold if not declared
+    InsightsSchema:
+      type: object
+      properties:
+        resultCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Number of Results
+        fieldInsights:
+          readOnly: true
+          description: List of field insights
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/fieldInsight'
+    talent_trait_detail:
+      properties:
+        logo:
+          type: string
+        name:
+          type: string
+        score:
+          type: number
+      type: object
+    talentTraits:
+      required:
+      - corrected_query
+      - query
+      properties:
+        count:
+          type: integer
+        query:
+          type: string
+          description: The input text query.
+        corrected_query:
+          type: string
+          description: The corrected text query
+        skill:
+          type: array
+          items:
+            $ref: '#/components/schemas/talent_trait_detail'
+        work:
+          type: array
+          items:
+            $ref: '#/components/schemas/talent_trait_detail'
+        school:
+          type: array
+          items:
+            $ref: '#/components/schemas/talent_trait_detail'
+        title:
+          type: array
+          items:
+            $ref: '#/components/schemas/talent_trait_detail'
+        work_categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/talent_trait_detail'
+      type: object
+    fieldInsights:
+      properties:
+        field:
+          type: string
+          description: Field name
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/fieldValues'
+      type: object
+    entityInsights:
+      properties:
+        resultCount:
+          type: integer
+        fieldInsights:
+          $ref: '#/components/schemas/fieldInsights'
+      type: object
+    talentTraitsFilter:
+      required:
+      - query
+      properties:
+        query:
+          type: string
+          description: The text query to search for
+        filterCompany:
+          type: array
+          items:
+            type: string
+        filterTitle:
+          type: array
+          items:
+            type: string
+        filterLocation:
+          type: array
+          items:
+            type: string
+        filterSeniority:
+          type: array
+          items:
+            type: string
+            description: should be one or more of the following Entry, Intern, Senior, Manager, Director, Vice President, CXO
+            example: Entry
+            enum:
+            - Entry
+            - Intern
+            - Senior
+            - Manager
+            - Director
+            - Vice President
+            - CXO
+        include:
+          type: array
+          items:
+            type: string
+            description: should be one or more of the following work, school, conference, skill, title, location, other, person, work_categories, work_title
+            example: work
+            enum:
+            - work
+            - school
+            - conference
+            - skill
+            - title
+            - location
+            - other
+            - person
+            - work_categories
+            - work_title
+      type: object
+    fieldValues:
+      required:
+      - value
+      properties:
+        value:
+          type: string
+          description: Field value
+        count:
+          type: integer
+      type: object
+x-refined-from:
+- eightfold-ai-api-server-v2-service-service.yml
+- eightfold-ai-api.yml

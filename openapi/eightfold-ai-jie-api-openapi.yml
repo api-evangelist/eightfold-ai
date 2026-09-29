@@ -1,0 +1,616 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service JIE API
+  version: 1.0.0
+  x-source-url: https://dash.readme.com/api/v1/api-registry/1c8ed7dqdmruc4aua
+  x-documentation-url: https://apidocs.eightfold.ai/docs/getting-started
+  x-last-validated: '2026-08-10'
+  x-provenance: first-party — retrieved from the provider's own documentation host
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-me
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: JIE
+paths:
+  /api/v2/JIE/roles/{roleId}:
+    get:
+      description: Given an Id of a role, it returns the JIE role for the same
+      operationId: get_JIE_roles_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ID of a role
+        in: path
+        name: roleId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalJIERoleSchema'
+          description: OK
+      summary: Get JIE Role
+      tags:
+      - JIE
+    put:
+      description: Update a role in Eightfold
+      operationId: update_JIE_roles
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ID of a role
+        in: path
+        name: roleId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExternalJIERoleSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalJIERoleSchema'
+          description: OK
+      summary: Update JIE Role
+      tags:
+      - JIE
+    delete:
+      description: Deletes a specific role given a role id
+      operationId: delete_JIE_roles
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ID of a role
+        in: path
+        name: roleId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalJIERoleSchema'
+          description: OK
+      summary: Delete JIE Role
+      tags:
+      - JIE
+  /api/v2/JIE/insights:
+    get:
+      description: This endpoint returns succession plan information for group id of a current user.
+      operationId: list_JIE_insights
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/JIEInsightsSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: Get Succession Plan
+      tags:
+      - JIE
+  /api/v2/JIE/roles:
+    post:
+      description: Create a role in Eightfold
+      operationId: create_JIE_roles
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExternalJIERoleSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalJIERoleSchema'
+          description: OK
+      summary: Create JIE Role
+      tags:
+      - JIE
+    get:
+      description: This endpoint returns a list of roles. If a new role is created, it takes some time to show up in the list call, you can fetch that role using get endpoints right after the creation of role
+      operationId: list_JIE_roles
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Filter query using predefined filter arguments documented [here](https://apidocs.eightfold.ai/v2.0/docs#the-filterquery-parameter)
+        in: query
+        name: filterQuery
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/ExternalJIERoleSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List JIE Roles
+      tags:
+      - JIE
+components:
+  schemas:
+    PreferredYearsOfExperience:
+      type: object
+      properties:
+        typeOfExperience:
+          type:
+          - string
+          - 'null'
+          description: Type of experience, can only be one of 'total', 'relevant'
+        maxExperience:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: preferred maximum experience titles for a role
+        minExperience:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: preferred minimum experience titles for a role
+    JIEInsightsSchema:
+      type: object
+      properties:
+        successionPlan:
+          readOnly: true
+          description: Metrics of Pipeline with leaders
+          allOf:
+          - $ref: '#/components/schemas/SuccessionPlanMetricsSchema'
+    SuccessionPlanMetricsSchema:
+      type: object
+      properties:
+        superstar:
+          readOnly: true
+          description: Metrics of superstars
+          allOf:
+          - $ref: '#/components/schemas/BinaryDistribution'
+        rolesWithSuccessorsReady:
+          readOnly: true
+          description: Metrics of roles ready with successors
+          allOf:
+          - $ref: '#/components/schemas/BinaryDistribution'
+        pipelinesWithWomen:
+          readOnly: true
+          description: Metrics of Pipeline with women
+          allOf:
+          - $ref: '#/components/schemas/BinaryDistribution'
+        pipelinesWithDiverseEthnicity:
+          readOnly: true
+          description: Metrics of Pipeline with diverse ethenicity
+          allOf:
+          - $ref: '#/components/schemas/BinaryDistribution'
+        pipelinesWithLeaders:
+          readOnly: true
+          description: Metrics of Pipeline with leaders
+          allOf:
+          - $ref: '#/components/schemas/BinaryDistribution'
+    BinaryDistribution:
+      type: object
+      properties:
+        noCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: False/Negative value of metric
+        yesCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: True/Positive value of metric
+    SkillProficiency:
+      type: object
+      properties:
+        proficiency:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: proficiency of the role
+        skillGroupList:
+          description: skill group list of a role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SkillGroupList'
+        level:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: level of the role
+        name:
+          type:
+          - string
+          - 'null'
+          description: name of the role
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+    GraduationYear:
+      type: object
+      properties:
+        graduationEndYear:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: end year of graduation
+        graduationStartYear:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Start year of graduation
+    ExternalJIERoleSchema:
+      type: object
+      properties:
+        externalId:
+          type:
+          - string
+          - 'null'
+          description: external role id for a role
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: id of the role
+        skillProficiencies:
+          description: skill proficiencies of the role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SkillProficiency'
+        experience:
+          description: preferred experience for the role
+          allOf:
+          - $ref: '#/components/schemas/PreferredExperience'
+        idealCandidateUrls:
+          type:
+          - array
+          - 'null'
+          description: LinkedIN URL's of preferred/ideal candidates for the role
+          items:
+            type: string
+        education:
+          description: preferred education for the role
+          allOf:
+          - $ref: '#/components/schemas/PreferredEducation'
+        calibrationNotes:
+          type:
+          - string
+          - 'null'
+          description: calibration Notes for a role
+        roleDescription:
+          type:
+          - string
+          - 'null'
+          description: description of the role
+        rmUserGroups:
+          readOnly: true
+          description: RM user groups associated with the role.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RmUserGroup'
+        idealCandidates:
+          type:
+          - array
+          - 'null'
+          description: EF profile ids of preferred/ideal candidates for the role
+          items:
+            type: string
+        associatedTags:
+          description: associated tags with the role, these tags are specific to a role and are generally filled in with a unique tag value. Only pre-configured tags in role_library_config:integration_config:configuration_tags are allowed
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RoleTagSchema'
+        approvalStatus:
+          type:
+          - string
+          - 'null'
+          description: approval status of role, can be one of ['approved', 'unapproved']
+        locations:
+          type:
+          - array
+          - 'null'
+          description: preferred locations for the role
+          items:
+            type: string
+        archivalStatus:
+          type:
+          - boolean
+          - 'null'
+          description: is archival of role
+        title:
+          type: string
+          description: title of the role
+        displayTags:
+          description: display tags of the role. They may or may not be unique to a role. Only pre-configured tags in role_library_config:integration_config:display_tags are allowed
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RoleTagSchema'
+      required:
+      - title
+    PreferredExperience:
+      type: object
+      properties:
+        preferredYearsOfExperience:
+          description: preferred years of experience for a role
+          allOf:
+          - $ref: '#/components/schemas/PreferredYearsOfExperience'
+        companies:
+          description: preferred companies for a role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Preference'
+        seniorities:
+          type:
+          - array
+          - 'null'
+          description: preferred seniorities for a role. Values for seniorities can only be one of 'display' values of seniority_levels in calibration config in admin console.
+          items:
+            type: string
+        jobTitles:
+          description: preferred job titles for a role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Preference'
+    RmUserGroup:
+      type: object
+      properties:
+        userGroupId:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier for the user group
+    PreferredEducation:
+      type: object
+      properties:
+        graduationYear:
+          description: preferred gradulation year for a role
+          allOf:
+          - $ref: '#/components/schemas/GraduationYear'
+        schools:
+          description: preferred schools for a role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Preference'
+        degreeMajors:
+          type:
+          - array
+          - 'null'
+          description: degree majors for a role. Values for degree majors can only be the external_id of the degree major.
+          items:
+            type: string
+        certifications:
+          type:
+          - array
+          - 'null'
+          description: certifications for a role. Values for certifications can only be the external_id of the certification.
+          items:
+            type: string
+        degrees:
+          type:
+          - array
+          - 'null'
+          description: preferred degrees for a role. Values for degrees can only be one of 'display' values of education_levels in calibration config in admin console.
+          items:
+            type: string
+    Preference:
+      type: object
+      properties:
+        preferenceType:
+          type:
+          - string
+          - 'null'
+          description: preference Type for value, can only be one of ['Preferred', 'Required', 'Excluded']
+        value:
+          type:
+          - string
+          - 'null'
+          description: Value/Name of the attribute
+    RoleTagSchema:
+      type: object
+      properties:
+        tagValues:
+          type:
+          - array
+          - 'null'
+          description: value of the tag
+          items:
+            type: string
+        tagName:
+          type:
+          - string
+          - 'null'
+          description: name of the tag
+    SkillGroupList:
+      type: object
+      properties:
+        proficiency:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: group proficiency of the skill group
+        groupName:
+          type:
+          - string
+          - 'null'
+          description: name of the skill group
+        level:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: level of the role
+        skillCategory:
+          type:
+          - string
+          - 'null'
+          description: skill category of the skill group
