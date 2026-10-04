@@ -32,6 +32,9 @@ accessModel:
   generated: '2026-07-22'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/eightfold-ai.png
+x-docs-platform: readme
+x-docs-platform-confidence: high
+x-docs-platform-checked: 2026-10-03
 tags:
 - Talent Intelligence
 - Talent Acquisition
@@ -39,7 +42,7 @@ tags:
 - AI Interviewing
 - Human Resources
 - Workforce Planning
-- Agentic AI
+- AI Agents
 tags_raw:
 - Talent Intelligence
 - Talent Acquisition
@@ -128,6 +131,10 @@ apis:
   humanURL: https://eightfold.ai/products/
   baseURL: https://app.eightfold.ai
   tags:
+  - AI Interviewing
+  - AI Agents
+  - Assessment
+  tags_raw:
   - AI Interviewing
   - Agentic AI
   - Assessment
