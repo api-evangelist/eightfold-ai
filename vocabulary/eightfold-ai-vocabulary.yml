@@ -1,0 +1,433 @@
+generated: '2026-10-14'
+method: derived
+generator: derive-vocabulary.py
+source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml
+vocabulary:
+  name: Eightfold AI Domain Vocabulary
+  description: 'Terms declared by Eightfold AI''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-14'
+  terms:
+  - term: AtsOpeningDetail
+    definition: 'Object declared by the contract with fields: status, closedAt, openingId, openedAt, closeReason, candidateId, applicationId.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/AtsOpeningDetail
+  - term: AtsOpenings
+    definition: 'Object declared by the contract with fields: closedAt, openingDetails, numOpenings, openedAt, numOpeningsFilled.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/AtsOpenings
+  - term: ChangeLog
+    definition: 'Object declared by the contract with fields: newValue, fieldName, prevValue.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/ChangeLog
+  - term: QuestionDependencies
+    definition: 'Object declared by the contract with fields: questionId, questionSource, choiceValue, dependencyType, childQuestionIds.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/QuestionDependencies
+  - term: QuestionChoice
+    definition: 'Object declared by the contract with fields: label, value.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/QuestionChoice
+  - term: LangMapping
+    definition: 'Object declared by the contract with fields: locale, label.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/LangMapping
+  - term: QuestionLabel
+    definition: 'Object declared by the contract with fields: langMappingList, label, value.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/QuestionLabel
+  - term: PersonSchema
+    definition: 'Object declared by the contract with fields: email, name.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/PersonSchema
+  - term: HiringTeamMemberSchema
+    definition: 'Object declared by the contract with fields: role, email, name, roleKey.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/HiringTeamMemberSchema
+  - term: QuestionsSchema
+    definition: 'Object declared by the contract with fields: choices, choicesV2, questionId, help, type, question, required.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/QuestionsSchema
+  - term: QuestionnaireSchema
+    definition: 'Object declared by the contract with fields: questionDependencies, questionnaireId.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/QuestionnaireSchema
+  - term: JobPostSchema
+    definition: 'Object declared by the contract with fields: publishedTime, expirationTime, postingTitle, postingId, locale, primaryPost, jobDescription,
+      postedFor.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/JobPostSchema
+  - term: PositionActivitiesSchema
+    definition: 'Object declared by the contract with fields: activityTime, activityType, changeLogs, message.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/PositionActivitiesSchema
+  - term: AtsUserGroupsSchema
+    definition: 'Object declared by the contract with fields: userGroupId.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/AtsUserGroupsSchema
+  - term: ATSPositionDataSchema
+    definition: 'Object declared by the contract with fields: createdAt, locationCountry, coordinators, businessUnit, isPrivate, workLocationOption,
+      atsEntityId, hiringManager, internalPostingUrl, evergreen, skills, company. (41 more)'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/ATSPositionDataSchema
+  - term: MetaSchema
+    definition: 'Object declared by the contract with fields: totalCount, pageTotalCount, pageStartIndex.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/MetaSchema
+  - term: PositionAttachmentUploadRequestItemSchema
+    definition: 'Object declared by the contract with fields: key, variable_id, file_name, url, content.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/PositionAttachmentUploadRequestItemSchema
+  - term: PositionAttachmentUploadRequestSchema
+    definition: 'Object declared by the contract with fields: files.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/PositionAttachmentUploadRequestSchema
+  - term: PositionAttachmentUploadResponseItemSchema
+    definition: 'Object declared by the contract with fields: key, name, type, attachment_id, size.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/PositionAttachmentUploadResponseItemSchema
+  - term: PositionAttachmentUploadResponseSchema
+    definition: 'Object declared by the contract with fields: data.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/PositionAttachmentUploadResponseSchema
+  - term: ConcisePositionSchema
+    definition: 'Object declared by the contract with fields: postingUrl, atsEntityId, locations, positionId, title.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/ConcisePositionSchema
+  - term: MatchingPositionsSchema
+    definition: 'Object declared by the contract with fields: missingSkills, position, skillScoreRelevance, validatedSkills, finalScore, titleScoreRelevance.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/MatchingPositionsSchema
+  - term: Preferences
+    definition: 'Object declared by the contract with fields: contactConsent.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/Preferences
+  - term: Endorsement
+    definition: 'Object declared by the contract with fields: work, description, metadata.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/Endorsement
+  - term: AtsContent
+    definition: 'Object declared by the contract with fields: extension, content, isBase64.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/AtsContent
+  - term: Award
+    definition: 'Object declared by the contract with fields: entity, date, allText, skills, description, title.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/Award
+  - term: CandidateEducation
+    definition: 'Object declared by the contract with fields: verificationStatus, location, school, isCurrent, isGraduated, endTime, awards, source,
+      degree, startTime, verificationBy, major. (7 more)'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/CandidateEducation
+  - term: Tag
+    definition: 'Object declared by the contract with fields: creatorEmail, id, tag, tagSubtype, profileId, tagType, url, groupId, positionId,
+      createdTime.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/Tag
+  - term: Patent
+    definition: 'Object declared by the contract with fields: date, allText, skills, description, title.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/Patent
+  - term: ProjectFeedback
+    definition: 'Object declared by the contract with fields: imageUrl, rating, name, projectId, timestamp, profileId, comment.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/ProjectFeedback
+  - term: Project
+    definition: 'Object declared by the contract with fields: addlJson, projectId, duration, links, personal_description, skills, time, feedback,
+      company, contributors, description, title.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/Project
+  - term: ApplicationQuestionAnswers
+    definition: 'Object declared by the contract with fields: answer, questionId, displayOrder, question.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/ApplicationQuestionAnswers
+  - term: ProfileFeedbackQuestionAnswer
+    definition: 'Object declared by the contract with fields: answer, label, questionId, comment.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/ProfileFeedbackQuestionAnswer
+  - term: ProfileFeedbackResponse
+    definition: 'Object declared by the contract with fields: overallFeedback, feedback.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/ProfileFeedbackResponse
+  - term: UserLogin
+    definition: 'Object declared by the contract with fields: fullName, redirectEmail, domain, email.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/UserLogin
+  - term: Person
+    definition: 'Object declared by the contract with fields: email, name.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/Person
+  - term: HiringTeamMember
+    definition: 'Object declared by the contract with fields: role, email, name, roleKey.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/HiringTeamMember
+  - term: PositionActivities
+    definition: 'Object declared by the contract with fields: activityTime, activityType, changeLogs, message.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/PositionActivities
+  - term: Questionnaire
+    definition: 'Object declared by the contract with fields: questionDependencies, questionnaireId.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/Questionnaire
+  - term: JobPost
+    definition: 'Object declared by the contract with fields: publishedTime, expirationTime, postingTitle, postingId, locale, primaryPost, jobDescription,
+      postedFor.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/JobPost
+  - term: AtsUserGroups
+    definition: 'Object declared by the contract with fields: userGroupId.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/AtsUserGroups
+  - term: Questions
+    definition: 'Object declared by the contract with fields: choices, choicesV2, questionId, help, type, question, required.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/Questions
+  - term: ATSPositionData
+    definition: 'Object declared by the contract with fields: createdAt, locationCountry, coordinators, businessUnit, isPrivate, workLocationOption,
+      atsEntityId, hiringManager, internalPostingUrl, evergreen, skills, company. (41 more)'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/ATSPositionData
+  - term: SkillGroupList
+    definition: 'Object declared by the contract with fields: proficiency, groupName, level, skillCategory.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/SkillGroupList
+  - term: SkillProficiency
+    definition: 'Object declared by the contract with fields: proficiency, skillGroupList, level, name.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/SkillProficiency
+  - term: CalibrationData
+    definition: 'Object declared by the contract with fields: flags, graduationYear, workCategories, skills, diversity, idealCandidates, companies,
+      titles, educationLevel, relocation, seniorities, maxExperience. (6 more)'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/CalibrationData
+  - term: CalibrationTemplate
+    definition: 'Object declared by the contract with fields: id, name.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/CalibrationTemplate
+  - term: Role
+    definition: 'Object declared by the contract with fields: templates, name.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/Role
+  - term: Position
+    definition: 'Object declared by the contract with fields: createdAt, jobDescriptionUpdatedAt, confidential, hiringManager, groupId, name,
+      followers, jobDescription, systemId, positionDisplayId, recruiter, calibrationConfirmedBy. (7 more)'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/Position
+  - term: RegisterButton
+    definition: 'Object declared by the contract with fields: textColor, backgroundColor, text.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/RegisterButton
+  - term: HomePageBanner
+    definition: 'Object declared by the contract with fields: useImage, image, title.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/HomePageBanner
+  - term: PlannedEvent
+    definition: 'Object declared by the contract with fields: createdAt, isCancelled, eventSpeakers, activeRegistrations, registerButton, eventTeamDataJson,
+      eventBucket, address, eventCustomFieldsJson, eventType, institution, selectedTimezone. (16 more)'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/PlannedEvent
+  - term: ApplicationMatchScore
+    definition: 'Object declared by the contract with fields: topMatches, indeterminable, score, relevantScoreTypeVal, scoreRaw, scoreType.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/ApplicationMatchScore
+  - term: ProfileFeedback
+    definition: 'Object declared by the contract with fields: createdAt, plannedEventId, feedbackResponse, followUpEnabled, profileId, communityId,
+      sharedFeedbackMessageId, viewFeedbackUrl, requestedAt, reminderCount, requester, submittedAt. (17 more)'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/ProfileFeedback
+  - term: Publication
+    definition: 'Object declared by the contract with fields: date, skills, publisher, description, title.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/Publication
+  - term: Note
+    definition: 'Object declared by the contract with fields: creatorEmail, id, noteType, note, profileId, positionId, createdTime.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/Note
+  - term: ATSScheduledInterview
+    definition: 'Object declared by the contract with fields: organizer, status, endTs, interviewType, interviewers, startTs, location, comment,
+      referenceId.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/ATSScheduledInterview
+  - term: AtsTag
+    definition: 'Object declared by the contract with fields: tag, jobId, creator, tagSubtype, tagType, creationTs.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/AtsTag
+  - term: AtsAttachmentApplicationMetadata
+    definition: 'Object declared by the contract with fields: applicationId.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/AtsAttachmentApplicationMetadata
+  - term: AtsAttachment
+    definition: 'Object declared by the contract with fields: isBase64, fileName, lastModifiedTs, applicationMetadata, attachmentContent, attachmentId,
+      attachmentType.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/AtsAttachment
+  - term: AtsEducation
+    definition: 'Object declared by the contract with fields: endTs, verificationStatus, degreeExternalId, attachmentIds, startTs, degree, major,
+      verificationBy, location, isCurrent, schoolExternalId, majorExternalId. (5 more)'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/AtsEducation
+  - term: LmsCourseAttendance
+    definition: 'Object declared by the contract with fields: durationHours, percentageCompletion, isInternal, pointsEarned, courseType, difficulty,
+      courseUrl, title, completionTs, lmsCourseId, medium, language. (8 more)'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/LmsCourseAttendance
+  - term: AtsCertification
+    definition: 'Object declared by the contract with fields: locationCountry, verificationStatus, licenseNo, skills, validFromTs, comments, allText,
+      endTs, verificationBy, certificateName, verificationTs, status. (9 more)'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/AtsCertification
+  - term: Jobs
+    definition: 'Object declared by the contract with fields: atsJobId, name.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/Jobs
+  - term: AtsNote
+    definition: 'Object declared by the contract with fields: subject, to, noteType, visibility, creator, cc, body, sender, creationTs.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/AtsNote
+  - term: AtsUser
+    definition: 'Object declared by the contract with fields: userId, email, name, atsRoles.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/AtsUser
+  - term: AtsStage
+    definition: 'Object declared by the contract with fields: stage, user, reason, wfSubStage, wfStage, stageTs.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/AtsStage
+  - term: ATSScoreCardAttribute
+    definition: 'Object declared by the contract with fields: rating, answer, note, question, rating_label.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/ATSScoreCardAttribute
+  - term: AtsScorecard
+    definition: 'Object declared by the contract with fields: overallRatingLabel, overallRating, submittedBy, submittedAt, interviewedAt, attributes,
+      description, interviewName.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/AtsScorecard
+  - term: AtsQuestionAnswer
+    definition: 'Object declared by the contract with fields: formName, choices, explanation, answer, formType, questionId, displayOrder, formId,
+      type, question.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/AtsQuestionAnswer
+  - term: AtsApplication
+    definition: 'Object declared by the contract with fields: locationCountry, reason, location, visaStatuses, veteranStatusStr, jobs, hiredTs,
+      lastModifiedTs, customInfo, note, systemId, creditor. (19 more)'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/AtsApplication
+  - term: AtsExperience
+    definition: 'Object declared by the contract with fields: endTs, industry, isInternal, department, startTs, location, company, isCurrent,
+      description, title.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/AtsExperience
+  - term: AtsProject
+    definition: 'Object declared by the contract with fields: endTs, links, startTs, skills, company, contributors, description, title.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/AtsProject
+  - term: ATSSkillGroup
+    definition: 'Object declared by the contract with fields: proficiency, skillGroup.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/ATSSkillGroup
+  - term: ATSSkillDetail
+    definition: 'Object declared by the contract with fields: skillGroups, proficiency, evaluationTimestamp, dataSource, skill.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/ATSSkillDetail
+  - term: SourceSchema
+    definition: 'Object declared by the contract with fields: sourceType, datetime, sourceName.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/SourceSchema
+  - term: ExperienceSchema
+    definition: 'Object declared by the contract with fields: industry, endTime, durationMonths, isInternal, addlJson, department, work, userVerifiedSkills,
+      experienceKey, skills, location, startTime. (4 more)'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/ExperienceSchema
+  - term: CertificateSchema
+    definition: 'Object declared by the contract with fields: verificationStatus, country, skills, comments, validFromDate, date, allText, source,
+      startDate, validToDate, certificateId, state. (12 more)'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/CertificateSchema
+  - term: InferredSkillsSchema
+    definition: 'Object declared by the contract with fields: skillType, skills.'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/InferredSkillsSchema
+  - term: ProfileApplicationSchema
+    definition: 'Object declared by the contract with fields: stage, lastModifiedTime, applicationAnswers, refereeEmail, profileId, utm_source,
+      feedback, groupId, applicationStatus, isInternal, isReferral, customInfo. (18 more)'
+    tags:
+    - Object
+    source: openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/ProfileApplicationSchema

@@ -1,0 +1,96 @@
+generated: '2026-10-14'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 7
+  own: 5
+  other_domain: 0
+  platform: 2
+  roles:
+  - community
+  - identity
+  - other
+  - portal
+  - source
+  - website
+hosts:
+- host: apidocs.eightfold.ai
+  found_by:
+  - pointer
+  types:
+  - DeveloperPortal
+  - Documentation
+  - APIReference
+  - GettingStarted
+  - ChangeLog
+  serves: []
+  registrable_domain: eightfold.ai
+  role: portal
+  relation: own
+- host: app.eightfold.ai
+  found_by:
+  - pointer
+  - apis[]
+  types:
+  - Marketplace
+  - Login
+  serves:
+  - api
+  - docs
+  registrable_domain: eightfold.ai
+  role: identity
+  relation: own
+- host: community.eightfold.ai
+  found_by:
+  - pointer
+  types:
+  - Community
+  serves: []
+  registrable_domain: eightfold.ai
+  role: community
+  relation: own
+- host: eightfold.ai
+  found_by:
+  - pointer
+  - apis[]
+  types:
+  - Website
+  - Products
+  - Blog
+  - Contact
+  - LlmsText
+  - PrivacyPolicy
+  - Security
+  serves:
+  - docs
+  registrable_domain: eightfold.ai
+  role: website
+  relation: own
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: trust.eightfold.ai
+  found_by:
+  - pointer
+  types:
+  - Compliance
+  serves: []
+  registrable_domain: eightfold.ai
+  role: other
+  relation: own
+- host: www.linkedin.com
+  found_by:
+  - pointer
+  types:
+  - LinkedIn
+  serves: []
+  registrable_domain: linkedin.com
+  role: other
+  relation: platform

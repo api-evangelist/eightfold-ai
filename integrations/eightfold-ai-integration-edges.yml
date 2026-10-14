@@ -1,7 +1,21 @@
-generated: '2026-10-13'
+generated: '2026-10-14'
 method: searched
+source:
+- https://zapier.com/apps/eightfold-ai/integrations
+- https://zapier.com/apps/eightfold/integrations
+- https://n8n.io/integrations/eightfold-ai/
+- https://n8n.io/integrations/eightfold/
+- https://composio.dev/toolkits/eightfold-ai
+- https://monid.ai/tools/eightfold-ai
 checked:
 - https://azuremarketplace.microsoft.com/
+- https://composio.dev/toolkits/eightfold-ai
+- https://monid.ai/tools/eightfold-ai
+- https://n8n.io/integrations/eightfold-ai/
+- https://n8n.io/integrations/eightfold/
+- https://zapier.com/apps/eightfold-ai/integrations
+- https://zapier.com/apps/eightfold/integrations
+summary: null
 marketplace_apps: []
 edges:
 - partner_name: Microsoft Azure Marketplace
@@ -20,3 +34,4 @@ edges:
   seller_name: Eightfold AI
   detected_by: sweep-cloud-marketplaces.py
   detected: '2026-10-13'
+templates: []

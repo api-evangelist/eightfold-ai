@@ -1,0 +1,2222 @@
+{
+  "@context": {
+    "@vocab": "https://eightfold.ai/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "eightfold": "https://eightfold.ai/schema#",
+    "AtsOpeningDetail": "eightfold:AtsOpeningDetail",
+    "status": {
+      "@id": "eightfold:status",
+      "@type": "xsd:string"
+    },
+    "closedAt": {
+      "@id": "eightfold:closedAt",
+      "@type": "xsd:integer"
+    },
+    "openingId": {
+      "@id": "eightfold:openingId",
+      "@type": "xsd:string"
+    },
+    "openedAt": {
+      "@id": "eightfold:openedAt",
+      "@type": "xsd:integer"
+    },
+    "closeReason": {
+      "@id": "eightfold:closeReason",
+      "@type": "xsd:string"
+    },
+    "candidateId": {
+      "@id": "eightfold:candidateId",
+      "@type": "xsd:string"
+    },
+    "applicationId": {
+      "@id": "eightfold:applicationId",
+      "@type": "xsd:string"
+    },
+    "AtsOpenings": "eightfold:AtsOpenings",
+    "openingDetails": {
+      "@id": "eightfold:openingDetails",
+      "@container": "@list"
+    },
+    "numOpenings": {
+      "@id": "eightfold:numOpenings",
+      "@type": "xsd:integer"
+    },
+    "numOpeningsFilled": {
+      "@id": "eightfold:numOpeningsFilled",
+      "@type": "xsd:integer"
+    },
+    "ChangeLog": "eightfold:ChangeLog",
+    "newValue": {
+      "@id": "eightfold:newValue",
+      "@type": "xsd:string"
+    },
+    "fieldName": {
+      "@id": "eightfold:fieldName",
+      "@type": "xsd:string"
+    },
+    "prevValue": {
+      "@id": "eightfold:prevValue",
+      "@type": "xsd:string"
+    },
+    "QuestionDependencies": "eightfold:QuestionDependencies",
+    "questionId": {
+      "@id": "eightfold:questionId",
+      "@type": "xsd:string"
+    },
+    "questionSource": {
+      "@id": "eightfold:questionSource",
+      "@type": "xsd:string"
+    },
+    "choiceValue": {
+      "@id": "eightfold:choiceValue",
+      "@type": "xsd:string"
+    },
+    "dependencyType": {
+      "@id": "eightfold:dependencyType",
+      "@type": "xsd:string"
+    },
+    "childQuestionIds": {
+      "@id": "eightfold:childQuestionIds",
+      "@container": "@list"
+    },
+    "QuestionChoice": "eightfold:QuestionChoice",
+    "label": {
+      "@id": "eightfold:label",
+      "@type": "xsd:string"
+    },
+    "value": {
+      "@id": "eightfold:value",
+      "@type": "xsd:string"
+    },
+    "LangMapping": "eightfold:LangMapping",
+    "locale": {
+      "@id": "eightfold:locale",
+      "@type": "xsd:string"
+    },
+    "QuestionLabel": "eightfold:QuestionLabel",
+    "langMappingList": {
+      "@id": "eightfold:langMappingList",
+      "@container": "@list"
+    },
+    "PersonSchema": "eightfold:PersonSchema",
+    "email": {
+      "@id": "eightfold:email",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "eightfold:name",
+      "@type": "xsd:string"
+    },
+    "HiringTeamMemberSchema": "eightfold:HiringTeamMemberSchema",
+    "role": {
+      "@id": "eightfold:role",
+      "@type": "xsd:string"
+    },
+    "roleKey": {
+      "@id": "eightfold:roleKey",
+      "@type": "xsd:string"
+    },
+    "QuestionsSchema": "eightfold:QuestionsSchema",
+    "choices": {
+      "@id": "eightfold:choices",
+      "@container": "@list"
+    },
+    "choicesV2": {
+      "@id": "eightfold:choicesV2",
+      "@container": "@list"
+    },
+    "help": {
+      "@id": "eightfold:help",
+      "@type": "xsd:string"
+    },
+    "type": {
+      "@id": "eightfold:type",
+      "@type": "xsd:string"
+    },
+    "question": {
+      "@id": "eightfold:question"
+    },
+    "required": {
+      "@id": "eightfold:required",
+      "@type": "xsd:boolean"
+    },
+    "QuestionnaireSchema": "eightfold:QuestionnaireSchema",
+    "questionDependencies": {
+      "@id": "eightfold:questionDependencies",
+      "@container": "@list"
+    },
+    "questionnaireId": {
+      "@id": "eightfold:questionnaireId",
+      "@type": "xsd:string"
+    },
+    "JobPostSchema": "eightfold:JobPostSchema",
+    "publishedTime": {
+      "@id": "eightfold:publishedTime",
+      "@type": "xsd:integer"
+    },
+    "expirationTime": {
+      "@id": "eightfold:expirationTime",
+      "@type": "xsd:integer"
+    },
+    "postingTitle": {
+      "@id": "eightfold:postingTitle",
+      "@type": "xsd:string"
+    },
+    "postingId": {
+      "@id": "eightfold:postingId",
+      "@type": "xsd:string"
+    },
+    "primaryPost": {
+      "@id": "eightfold:primaryPost",
+      "@type": "xsd:boolean"
+    },
+    "jobDescription": {
+      "@id": "eightfold:jobDescription",
+      "@type": "xsd:string"
+    },
+    "postedFor": {
+      "@id": "eightfold:postedFor",
+      "@type": "xsd:string"
+    },
+    "PositionActivitiesSchema": "eightfold:PositionActivitiesSchema",
+    "activityTime": {
+      "@id": "eightfold:activityTime",
+      "@type": "xsd:integer"
+    },
+    "activityType": {
+      "@id": "eightfold:activityType",
+      "@type": "xsd:string"
+    },
+    "changeLogs": {
+      "@id": "eightfold:changeLogs",
+      "@container": "@list"
+    },
+    "message": {
+      "@id": "eightfold:message",
+      "@type": "xsd:string"
+    },
+    "AtsUserGroupsSchema": "eightfold:AtsUserGroupsSchema",
+    "userGroupId": {
+      "@id": "eightfold:userGroupId",
+      "@type": "xsd:string"
+    },
+    "ATSPositionDataSchema": "eightfold:ATSPositionDataSchema",
+    "createdAt": {
+      "@id": "eightfold:createdAt",
+      "@type": "xsd:integer"
+    },
+    "locationCountry": {
+      "@id": "eightfold:locationCountry",
+      "@type": "xsd:string"
+    },
+    "coordinators": {
+      "@id": "eightfold:coordinators",
+      "@container": "@list"
+    },
+    "businessUnit": {
+      "@id": "eightfold:businessUnit",
+      "@type": "xsd:string"
+    },
+    "isPrivate": {
+      "@id": "eightfold:isPrivate",
+      "@type": "xsd:boolean"
+    },
+    "workLocationOption": {
+      "@id": "eightfold:workLocationOption",
+      "@type": "xsd:string"
+    },
+    "atsEntityId": {
+      "@id": "eightfold:atsEntityId",
+      "@type": "xsd:string"
+    },
+    "hiringManager": {
+      "@id": "eightfold:hiringManager"
+    },
+    "internalPostingUrl": {
+      "@id": "eightfold:internalPostingUrl",
+      "@type": "xsd:string"
+    },
+    "evergreen": {
+      "@id": "eightfold:evergreen",
+      "@type": "xsd:boolean"
+    },
+    "skills": {
+      "@id": "eightfold:skills",
+      "@container": "@list"
+    },
+    "company": {
+      "@id": "eightfold:company",
+      "@type": "xsd:string"
+    },
+    "locationCity": {
+      "@id": "eightfold:locationCity",
+      "@type": "xsd:string"
+    },
+    "lastUpdated": {
+      "@id": "eightfold:lastUpdated",
+      "@type": "xsd:integer"
+    },
+    "displayJobId": {
+      "@id": "eightfold:displayJobId",
+      "@type": "xsd:string"
+    },
+    "openings": {
+      "@id": "eightfold:openings"
+    },
+    "hiringTeam": {
+      "@id": "eightfold:hiringTeam",
+      "@container": "@list"
+    },
+    "followers": {
+      "@id": "eightfold:followers",
+      "@container": "@list"
+    },
+    "startDate": {
+      "@id": "eightfold:startDate",
+      "@type": "xsd:string"
+    },
+    "requisitionType": {
+      "@id": "eightfold:requisitionType",
+      "@type": "xsd:string"
+    },
+    "systemId": {
+      "@id": "eightfold:systemId",
+      "@type": "xsd:string"
+    },
+    "activities": {
+      "@id": "eightfold:activities",
+      "@container": "@list"
+    },
+    "questionnaires": {
+      "@id": "eightfold:questionnaires",
+      "@container": "@list"
+    },
+    "restrictAccess": {
+      "@id": "eightfold:restrictAccess",
+      "@type": "xsd:boolean"
+    },
+    "title": {
+      "@id": "eightfold:title",
+      "@type": "xsd:string"
+    },
+    "templateId": {
+      "@id": "eightfold:templateId",
+      "@type": "xsd:integer"
+    },
+    "recruiter": {
+      "@id": "eightfold:recruiter"
+    },
+    "jobPosts": {
+      "@id": "eightfold:jobPosts",
+      "@container": "@list"
+    },
+    "hiringBand": {
+      "@id": "eightfold:hiringBand",
+      "@type": "xsd:string"
+    },
+    "employmentType": {
+      "@id": "eightfold:employmentType",
+      "@type": "xsd:string"
+    },
+    "posted": {
+      "@id": "eightfold:posted",
+      "@type": "xsd:boolean"
+    },
+    "locationFlexibility": {
+      "@id": "eightfold:locationFlexibility",
+      "@type": "xsd:string"
+    },
+    "orgUnits": {
+      "@id": "eightfold:orgUnits"
+    },
+    "companyDescription": {
+      "@id": "eightfold:companyDescription",
+      "@type": "xsd:string"
+    },
+    "customFields": {
+      "@id": "eightfold:customFields"
+    },
+    "sourcers": {
+      "@id": "eightfold:sourcers",
+      "@container": "@list"
+    },
+    "workflowTemplateId": {
+      "@id": "eightfold:workflowTemplateId",
+      "@type": "xsd:string"
+    },
+    "jobCode": {
+      "@id": "eightfold:jobCode",
+      "@type": "xsd:string"
+    },
+    "open": {
+      "@id": "eightfold:open",
+      "@type": "xsd:boolean"
+    },
+    "postingUrl": {
+      "@id": "eightfold:postingUrl",
+      "@type": "xsd:string"
+    },
+    "atsUserGroups": {
+      "@id": "eightfold:atsUserGroups",
+      "@container": "@list"
+    },
+    "createdBy": {
+      "@id": "eightfold:createdBy",
+      "@type": "xsd:string"
+    },
+    "function": {
+      "@id": "eightfold:function",
+      "@type": "xsd:string"
+    },
+    "jobStages": {
+      "@id": "eightfold:jobStages",
+      "@container": "@list"
+    },
+    "requiredSkills": {
+      "@id": "eightfold:requiredSkills",
+      "@container": "@list"
+    },
+    "questions": {
+      "@id": "eightfold:questions",
+      "@container": "@list"
+    },
+    "locationState": {
+      "@id": "eightfold:locationState",
+      "@type": "xsd:string"
+    },
+    "locations": {
+      "@id": "eightfold:locations",
+      "@container": "@list"
+    },
+    "positionId": {
+      "@id": "eightfold:positionId",
+      "@type": "xsd:integer"
+    },
+    "description": {
+      "@id": "eightfold:description",
+      "@type": "xsd:string"
+    },
+    "MetaSchema": "eightfold:MetaSchema",
+    "totalCount": {
+      "@id": "eightfold:totalCount",
+      "@type": "xsd:integer"
+    },
+    "pageTotalCount": {
+      "@id": "eightfold:pageTotalCount",
+      "@type": "xsd:integer"
+    },
+    "pageStartIndex": {
+      "@id": "eightfold:pageStartIndex",
+      "@type": "xsd:integer"
+    },
+    "PositionAttachmentUploadRequestItemSchema": "eightfold:PositionAttachmentUploadRequestItemSchema",
+    "key": {
+      "@id": "eightfold:key",
+      "@type": "xsd:string"
+    },
+    "variable_id": {
+      "@id": "eightfold:variable_id",
+      "@type": "xsd:string"
+    },
+    "file_name": {
+      "@id": "eightfold:file_name",
+      "@type": "xsd:string"
+    },
+    "url": {
+      "@id": "eightfold:url",
+      "@type": "xsd:string"
+    },
+    "content": {
+      "@id": "eightfold:content",
+      "@type": "xsd:string"
+    },
+    "PositionAttachmentUploadRequestSchema": "eightfold:PositionAttachmentUploadRequestSchema",
+    "files": {
+      "@id": "eightfold:files",
+      "@container": "@list"
+    },
+    "PositionAttachmentUploadResponseItemSchema": "eightfold:PositionAttachmentUploadResponseItemSchema",
+    "attachment_id": {
+      "@id": "eightfold:attachment_id",
+      "@type": "xsd:string"
+    },
+    "size": {
+      "@id": "eightfold:size",
+      "@type": "xsd:integer"
+    },
+    "PositionAttachmentUploadResponseSchema": "eightfold:PositionAttachmentUploadResponseSchema",
+    "data": {
+      "@id": "eightfold:data",
+      "@container": "@list"
+    },
+    "ConcisePositionSchema": "eightfold:ConcisePositionSchema",
+    "MatchingPositionsSchema": "eightfold:MatchingPositionsSchema",
+    "missingSkills": {
+      "@id": "eightfold:missingSkills",
+      "@container": "@list"
+    },
+    "position": {
+      "@id": "eightfold:position"
+    },
+    "skillScoreRelevance": {
+      "@id": "eightfold:skillScoreRelevance",
+      "@type": "xsd:decimal"
+    },
+    "validatedSkills": {
+      "@id": "eightfold:validatedSkills",
+      "@container": "@list"
+    },
+    "finalScore": {
+      "@id": "eightfold:finalScore",
+      "@type": "xsd:decimal"
+    },
+    "titleScoreRelevance": {
+      "@id": "eightfold:titleScoreRelevance",
+      "@type": "xsd:decimal"
+    },
+    "Preferences": "eightfold:Preferences",
+    "contactConsent": {
+      "@id": "eightfold:contactConsent",
+      "@type": "xsd:string"
+    },
+    "Endorsement": "eightfold:Endorsement",
+    "work": {
+      "@id": "eightfold:work",
+      "@type": "xsd:string"
+    },
+    "metadata": {
+      "@id": "eightfold:metadata",
+      "@type": "xsd:string"
+    },
+    "AtsContent": "eightfold:AtsContent",
+    "extension": {
+      "@id": "eightfold:extension",
+      "@type": "xsd:string"
+    },
+    "isBase64": {
+      "@id": "eightfold:isBase64",
+      "@type": "xsd:boolean"
+    },
+    "Award": "eightfold:Award",
+    "entity": {
+      "@id": "eightfold:entity",
+      "@type": "xsd:string"
+    },
+    "date": {
+      "@id": "eightfold:date",
+      "@type": "xsd:string"
+    },
+    "allText": {
+      "@id": "eightfold:allText",
+      "@type": "xsd:string"
+    },
+    "CandidateEducation": "eightfold:CandidateEducation",
+    "verificationStatus": {
+      "@id": "eightfold:verificationStatus",
+      "@type": "xsd:string"
+    },
+    "location": {
+      "@id": "eightfold:location",
+      "@type": "xsd:string"
+    },
+    "school": {
+      "@id": "eightfold:school",
+      "@type": "xsd:string"
+    },
+    "isCurrent": {
+      "@id": "eightfold:isCurrent",
+      "@type": "xsd:boolean"
+    },
+    "isGraduated": {
+      "@id": "eightfold:isGraduated",
+      "@type": "xsd:boolean"
+    },
+    "endTime": {
+      "@id": "eightfold:endTime",
+      "@type": "xsd:integer"
+    },
+    "awards": {
+      "@id": "eightfold:awards",
+      "@container": "@list"
+    },
+    "source": {
+      "@id": "eightfold:source",
+      "@type": "xsd:string"
+    },
+    "degree": {
+      "@id": "eightfold:degree",
+      "@type": "xsd:string"
+    },
+    "startTime": {
+      "@id": "eightfold:startTime",
+      "@type": "xsd:integer"
+    },
+    "verificationBy": {
+      "@id": "eightfold:verificationBy",
+      "@type": "xsd:string"
+    },
+    "major": {
+      "@id": "eightfold:major",
+      "@type": "xsd:string"
+    },
+    "majorExternalId": {
+      "@id": "eightfold:majorExternalId",
+      "@type": "xsd:string"
+    },
+    "verificationTs": {
+      "@id": "eightfold:verificationTs",
+      "@type": "xsd:integer"
+    },
+    "degreeExternalId": {
+      "@id": "eightfold:degreeExternalId",
+      "@type": "xsd:string"
+    },
+    "attachmentIds": {
+      "@id": "eightfold:attachmentIds",
+      "@container": "@list"
+    },
+    "schoolExternalId": {
+      "@id": "eightfold:schoolExternalId",
+      "@type": "xsd:string"
+    },
+    "nameAlias": {
+      "@id": "eightfold:nameAlias",
+      "@type": "xsd:string"
+    },
+    "Tag": "eightfold:Tag",
+    "creatorEmail": {
+      "@id": "eightfold:creatorEmail",
+      "@type": "xsd:string"
+    },
+    "id": {
+      "@id": "eightfold:id",
+      "@type": "xsd:string"
+    },
+    "tag": {
+      "@id": "eightfold:tag",
+      "@type": "xsd:string"
+    },
+    "tagSubtype": {
+      "@id": "eightfold:tagSubtype",
+      "@type": "xsd:string"
+    },
+    "profileId": {
+      "@id": "eightfold:profileId",
+      "@type": "xsd:string"
+    },
+    "tagType": {
+      "@id": "eightfold:tagType",
+      "@type": "xsd:string"
+    },
+    "groupId": {
+      "@id": "eightfold:groupId",
+      "@type": "xsd:string"
+    },
+    "createdTime": {
+      "@id": "eightfold:createdTime",
+      "@type": "xsd:integer"
+    },
+    "Patent": "eightfold:Patent",
+    "ProjectFeedback": "eightfold:ProjectFeedback",
+    "imageUrl": {
+      "@id": "eightfold:imageUrl",
+      "@type": "xsd:string"
+    },
+    "rating": {
+      "@id": "eightfold:rating",
+      "@type": "xsd:string"
+    },
+    "projectId": {
+      "@id": "eightfold:projectId",
+      "@type": "xsd:integer"
+    },
+    "timestamp": {
+      "@id": "eightfold:timestamp",
+      "@type": "xsd:integer"
+    },
+    "comment": {
+      "@id": "eightfold:comment",
+      "@type": "xsd:string"
+    },
+    "Project": "eightfold:Project",
+    "addlJson": {
+      "@id": "eightfold:addlJson"
+    },
+    "duration": {
+      "@id": "eightfold:duration",
+      "@type": "xsd:integer"
+    },
+    "links": {
+      "@id": "eightfold:links",
+      "@container": "@list"
+    },
+    "personal_description": {
+      "@id": "eightfold:personal_description",
+      "@type": "xsd:string"
+    },
+    "time": {
+      "@id": "eightfold:time",
+      "@type": "xsd:string"
+    },
+    "feedback": {
+      "@id": "eightfold:feedback",
+      "@container": "@list"
+    },
+    "contributors": {
+      "@id": "eightfold:contributors",
+      "@container": "@list"
+    },
+    "ApplicationQuestionAnswers": "eightfold:ApplicationQuestionAnswers",
+    "answer": {
+      "@id": "eightfold:answer",
+      "@type": "xsd:string"
+    },
+    "displayOrder": {
+      "@id": "eightfold:displayOrder",
+      "@type": "xsd:string"
+    },
+    "ProfileFeedbackQuestionAnswer": "eightfold:ProfileFeedbackQuestionAnswer",
+    "ProfileFeedbackResponse": "eightfold:ProfileFeedbackResponse",
+    "overallFeedback": {
+      "@id": "eightfold:overallFeedback"
+    },
+    "UserLogin": "eightfold:UserLogin",
+    "fullName": {
+      "@id": "eightfold:fullName",
+      "@type": "xsd:string"
+    },
+    "redirectEmail": {
+      "@id": "eightfold:redirectEmail",
+      "@type": "xsd:string"
+    },
+    "domain": {
+      "@id": "eightfold:domain",
+      "@type": "xsd:string"
+    },
+    "Person": "eightfold:Person",
+    "HiringTeamMember": "eightfold:HiringTeamMember",
+    "PositionActivities": "eightfold:PositionActivities",
+    "Questionnaire": "eightfold:Questionnaire",
+    "JobPost": "eightfold:JobPost",
+    "AtsUserGroups": "eightfold:AtsUserGroups",
+    "Questions": "eightfold:Questions",
+    "ATSPositionData": "eightfold:ATSPositionData",
+    "SkillGroupList": "eightfold:SkillGroupList",
+    "proficiency": {
+      "@id": "eightfold:proficiency",
+      "@type": "xsd:decimal"
+    },
+    "groupName": {
+      "@id": "eightfold:groupName",
+      "@type": "xsd:string"
+    },
+    "level": {
+      "@id": "eightfold:level",
+      "@type": "xsd:string"
+    },
+    "skillCategory": {
+      "@id": "eightfold:skillCategory",
+      "@type": "xsd:string"
+    },
+    "SkillProficiency": "eightfold:SkillProficiency",
+    "skillGroupList": {
+      "@id": "eightfold:skillGroupList",
+      "@container": "@list"
+    },
+    "CalibrationData": "eightfold:CalibrationData",
+    "flags": {
+      "@id": "eightfold:flags",
+      "@container": "@list"
+    },
+    "graduationYear": {
+      "@id": "eightfold:graduationYear",
+      "@type": "xsd:string"
+    },
+    "workCategories": {
+      "@id": "eightfold:workCategories",
+      "@container": "@list"
+    },
+    "diversity": {
+      "@id": "eightfold:diversity",
+      "@container": "@list"
+    },
+    "idealCandidates": {
+      "@id": "eightfold:idealCandidates",
+      "@container": "@list"
+    },
+    "companies": {
+      "@id": "eightfold:companies",
+      "@container": "@list"
+    },
+    "titles": {
+      "@id": "eightfold:titles",
+      "@container": "@list"
+    },
+    "educationLevel": {
+      "@id": "eightfold:educationLevel",
+      "@container": "@list"
+    },
+    "relocation": {
+      "@id": "eightfold:relocation",
+      "@container": "@list"
+    },
+    "seniorities": {
+      "@id": "eightfold:seniorities",
+      "@container": "@list"
+    },
+    "maxExperience": {
+      "@id": "eightfold:maxExperience",
+      "@type": "xsd:integer"
+    },
+    "schools": {
+      "@id": "eightfold:schools",
+      "@container": "@list"
+    },
+    "skillProficiencies": {
+      "@id": "eightfold:skillProficiencies",
+      "@container": "@list"
+    },
+    "idealCandidateUrls": {
+      "@id": "eightfold:idealCandidateUrls",
+      "@container": "@list"
+    },
+    "minExperience": {
+      "@id": "eightfold:minExperience",
+      "@type": "xsd:integer"
+    },
+    "notes": {
+      "@id": "eightfold:notes",
+      "@type": "xsd:string"
+    },
+    "CalibrationTemplate": "eightfold:CalibrationTemplate",
+    "Role": "eightfold:Role",
+    "templates": {
+      "@id": "eightfold:templates",
+      "@container": "@list"
+    },
+    "Position": "eightfold:Position",
+    "jobDescriptionUpdatedAt": {
+      "@id": "eightfold:jobDescriptionUpdatedAt",
+      "@type": "xsd:integer"
+    },
+    "confidential": {
+      "@id": "eightfold:confidential",
+      "@type": "xsd:boolean"
+    },
+    "positionDisplayId": {
+      "@id": "eightfold:positionDisplayId",
+      "@type": "xsd:string"
+    },
+    "calibrationConfirmedBy": {
+      "@id": "eightfold:calibrationConfirmedBy",
+      "@type": "xsd:string"
+    },
+    "calibrationConfirmedAt": {
+      "@id": "eightfold:calibrationConfirmedAt",
+      "@type": "xsd:integer"
+    },
+    "atsData": {
+      "@id": "eightfold:atsData"
+    },
+    "calibrationData": {
+      "@id": "eightfold:calibrationData"
+    },
+    "RegisterButton": "eightfold:RegisterButton",
+    "textColor": {
+      "@id": "eightfold:textColor",
+      "@type": "xsd:string"
+    },
+    "backgroundColor": {
+      "@id": "eightfold:backgroundColor",
+      "@type": "xsd:string"
+    },
+    "text": {
+      "@id": "eightfold:text",
+      "@type": "xsd:string"
+    },
+    "HomePageBanner": "eightfold:HomePageBanner",
+    "useImage": {
+      "@id": "eightfold:useImage",
+      "@type": "xsd:boolean"
+    },
+    "image": {
+      "@id": "eightfold:image",
+      "@type": "xsd:string"
+    },
+    "PlannedEvent": "eightfold:PlannedEvent",
+    "isCancelled": {
+      "@id": "eightfold:isCancelled",
+      "@type": "xsd:boolean"
+    },
+    "eventSpeakers": {
+      "@id": "eightfold:eventSpeakers",
+      "@container": "@list"
+    },
+    "activeRegistrations": {
+      "@id": "eightfold:activeRegistrations",
+      "@type": "xsd:string"
+    },
+    "registerButton": {
+      "@id": "eightfold:registerButton"
+    },
+    "eventTeamDataJson": {
+      "@id": "eightfold:eventTeamDataJson"
+    },
+    "eventBucket": {
+      "@id": "eightfold:eventBucket",
+      "@type": "xsd:string"
+    },
+    "address": {
+      "@id": "eightfold:address",
+      "@type": "xsd:string"
+    },
+    "eventCustomFieldsJson": {
+      "@id": "eightfold:eventCustomFieldsJson"
+    },
+    "eventType": {
+      "@id": "eightfold:eventType",
+      "@type": "xsd:string"
+    },
+    "institution": {
+      "@id": "eightfold:institution",
+      "@type": "xsd:string"
+    },
+    "selectedTimezone": {
+      "@id": "eightfold:selectedTimezone",
+      "@type": "xsd:string"
+    },
+    "homePageBanner": {
+      "@id": "eightfold:homePageBanner"
+    },
+    "eventLocationType": {
+      "@id": "eightfold:eventLocationType",
+      "@type": "xsd:string"
+    },
+    "plannedEventEncId": {
+      "@id": "eightfold:plannedEventEncId",
+      "@type": "xsd:string"
+    },
+    "parentId": {
+      "@id": "eightfold:parentId",
+      "@type": "xsd:string"
+    },
+    "venue": {
+      "@id": "eightfold:venue",
+      "@type": "xsd:string"
+    },
+    "endTimestamp": {
+      "@id": "eightfold:endTimestamp",
+      "@type": "xsd:integer"
+    },
+    "isPublished": {
+      "@id": "eightfold:isPublished",
+      "@type": "xsd:boolean"
+    },
+    "eventLandingPage": {
+      "@id": "eightfold:eventLandingPage",
+      "@type": "xsd:string"
+    },
+    "eventCategory": {
+      "@id": "eightfold:eventCategory",
+      "@type": "xsd:string"
+    },
+    "startTimestamp": {
+      "@id": "eightfold:startTimestamp",
+      "@type": "xsd:integer"
+    },
+    "when": {
+      "@id": "eightfold:when",
+      "@type": "xsd:string"
+    },
+    "ApplicationMatchScore": "eightfold:ApplicationMatchScore",
+    "topMatches": {
+      "@id": "eightfold:topMatches",
+      "@container": "@list"
+    },
+    "indeterminable": {
+      "@id": "eightfold:indeterminable",
+      "@type": "xsd:integer"
+    },
+    "score": {
+      "@id": "eightfold:score",
+      "@type": "xsd:integer"
+    },
+    "relevantScoreTypeVal": {
+      "@id": "eightfold:relevantScoreTypeVal",
+      "@type": "xsd:integer"
+    },
+    "scoreRaw": {
+      "@id": "eightfold:scoreRaw",
+      "@type": "xsd:decimal"
+    },
+    "scoreType": {
+      "@id": "eightfold:scoreType",
+      "@type": "xsd:string"
+    },
+    "ProfileFeedback": "eightfold:ProfileFeedback",
+    "plannedEventId": {
+      "@id": "eightfold:plannedEventId",
+      "@type": "xsd:integer"
+    },
+    "feedbackResponse": {
+      "@id": "eightfold:feedbackResponse"
+    },
+    "followUpEnabled": {
+      "@id": "eightfold:followUpEnabled",
+      "@type": "xsd:boolean"
+    },
+    "communityId": {
+      "@id": "eightfold:communityId",
+      "@type": "xsd:integer"
+    },
+    "sharedFeedbackMessageId": {
+      "@id": "eightfold:sharedFeedbackMessageId",
+      "@type": "xsd:integer"
+    },
+    "viewFeedbackUrl": {
+      "@id": "eightfold:viewFeedbackUrl",
+      "@type": "xsd:string"
+    },
+    "requestedAt": {
+      "@id": "eightfold:requestedAt",
+      "@type": "xsd:integer"
+    },
+    "reminderCount": {
+      "@id": "eightfold:reminderCount",
+      "@type": "xsd:integer"
+    },
+    "requester": {
+      "@id": "eightfold:requester"
+    },
+    "submittedAt": {
+      "@id": "eightfold:submittedAt",
+      "@type": "xsd:integer"
+    },
+    "reviewerEmail": {
+      "@id": "eightfold:reviewerEmail",
+      "@type": "xsd:string"
+    },
+    "feedbackType": {
+      "@id": "eightfold:feedbackType",
+      "@type": "xsd:string"
+    },
+    "feedbackTemplateId": {
+      "@id": "eightfold:feedbackTemplateId",
+      "@type": "xsd:integer"
+    },
+    "feedbackEncId": {
+      "@id": "eightfold:feedbackEncId",
+      "@type": "xsd:string"
+    },
+    "requesterEmail": {
+      "@id": "eightfold:requesterEmail",
+      "@type": "xsd:string"
+    },
+    "archiveFlag": {
+      "@id": "eightfold:archiveFlag",
+      "@type": "xsd:boolean"
+    },
+    "userCalendarEventId": {
+      "@id": "eightfold:userCalendarEventId",
+      "@type": "xsd:integer"
+    },
+    "feedbackId": {
+      "@id": "eightfold:feedbackId",
+      "@type": "xsd:integer"
+    },
+    "feedbackTemplateName": {
+      "@id": "eightfold:feedbackTemplateName",
+      "@type": "xsd:string"
+    },
+    "reviewer": {
+      "@id": "eightfold:reviewer"
+    },
+    "plannedEvent": {
+      "@id": "eightfold:plannedEvent"
+    },
+    "matchingData": {
+      "@id": "eightfold:matchingData",
+      "@container": "@list"
+    },
+    "feedbackJson": {
+      "@id": "eightfold:feedbackJson"
+    },
+    "feedbackUrl": {
+      "@id": "eightfold:feedbackUrl",
+      "@type": "xsd:string"
+    },
+    "Publication": "eightfold:Publication",
+    "publisher": {
+      "@id": "eightfold:publisher",
+      "@type": "xsd:string"
+    },
+    "Note": "eightfold:Note",
+    "noteType": {
+      "@id": "eightfold:noteType",
+      "@type": "xsd:string"
+    },
+    "note": {
+      "@id": "eightfold:note",
+      "@type": "xsd:string"
+    },
+    "ATSScheduledInterview": "eightfold:ATSScheduledInterview",
+    "organizer": {
+      "@id": "eightfold:organizer",
+      "@type": "xsd:string"
+    },
+    "endTs": {
+      "@id": "eightfold:endTs",
+      "@type": "xsd:integer"
+    },
+    "interviewType": {
+      "@id": "eightfold:interviewType",
+      "@type": "xsd:string"
+    },
+    "interviewers": {
+      "@id": "eightfold:interviewers",
+      "@container": "@list"
+    },
+    "startTs": {
+      "@id": "eightfold:startTs",
+      "@type": "xsd:integer"
+    },
+    "referenceId": {
+      "@id": "eightfold:referenceId",
+      "@type": "xsd:string"
+    },
+    "AtsTag": "eightfold:AtsTag",
+    "jobId": {
+      "@id": "eightfold:jobId",
+      "@type": "xsd:string"
+    },
+    "creator": {
+      "@id": "eightfold:creator",
+      "@type": "xsd:string"
+    },
+    "creationTs": {
+      "@id": "eightfold:creationTs",
+      "@type": "xsd:integer"
+    },
+    "AtsAttachmentApplicationMetadata": "eightfold:AtsAttachmentApplicationMetadata",
+    "AtsAttachment": "eightfold:AtsAttachment",
+    "fileName": {
+      "@id": "eightfold:fileName",
+      "@type": "xsd:string"
+    },
+    "lastModifiedTs": {
+      "@id": "eightfold:lastModifiedTs",
+      "@type": "xsd:integer"
+    },
+    "applicationMetadata": {
+      "@id": "eightfold:applicationMetadata",
+      "@container": "@list"
+    },
+    "attachmentContent": {
+      "@id": "eightfold:attachmentContent",
+      "@type": "xsd:string"
+    },
+    "attachmentId": {
+      "@id": "eightfold:attachmentId",
+      "@type": "xsd:string"
+    },
+    "attachmentType": {
+      "@id": "eightfold:attachmentType",
+      "@type": "xsd:string"
+    },
+    "AtsEducation": "eightfold:AtsEducation",
+    "LmsCourseAttendance": "eightfold:LmsCourseAttendance",
+    "durationHours": {
+      "@id": "eightfold:durationHours",
+      "@type": "xsd:decimal"
+    },
+    "percentageCompletion": {
+      "@id": "eightfold:percentageCompletion",
+      "@type": "xsd:decimal"
+    },
+    "isInternal": {
+      "@id": "eightfold:isInternal",
+      "@type": "xsd:boolean"
+    },
+    "pointsEarned": {
+      "@id": "eightfold:pointsEarned",
+      "@type": "xsd:decimal"
+    },
+    "courseType": {
+      "@id": "eightfold:courseType",
+      "@type": "xsd:string"
+    },
+    "difficulty": {
+      "@id": "eightfold:difficulty",
+      "@type": "xsd:string"
+    },
+    "courseUrl": {
+      "@id": "eightfold:courseUrl",
+      "@type": "xsd:string"
+    },
+    "completionTs": {
+      "@id": "eightfold:completionTs",
+      "@type": "xsd:integer"
+    },
+    "lmsCourseId": {
+      "@id": "eightfold:lmsCourseId",
+      "@type": "xsd:string"
+    },
+    "medium": {
+      "@id": "eightfold:medium",
+      "@type": "xsd:string"
+    },
+    "language": {
+      "@id": "eightfold:language",
+      "@type": "xsd:string"
+    },
+    "dueTs": {
+      "@id": "eightfold:dueTs",
+      "@type": "xsd:integer"
+    },
+    "assignedBy": {
+      "@id": "eightfold:assignedBy",
+      "@type": "xsd:string"
+    },
+    "isMandatory": {
+      "@id": "eightfold:isMandatory",
+      "@type": "xsd:boolean"
+    },
+    "provider": {
+      "@id": "eightfold:provider",
+      "@type": "xsd:string"
+    },
+    "verified": {
+      "@id": "eightfold:verified",
+      "@type": "xsd:string"
+    },
+    "AtsCertification": "eightfold:AtsCertification",
+    "licenseNo": {
+      "@id": "eightfold:licenseNo",
+      "@type": "xsd:string"
+    },
+    "validFromTs": {
+      "@id": "eightfold:validFromTs",
+      "@type": "xsd:integer"
+    },
+    "comments": {
+      "@id": "eightfold:comments",
+      "@type": "xsd:string"
+    },
+    "certificateName": {
+      "@id": "eightfold:certificateName",
+      "@type": "xsd:string"
+    },
+    "certificateType": {
+      "@id": "eightfold:certificateType",
+      "@type": "xsd:string"
+    },
+    "validToTs": {
+      "@id": "eightfold:validToTs",
+      "@type": "xsd:integer"
+    },
+    "certificateExternalId": {
+      "@id": "eightfold:certificateExternalId",
+      "@type": "xsd:string"
+    },
+    "issuingAuthority": {
+      "@id": "eightfold:issuingAuthority",
+      "@type": "xsd:string"
+    },
+    "Jobs": "eightfold:Jobs",
+    "atsJobId": {
+      "@id": "eightfold:atsJobId",
+      "@type": "xsd:string"
+    },
+    "AtsNote": "eightfold:AtsNote",
+    "subject": {
+      "@id": "eightfold:subject",
+      "@type": "xsd:string"
+    },
+    "to": {
+      "@id": "eightfold:to",
+      "@type": "xsd:string"
+    },
+    "visibility": {
+      "@id": "eightfold:visibility",
+      "@type": "xsd:string"
+    },
+    "cc": {
+      "@id": "eightfold:cc",
+      "@container": "@list"
+    },
+    "body": {
+      "@id": "eightfold:body",
+      "@type": "xsd:string"
+    },
+    "sender": {
+      "@id": "eightfold:sender",
+      "@type": "xsd:string"
+    },
+    "AtsUser": "eightfold:AtsUser",
+    "userId": {
+      "@id": "eightfold:userId",
+      "@type": "xsd:string"
+    },
+    "atsRoles": {
+      "@id": "eightfold:atsRoles",
+      "@container": "@list"
+    },
+    "AtsStage": "eightfold:AtsStage",
+    "stage": {
+      "@id": "eightfold:stage",
+      "@type": "xsd:string"
+    },
+    "user": {
+      "@id": "eightfold:user"
+    },
+    "reason": {
+      "@id": "eightfold:reason",
+      "@type": "xsd:string"
+    },
+    "wfSubStage": {
+      "@id": "eightfold:wfSubStage",
+      "@type": "xsd:string"
+    },
+    "wfStage": {
+      "@id": "eightfold:wfStage",
+      "@type": "xsd:string"
+    },
+    "stageTs": {
+      "@id": "eightfold:stageTs",
+      "@type": "xsd:integer"
+    },
+    "ATSScoreCardAttribute": "eightfold:ATSScoreCardAttribute",
+    "rating_label": {
+      "@id": "eightfold:rating_label",
+      "@type": "xsd:string"
+    },
+    "AtsScorecard": "eightfold:AtsScorecard",
+    "overallRatingLabel": {
+      "@id": "eightfold:overallRatingLabel",
+      "@type": "xsd:string"
+    },
+    "overallRating": {
+      "@id": "eightfold:overallRating",
+      "@type": "xsd:string"
+    },
+    "submittedBy": {
+      "@id": "eightfold:submittedBy"
+    },
+    "interviewedAt": {
+      "@id": "eightfold:interviewedAt",
+      "@type": "xsd:integer"
+    },
+    "attributes": {
+      "@id": "eightfold:attributes",
+      "@container": "@list"
+    },
+    "interviewName": {
+      "@id": "eightfold:interviewName",
+      "@type": "xsd:string"
+    },
+    "AtsQuestionAnswer": "eightfold:AtsQuestionAnswer",
+    "formName": {
+      "@id": "eightfold:formName",
+      "@type": "xsd:string"
+    },
+    "explanation": {
+      "@id": "eightfold:explanation",
+      "@type": "xsd:string"
+    },
+    "formType": {
+      "@id": "eightfold:formType",
+      "@type": "xsd:string"
+    },
+    "formId": {
+      "@id": "eightfold:formId",
+      "@type": "xsd:string"
+    },
+    "AtsApplication": "eightfold:AtsApplication",
+    "visaStatuses": {
+      "@id": "eightfold:visaStatuses",
+      "@container": "@list"
+    },
+    "veteranStatusStr": {
+      "@id": "eightfold:veteranStatusStr",
+      "@type": "xsd:string"
+    },
+    "jobs": {
+      "@id": "eightfold:jobs",
+      "@container": "@list"
+    },
+    "hiredTs": {
+      "@id": "eightfold:hiredTs",
+      "@type": "xsd:integer"
+    },
+    "customInfo": {
+      "@id": "eightfold:customInfo"
+    },
+    "creditor": {
+      "@id": "eightfold:creditor",
+      "@type": "xsd:string"
+    },
+    "rejectedTs": {
+      "@id": "eightfold:rejectedTs",
+      "@type": "xsd:integer"
+    },
+    "veteranStatus": {
+      "@id": "eightfold:veteranStatus",
+      "@type": "xsd:boolean"
+    },
+    "applicationTs": {
+      "@id": "eightfold:applicationTs",
+      "@type": "xsd:integer"
+    },
+    "pastStages": {
+      "@id": "eightfold:pastStages",
+      "@container": "@list"
+    },
+    "sourceName": {
+      "@id": "eightfold:sourceName",
+      "@type": "xsd:string"
+    },
+    "isProspect": {
+      "@id": "eightfold:isProspect",
+      "@type": "xsd:boolean"
+    },
+    "scorecards": {
+      "@id": "eightfold:scorecards",
+      "@container": "@list"
+    },
+    "jobSystemId": {
+      "@id": "eightfold:jobSystemId",
+      "@type": "xsd:string"
+    },
+    "disabilityStatus": {
+      "@id": "eightfold:disabilityStatus",
+      "@type": "xsd:boolean"
+    },
+    "currentStage": {
+      "@id": "eightfold:currentStage"
+    },
+    "races": {
+      "@id": "eightfold:races",
+      "@container": "@list"
+    },
+    "sourceType": {
+      "@id": "eightfold:sourceType",
+      "@type": "xsd:string"
+    },
+    "gender": {
+      "@id": "eightfold:gender",
+      "@type": "xsd:string"
+    },
+    "rejectedBy": {
+      "@id": "eightfold:rejectedBy",
+      "@type": "xsd:string"
+    },
+    "disabilityStatusStr": {
+      "@id": "eightfold:disabilityStatusStr",
+      "@type": "xsd:string"
+    },
+    "AtsExperience": "eightfold:AtsExperience",
+    "industry": {
+      "@id": "eightfold:industry",
+      "@type": "xsd:string"
+    },
+    "department": {
+      "@id": "eightfold:department",
+      "@type": "xsd:string"
+    },
+    "AtsProject": "eightfold:AtsProject",
+    "ATSSkillGroup": "eightfold:ATSSkillGroup",
+    "skillGroup": {
+      "@id": "eightfold:skillGroup",
+      "@type": "xsd:string"
+    },
+    "ATSSkillDetail": "eightfold:ATSSkillDetail",
+    "skillGroups": {
+      "@id": "eightfold:skillGroups",
+      "@container": "@list"
+    },
+    "evaluationTimestamp": {
+      "@id": "eightfold:evaluationTimestamp",
+      "@type": "xsd:integer"
+    },
+    "dataSource": {
+      "@id": "eightfold:dataSource",
+      "@type": "xsd:string"
+    },
+    "skill": {
+      "@id": "eightfold:skill",
+      "@type": "xsd:string"
+    },
+    "SourceSchema": "eightfold:SourceSchema",
+    "datetime": {
+      "@id": "eightfold:datetime",
+      "@type": "xsd:dateTime"
+    },
+    "ExperienceSchema": "eightfold:ExperienceSchema",
+    "durationMonths": {
+      "@id": "eightfold:durationMonths",
+      "@type": "xsd:integer"
+    },
+    "userVerifiedSkills": {
+      "@id": "eightfold:userVerifiedSkills",
+      "@type": "xsd:boolean"
+    },
+    "experienceKey": {
+      "@id": "eightfold:experienceKey",
+      "@type": "xsd:string"
+    },
+    "edited": {
+      "@id": "eightfold:edited",
+      "@type": "xsd:boolean"
+    },
+    "CertificateSchema": "eightfold:CertificateSchema",
+    "country": {
+      "@id": "eightfold:country",
+      "@type": "xsd:string"
+    },
+    "validFromDate": {
+      "@id": "eightfold:validFromDate",
+      "@type": "xsd:string"
+    },
+    "validToDate": {
+      "@id": "eightfold:validToDate",
+      "@type": "xsd:string"
+    },
+    "certificateId": {
+      "@id": "eightfold:certificateId",
+      "@type": "xsd:string"
+    },
+    "state": {
+      "@id": "eightfold:state",
+      "@type": "xsd:string"
+    },
+    "endDate": {
+      "@id": "eightfold:endDate",
+      "@type": "xsd:string"
+    },
+    "externalKey": {
+      "@id": "eightfold:externalKey",
+      "@type": "xsd:string"
+    },
+    "InferredSkillsSchema": "eightfold:InferredSkillsSchema",
+    "skillType": {
+      "@id": "eightfold:skillType",
+      "@type": "xsd:string"
+    },
+    "ProfileApplicationSchema": "eightfold:ProfileApplicationSchema",
+    "lastModifiedTime": {
+      "@id": "eightfold:lastModifiedTime",
+      "@type": "xsd:integer"
+    },
+    "applicationAnswers": {
+      "@id": "eightfold:applicationAnswers",
+      "@container": "@list"
+    },
+    "refereeEmail": {
+      "@id": "eightfold:refereeEmail",
+      "@type": "xsd:string"
+    },
+    "utm_source": {
+      "@id": "eightfold:utm_source",
+      "@type": "xsd:string"
+    },
+    "applicationStatus": {
+      "@id": "eightfold:applicationStatus",
+      "@type": "xsd:string"
+    },
+    "isReferral": {
+      "@id": "eightfold:isReferral",
+      "@type": "xsd:boolean"
+    },
+    "visaStatus": {
+      "@id": "eightfold:visaStatus",
+      "@type": "xsd:string"
+    },
+    "positionTitle": {
+      "@id": "eightfold:positionTitle",
+      "@type": "xsd:string"
+    },
+    "applicationTime": {
+      "@id": "eightfold:applicationTime",
+      "@type": "xsd:integer"
+    },
+    "utm_campaign": {
+      "@id": "eightfold:utm_campaign",
+      "@type": "xsd:string"
+    },
+    "isInTalentNetwork": {
+      "@id": "eightfold:isInTalentNetwork",
+      "@type": "xsd:boolean"
+    },
+    "isCareerSite": {
+      "@id": "eightfold:isCareerSite",
+      "@type": "xsd:boolean"
+    },
+    "actionUser": {
+      "@id": "eightfold:actionUser"
+    },
+    "ProfileAttachmentSchema": "eightfold:ProfileAttachmentSchema",
+    "attachmentID": {
+      "@id": "eightfold:attachmentID",
+      "@type": "xsd:string"
+    },
+    "filename": {
+      "@id": "eightfold:filename",
+      "@type": "xsd:string"
+    },
+    "ProfileAddressSchema": "eightfold:ProfileAddressSchema",
+    "zip": {
+      "@id": "eightfold:zip",
+      "@type": "xsd:string"
+    },
+    "city": {
+      "@id": "eightfold:city",
+      "@type": "xsd:string"
+    },
+    "street": {
+      "@id": "eightfold:street",
+      "@type": "xsd:string"
+    },
+    "ProfileLastContactSchema": "eightfold:ProfileLastContactSchema",
+    "senderEmail": {
+      "@id": "eightfold:senderEmail",
+      "@type": "xsd:string"
+    },
+    "senderUserId": {
+      "@id": "eightfold:senderUserId",
+      "@type": "xsd:string"
+    },
+    "lastContactTs": {
+      "@id": "eightfold:lastContactTs",
+      "@type": "xsd:integer"
+    },
+    "CareerSiteQuestionsSchema": "eightfold:CareerSiteQuestionsSchema",
+    "positionIdList": {
+      "@id": "eightfold:positionIdList",
+      "@container": "@list"
+    },
+    "mode": {
+      "@id": "eightfold:mode",
+      "@type": "xsd:string"
+    },
+    "JTNAnswersSchema": "eightfold:JTNAnswersSchema",
+    "values": {
+      "@id": "eightfold:values",
+      "@type": "xsd:string"
+    },
+    "ATSProfileSchema": "eightfold:ATSProfileSchema",
+    "isAnonymized": {
+      "@id": "eightfold:isAnonymized",
+      "@type": "xsd:boolean"
+    },
+    "scheduledInterviews": {
+      "@id": "eightfold:scheduledInterviews",
+      "@container": "@list"
+    },
+    "firstName": {
+      "@id": "eightfold:firstName",
+      "@type": "xsd:string"
+    },
+    "emails": {
+      "@id": "eightfold:emails",
+      "@type": "xsd:string"
+    },
+    "detailTags": {
+      "@id": "eightfold:detailTags",
+      "@container": "@list"
+    },
+    "attachments": {
+      "@id": "eightfold:attachments",
+      "@container": "@list"
+    },
+    "resumeContent": {
+      "@id": "eightfold:resumeContent"
+    },
+    "education": {
+      "@id": "eightfold:education",
+      "@container": "@list"
+    },
+    "courseAttendance": {
+      "@id": "eightfold:courseAttendance",
+      "@container": "@list"
+    },
+    "urls": {
+      "@id": "eightfold:urls",
+      "@container": "@list"
+    },
+    "displayTags": {
+      "@id": "eightfold:displayTags",
+      "@container": "@list"
+    },
+    "tags": {
+      "@id": "eightfold:tags",
+      "@container": "@list"
+    },
+    "highestEducationLevel": {
+      "@id": "eightfold:highestEducationLevel",
+      "@type": "xsd:string"
+    },
+    "certifications": {
+      "@id": "eightfold:certifications",
+      "@container": "@list"
+    },
+    "lastActivityTs": {
+      "@id": "eightfold:lastActivityTs",
+      "@type": "xsd:integer"
+    },
+    "summary": {
+      "@id": "eightfold:summary",
+      "@type": "xsd:string"
+    },
+    "photoContent": {
+      "@id": "eightfold:photoContent"
+    },
+    "applications": {
+      "@id": "eightfold:applications",
+      "@container": "@list"
+    },
+    "phones": {
+      "@id": "eightfold:phones",
+      "@type": "xsd:string"
+    },
+    "experience": {
+      "@id": "eightfold:experience",
+      "@container": "@list"
+    },
+    "dateOfBirth": {
+      "@id": "eightfold:dateOfBirth",
+      "@type": "xsd:string"
+    },
+    "project": {
+      "@id": "eightfold:project",
+      "@container": "@list"
+    },
+    "skillDetails": {
+      "@id": "eightfold:skillDetails",
+      "@container": "@list"
+    },
+    "lastName": {
+      "@id": "eightfold:lastName",
+      "@type": "xsd:string"
+    },
+    "InternalGroupAffiliation": "eightfold:InternalGroupAffiliation",
+    "positionType": {
+      "@id": "eightfold:positionType",
+      "@type": "xsd:string"
+    },
+    "internalGroup": {
+      "@id": "eightfold:internalGroup",
+      "@type": "xsd:string"
+    },
+    "ProfileSkillEvaluation": "eightfold:ProfileSkillEvaluation",
+    "skillSubGroup": {
+      "@id": "eightfold:skillSubGroup",
+      "@type": "xsd:string"
+    },
+    "skillGroupDescription": {
+      "@id": "eightfold:skillGroupDescription",
+      "@type": "xsd:string"
+    },
+    "skillCategoryDescription": {
+      "@id": "eightfold:skillCategoryDescription",
+      "@type": "xsd:string"
+    },
+    "assessmentProvider": {
+      "@id": "eightfold:assessmentProvider",
+      "@type": "xsd:string"
+    },
+    "Source1": "eightfold:Source1",
+    "entityId": {
+      "@id": "eightfold:entityId",
+      "@type": "xsd:string"
+    },
+    "ProfileSkill": "eightfold:ProfileSkill",
+    "displayName": {
+      "@id": "eightfold:displayName",
+      "@type": "xsd:string"
+    },
+    "evaluations": {
+      "@id": "eightfold:evaluations",
+      "@container": "@list"
+    },
+    "ProfileSuccessionPlanNote": "eightfold:ProfileSuccessionPlanNote",
+    "managerName": {
+      "@id": "eightfold:managerName",
+      "@type": "xsd:string"
+    },
+    "managerProfileId": {
+      "@id": "eightfold:managerProfileId",
+      "@type": "xsd:string"
+    },
+    "noteId": {
+      "@id": "eightfold:noteId",
+      "@type": "xsd:string"
+    },
+    "ProfileSuccessors": "eightfold:ProfileSuccessors",
+    "successorProfileId": {
+      "@id": "eightfold:successorProfileId",
+      "@type": "xsd:string"
+    },
+    "successorReadiness": {
+      "@id": "eightfold:successorReadiness",
+      "@type": "xsd:string"
+    },
+    "ProfileSuccessionPlanMetric": "eightfold:ProfileSuccessionPlanMetric",
+    "readiness": {
+      "@id": "eightfold:readiness"
+    },
+    "ProfileSuccessionPlan": "eightfold:ProfileSuccessionPlan",
+    "successionPlanRole": {
+      "@id": "eightfold:successionPlanRole",
+      "@type": "xsd:string"
+    },
+    "successionPlanNotes": {
+      "@id": "eightfold:successionPlanNotes",
+      "@container": "@list"
+    },
+    "successors": {
+      "@id": "eightfold:successors",
+      "@container": "@list"
+    },
+    "leaderWithoutPathForward": {
+      "@id": "eightfold:leaderWithoutPathForward",
+      "@type": "xsd:string"
+    },
+    "successionPlanId": {
+      "@id": "eightfold:successionPlanId",
+      "@type": "xsd:string"
+    },
+    "successionPlanMetrics": {
+      "@id": "eightfold:successionPlanMetrics"
+    },
+    "ProfileRelocation": "eightfold:ProfileRelocation",
+    "travelPercentageMin": {
+      "@id": "eightfold:travelPercentageMin",
+      "@type": "xsd:decimal"
+    },
+    "relocationLocations": {
+      "@id": "eightfold:relocationLocations",
+      "@container": "@list"
+    },
+    "travel": {
+      "@id": "eightfold:travel",
+      "@type": "xsd:string"
+    },
+    "travelPercentageMax": {
+      "@id": "eightfold:travelPercentageMax",
+      "@type": "xsd:decimal"
+    },
+    "ProfilePromotionReadiness": "eightfold:ProfilePromotionReadiness",
+    "ProfileReviewer": "eightfold:ProfileReviewer",
+    "ProfilePerformanceRating": "eightfold:ProfilePerformanceRating",
+    "reviewedBy": {
+      "@id": "eightfold:reviewedBy"
+    },
+    "performancePeriodEndDate": {
+      "@id": "eightfold:performancePeriodEndDate",
+      "@type": "xsd:string"
+    },
+    "ratingLabel": {
+      "@id": "eightfold:ratingLabel",
+      "@type": "xsd:string"
+    },
+    "reviewComments": {
+      "@id": "eightfold:reviewComments",
+      "@container": "@list"
+    },
+    "reviewType": {
+      "@id": "eightfold:reviewType",
+      "@type": "xsd:string"
+    },
+    "performancePeriodStartDate": {
+      "@id": "eightfold:performancePeriodStartDate",
+      "@type": "xsd:string"
+    },
+    "ProfilePerformanceManagement": "eightfold:ProfilePerformanceManagement",
+    "promotionReadiness": {
+      "@id": "eightfold:promotionReadiness"
+    },
+    "performanceRatings": {
+      "@id": "eightfold:performanceRatings",
+      "@container": "@list"
+    },
+    "EmployeeInfo": "eightfold:EmployeeInfo",
+    "successionPlan": {
+      "@id": "eightfold:successionPlan"
+    },
+    "employeeId": {
+      "@id": "eightfold:employeeId",
+      "@type": "xsd:string"
+    },
+    "relocationPreferences": {
+      "@id": "eightfold:relocationPreferences"
+    },
+    "performanceManagement": {
+      "@id": "eightfold:performanceManagement"
+    },
+    "ProfileStagedSections": "eightfold:ProfileStagedSections",
+    "certificates": {
+      "@id": "eightfold:certificates"
+    },
+    "publications": {
+      "@id": "eightfold:publications"
+    },
+    "languageProficiencies": {
+      "@id": "eightfold:languageProficiencies"
+    },
+    "endorsements": {
+      "@id": "eightfold:endorsements"
+    },
+    "experiences": {
+      "@id": "eightfold:experiences"
+    },
+    "courses": {
+      "@id": "eightfold:courses"
+    },
+    "patents": {
+      "@id": "eightfold:patents"
+    },
+    "projects": {
+      "@id": "eightfold:projects"
+    },
+    "ProfileSkillGoal": "eightfold:ProfileSkillGoal",
+    "goalType": {
+      "@id": "eightfold:goalType",
+      "@type": "xsd:string"
+    },
+    "ExternalProfileSchema": "eightfold:ExternalProfileSchema",
+    "preferences": {
+      "@id": "eightfold:preferences"
+    },
+    "jtnSubmissions": {
+      "@id": "eightfold:jtnSubmissions"
+    },
+    "internalGroupAffiliation": {
+      "@id": "eightfold:internalGroupAffiliation",
+      "@container": "@list"
+    },
+    "seniorityLevel": {
+      "@id": "eightfold:seniorityLevel",
+      "@type": "xsd:string"
+    },
+    "careerSiteQuestions": {
+      "@id": "eightfold:careerSiteQuestions",
+      "@container": "@list"
+    },
+    "lastContact": {
+      "@id": "eightfold:lastContact"
+    },
+    "employeeInfo": {
+      "@id": "eightfold:employeeInfo"
+    },
+    "roleId": {
+      "@id": "eightfold:roleId",
+      "@type": "xsd:string"
+    },
+    "workExperienceYears": {
+      "@id": "eightfold:workExperienceYears",
+      "@type": "xsd:decimal"
+    },
+    "resumeFileName": {
+      "@id": "eightfold:resumeFileName",
+      "@type": "xsd:string"
+    },
+    "efRace": {
+      "@id": "eightfold:efRace",
+      "@type": "xsd:string"
+    },
+    "resume": {
+      "@id": "eightfold:resume",
+      "@type": "xsd:string"
+    },
+    "profileStagedSections": {
+      "@id": "eightfold:profileStagedSections"
+    },
+    "skillGoals": {
+      "@id": "eightfold:skillGoals",
+      "@container": "@list"
+    },
+    "isConfidential": {
+      "@id": "eightfold:isConfidential",
+      "@type": "xsd:boolean"
+    },
+    "isCurrentEmployee": {
+      "@id": "eightfold:isCurrentEmployee",
+      "@type": "xsd:boolean"
+    },
+    "demandExperiences": {
+      "@id": "eightfold:demandExperiences",
+      "@container": "@list"
+    },
+    "phone": {
+      "@id": "eightfold:phone",
+      "@type": "xsd:string"
+    },
+    "deletedAt": {
+      "@id": "eightfold:deletedAt",
+      "@type": "xsd:integer"
+    },
+    "race": {
+      "@id": "eightfold:race",
+      "@type": "xsd:string"
+    },
+    "jtnAnswers": {
+      "@id": "eightfold:jtnAnswers",
+      "@container": "@list"
+    },
+    "additionalSections": {
+      "@id": "eightfold:additionalSections"
+    },
+    "sources": {
+      "@id": "eightfold:sources",
+      "@container": "@list"
+    },
+    "currentCompany": {
+      "@id": "eightfold:currentCompany",
+      "@type": "xsd:string"
+    },
+    "socialMediaLinks": {
+      "@id": "eightfold:socialMediaLinks",
+      "@container": "@list"
+    },
+    "efCustomInfo": {
+      "@id": "eightfold:efCustomInfo"
+    },
+    "dupeData": {
+      "@id": "eightfold:dupeData"
+    },
+    "highlights": {
+      "@id": "eightfold:highlights",
+      "@container": "@list"
+    },
+    "industries": {
+      "@id": "eightfold:industries",
+      "@container": "@list"
+    },
+    "efGender": {
+      "@id": "eightfold:efGender",
+      "@type": "xsd:string"
+    },
+    "inferredSkills": {
+      "@id": "eightfold:inferredSkills",
+      "@container": "@list"
+    },
+    "attachmentsInfo": {
+      "@id": "eightfold:attachmentsInfo",
+      "@container": "@list"
+    },
+    "ProfileAsyncSchema": "eightfold:ProfileAsyncSchema",
+    "transactionId": {
+      "@id": "eightfold:transactionId",
+      "@type": "xsd:string"
+    },
+    "ApplicationCreationSource": "eightfold:ApplicationCreationSource",
+    "CreateOrAdvanceApplicationStageSchema": "eightfold:CreateOrAdvanceApplicationStageSchema",
+    "isReject": {
+      "@id": "eightfold:isReject",
+      "@type": "xsd:boolean"
+    },
+    "newStage": {
+      "@id": "eightfold:newStage",
+      "@type": "xsd:string"
+    },
+    "actionUserEmail": {
+      "@id": "eightfold:actionUserEmail",
+      "@type": "xsd:string"
+    },
+    "scheduledRejectionTime": {
+      "@id": "eightfold:scheduledRejectionTime",
+      "@type": "xsd:integer"
+    },
+    "prevSubStage": {
+      "@id": "eightfold:prevSubStage",
+      "@type": "xsd:string"
+    },
+    "newSubStage": {
+      "@id": "eightfold:newSubStage",
+      "@type": "xsd:string"
+    },
+    "prevStage": {
+      "@id": "eightfold:prevStage",
+      "@type": "xsd:string"
+    },
+    "applicationCreationSource": {
+      "@id": "eightfold:applicationCreationSource"
+    },
+    "SuccessMessageSchema": "eightfold:SuccessMessageSchema",
+    "BatchFetchMetaSchema": "eightfold:BatchFetchMetaSchema",
+    "missingEntityIds": {
+      "@id": "eightfold:missingEntityIds",
+      "@container": "@list"
+    },
+    "BatchFetchEntityRequestSchema": "eightfold:BatchFetchEntityRequestSchema",
+    "entityIds": {
+      "@id": "eightfold:entityIds",
+      "@container": "@list"
+    },
+    "CancelScheduledRejectionSchema": "eightfold:CancelScheduledRejectionSchema",
+    "ProfileUnsubscribeSchema": "eightfold:ProfileUnsubscribeSchema",
+    "channels": {
+      "@id": "eightfold:channels",
+      "@container": "@list"
+    },
+    "ProfileUnsubscribeChannelResult": "eightfold:ProfileUnsubscribeChannelResult",
+    "contactsUnsubscribed": {
+      "@id": "eightfold:contactsUnsubscribed",
+      "@type": "xsd:integer"
+    },
+    "channel": {
+      "@id": "eightfold:channel",
+      "@type": "xsd:string"
+    },
+    "contactsFailed": {
+      "@id": "eightfold:contactsFailed",
+      "@type": "xsd:integer"
+    },
+    "ProfileUnsubscribeResultSchema": "eightfold:ProfileUnsubscribeResultSchema",
+    "phonesUnsubscribed": {
+      "@id": "eightfold:phonesUnsubscribed",
+      "@type": "xsd:integer"
+    },
+    "channelResults": {
+      "@id": "eightfold:channelResults",
+      "@container": "@list"
+    },
+    "emailsUnsubscribed": {
+      "@id": "eightfold:emailsUnsubscribed",
+      "@type": "xsd:integer"
+    },
+    "PositionSchema": "eightfold:PositionSchema",
+    "MatchingProfilesSchema": "eightfold:MatchingProfilesSchema",
+    "matchScore": {
+      "@id": "eightfold:matchScore",
+      "@type": "xsd:decimal"
+    },
+    "candidateInsights": {
+      "@id": "eightfold:candidateInsights",
+      "@container": "@list"
+    },
+    "ApplyFormAwliOptions": "eightfold:ApplyFormAwliOptions",
+    "clientId": {
+      "@id": "eightfold:clientId",
+      "@type": "xsd:string"
+    },
+    "ApplyFormAutoGeneratedResume": "eightfold:ApplyFormAutoGeneratedResume",
+    "enabled": {
+      "@id": "eightfold:enabled",
+      "@type": "xsd:boolean"
+    },
+    "ApplyFormQuestionOptions": "eightfold:ApplyFormQuestionOptions",
+    "previewUrl": {
+      "@id": "eightfold:previewUrl",
+      "@type": "xsd:string"
+    },
+    "today": {
+      "@id": "eightfold:today",
+      "@type": "xsd:boolean"
+    },
+    "acceptedFileTypes": {
+      "@id": "eightfold:acceptedFileTypes",
+      "@container": "@list"
+    },
+    "inputType": {
+      "@id": "eightfold:inputType",
+      "@type": "xsd:string"
+    },
+    "fileFormats": {
+      "@id": "eightfold:fileFormats",
+      "@type": "xsd:string"
+    },
+    "hasPredefinedSelector": {
+      "@id": "eightfold:hasPredefinedSelector",
+      "@type": "xsd:boolean"
+    },
+    "fileTypesText": {
+      "@id": "eightfold:fileTypesText",
+      "@type": "xsd:string"
+    },
+    "subType": {
+      "@id": "eightfold:subType",
+      "@type": "xsd:string"
+    },
+    "autocomplete": {
+      "@id": "eightfold:autocomplete",
+      "@type": "xsd:string"
+    },
+    "multiple": {
+      "@id": "eightfold:multiple",
+      "@type": "xsd:boolean"
+    },
+    "maxFiles": {
+      "@id": "eightfold:maxFiles",
+      "@type": "xsd:integer"
+    },
+    "awliOptions": {
+      "@id": "eightfold:awliOptions"
+    },
+    "autoGeneratedResume": {
+      "@id": "eightfold:autoGeneratedResume"
+    },
+    "choicesSortOrder": {
+      "@id": "eightfold:choicesSortOrder",
+      "@type": "xsd:string"
+    },
+    "requiredFields": {
+      "@id": "eightfold:requiredFields",
+      "@container": "@list"
+    },
+    "fallbackFormat": {
+      "@id": "eightfold:fallbackFormat",
+      "@type": "xsd:string"
+    },
+    "maxFileSizeMB": {
+      "@id": "eightfold:maxFileSizeMB",
+      "@type": "xsd:decimal"
+    },
+    "ApplyFormParentDependency": "eightfold:ApplyFormParentDependency",
+    "operator": {
+      "@id": "eightfold:operator",
+      "@type": "xsd:string"
+    },
+    "ApplyFormQuestion": "eightfold:ApplyFormQuestion",
+    "options": {
+      "@id": "eightfold:options"
+    },
+    "countries": {
+      "@id": "eightfold:countries",
+      "@container": "@list"
+    },
+    "parentDependencies": {
+      "@id": "eightfold:parentDependencies",
+      "@container": "@list"
+    },
+    "isContactInfoQuestion": {
+      "@id": "eightfold:isContactInfoQuestion",
+      "@type": "xsd:boolean"
+    },
+    "configType": {
+      "@id": "eightfold:configType",
+      "@type": "xsd:string"
+    },
+    "hasDependents": {
+      "@id": "eightfold:hasDependents",
+      "@type": "xsd:boolean"
+    },
+    "readonly": {
+      "@id": "eightfold:readonly",
+      "@type": "xsd:boolean"
+    },
+    "requiredErrorMessage": {
+      "@id": "eightfold:requiredErrorMessage",
+      "@type": "xsd:string"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Eightfold AI API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Eightfold AI's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-14) from openapi/eightfold-ai-api-server-v2-service-service-openapi.yml.",
+  "dcterms:created": "2026-10-14",
+  "dcterms:source": [
+    "openapi/eightfold-ai-api-server-v2-service-service-openapi.yml"
+  ]
+}

@@ -1,0 +1,541 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/eightfold-ai/main/json-schema/eightfold-ai-create-or-update-offer-schema-schema.json",
+  "title": "CreateOrUpdateOfferSchema",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/CreateOrUpdateOfferSchema",
+  "type": "object",
+  "properties": {
+    "createdAt": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "int32",
+      "readOnly": true,
+      "description": "Timestamp of when the offer was created"
+    },
+    "stockVestingFrequency": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Stock vesting frequency"
+    },
+    "versions": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "readOnly": true,
+      "description": "All versions of the offer",
+      "items": {
+        "type": "string"
+      }
+    },
+    "payGradeExternalId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "readOnly": true,
+      "description": "External ID of the pay grade"
+    },
+    "stockOptionsType": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Type of stock options"
+    },
+    "offerStatus": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "status of the offer"
+    },
+    "profileId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "readOnly": true,
+      "description": "unique identifier for profile"
+    },
+    "candidateAddress": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Candidate address"
+    },
+    "currency": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Currency for compensation"
+    },
+    "version": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "readOnly": true,
+      "description": "Version of the offer"
+    },
+    "groupId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "readOnly": true,
+      "description": "group id"
+    },
+    "jobTitle": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Job title"
+    },
+    "relocationBonus": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "format": "float",
+      "description": "Relocation bonus amount"
+    },
+    "workplaceType": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "remote_global",
+        "remote_local",
+        "hybrid",
+        "onsite"
+      ],
+      "description": "Workplace type. Possible values: ['remote_global', 'remote_local', 'hybrid', 'onsite']"
+    },
+    "displayOfferId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "readOnly": true,
+      "description": "Offer display id"
+    },
+    "payGradeId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "int32",
+      "description": "Pay grade of the offer"
+    },
+    "variableBonus": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "format": "float",
+      "description": "Variable bonus amount"
+    },
+    "note": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Additional notes"
+    },
+    "customInfo": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Custom info"
+    },
+    "jobLocation": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Job location"
+    },
+    "bonusPayFrequency": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Bonus pay frequency"
+    },
+    "offerId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "int32",
+      "readOnly": true,
+      "description": "Offer id"
+    },
+    "templateId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "int32",
+      "description": "Template id of the template used to create the offer"
+    },
+    "countryCode": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Country code"
+    },
+    "offerLetter": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "readOnly": true,
+      "description": "Offer letter details"
+    },
+    "visaType": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Visa type"
+    },
+    "candidateEmail": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Candidate email address"
+    },
+    "isPeopleManagerRole": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Whether this is a people manager role"
+    },
+    "watchers": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "Watchers (email list)",
+      "items": {
+        "type": "string"
+      }
+    },
+    "joiningTs": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "int32",
+      "description": "Joining timestamp in seconds since epoch"
+    },
+    "isRehire": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Whether this is a rehire"
+    },
+    "stockOptionsDescription": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Stock options description"
+    },
+    "stockOptionsTotalVestingYears": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "int32",
+      "description": "Total years for stock options vesting"
+    },
+    "stockVestingStartTs": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "int32",
+      "description": "Stock vesting start timestamp in seconds since epoch"
+    },
+    "updatedAt": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "int32",
+      "readOnly": true,
+      "description": "Timestamp of when the offer was last updated"
+    },
+    "salaryAmount": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "format": "float",
+      "description": "Base salary amount"
+    },
+    "shiftAllowance": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "format": "float",
+      "description": "Shift allowance amount"
+    },
+    "stockOptionsAmount": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "format": "float",
+      "description": "Stock options amount"
+    },
+    "totalCompensation": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "format": "float",
+      "description": "Total compensation amount"
+    },
+    "createdBy": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "readOnly": true,
+      "description": "User email who created the offer"
+    },
+    "basePayFrequency": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Base pay frequency"
+    },
+    "candidateFullName": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Candidate full name"
+    },
+    "atsData": {
+      "nullable": true,
+      "description": "ATS-system metadata",
+      "allOf": [
+        {
+          "$ref": "#/$defs/OfferAtsData"
+        }
+      ]
+    },
+    "joiningBonus": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "format": "float",
+      "description": "Joining bonus amount"
+    },
+    "stockOptionsPercentageVesting": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "Stock options vesting percentages per period (list of ints)",
+      "items": {
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "positionId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "int32",
+      "readOnly": true,
+      "description": "job id"
+    },
+    "applicationId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "int32",
+      "readOnly": true,
+      "description": "application id"
+    }
+  },
+  "$defs": {
+    "OfferAtsData": {
+      "type": "object",
+      "properties": {
+        "atsOfferData": {
+          "nullable": true,
+          "description": "ATS offer payload (application status, document collections)",
+          "allOf": [
+            {
+              "$ref": "#/$defs/OfferAtsOfferData"
+            }
+          ]
+        },
+        "atsApplicationId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "ATS application id"
+        },
+        "atsCandidateId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "ATS candidate id"
+        }
+      }
+    },
+    "OfferAtsDocument": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int32",
+          "description": "Creation timestamp"
+        },
+        "statusQueryUrl": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "URL to query document status"
+        },
+        "documentName": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Document name"
+        },
+        "underRevision": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Whether the document is under revision"
+        },
+        "signingUrl": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Signing URL for the document"
+        },
+        "documentType": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Document type"
+        },
+        "updatedAt": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int32",
+          "description": "Last updated timestamp"
+        },
+        "documentStatus": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Document status"
+        }
+      }
+    },
+    "OfferAtsDocumentCollection": {
+      "type": "object",
+      "properties": {
+        "collectionType": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Type of the document collection"
+        },
+        "signatureProvider": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Signature provider for the collection"
+        },
+        "documents": {
+          "description": "Documents in the collection",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/OfferAtsDocument"
+          }
+        },
+        "updatedAt": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int32",
+          "description": "Last updated timestamp"
+        }
+      }
+    },
+    "OfferAtsOfferData": {
+      "type": "object",
+      "properties": {
+        "applicationStatus": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "ATS application status"
+        },
+        "documentCollections": {
+          "description": "ATS document collections (e.g. signing-URL groupings)",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/OfferAtsDocumentCollection"
+          }
+        }
+      }
+    }
+  }
+}

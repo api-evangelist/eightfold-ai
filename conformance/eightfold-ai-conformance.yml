@@ -7,9 +7,7 @@ standards:
   evidence: OAuth 2.0 password grant with bearer tokens (oauth-configuration docs).
 - id: scim-2.0
   conforms: true
-  evidence: >-
-    SCIM API follows SCIM 2.0 per RFC 7643 and RFC 7644; User supports full CRUD, Role
-    supports GET. https://apidocs.eightfold.ai/docs/scim-api-documentation
+  evidence: SCIM API follows SCIM 2.0 per RFC 7643 and RFC 7644; User supports full CRUD, Role supports GET. https://apidocs.eightfold.ai/docs/scim-api-documentation
 - id: rfc7643-scim-core-schema
   conforms: true
   evidence: SCIM implementation cites RFC 7643 (core schema).
@@ -43,3 +41,15 @@ standards:
 - id: fedramp-moderate
   conforms: true
   evidence: 'Trust Center: FedRAMP Moderate.'
+- id: openapi-3.0
+  conforms: true
+  evidence: the document declares 3.0.2
+- id: rfc9457
+  conforms: false
+  evidence: no response declares application/problem+json
+- id: idempotency
+  conforms: false
+  evidence: no idempotency key parameter on mutating operations
+- id: pagination
+  conforms: true
+  evidence: list operations take limit

@@ -1,0 +1,963 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/eightfold-ai/main/json-schema/eightfold-ai-atsposition-data-schema-schema.json",
+  "title": "ATSPositionDataSchema",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/eightfold-ai-api-server-v2-service-service-openapi.yml#/components/schemas/ATSPositionDataSchema",
+  "type": "object",
+  "properties": {
+    "createdAt": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "int32",
+      "description": "creation timestamp in epoch format"
+    },
+    "locationCountry": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Country of the location"
+    },
+    "coordinators": {
+      "description": "all the coordinators related to this position",
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/$defs/PersonSchema"
+      }
+    },
+    "businessUnit": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "business unit"
+    },
+    "isPrivate": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Indicates if a position is a private posting"
+    },
+    "workLocationOption": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Indicates the option for working location e.g. onsite, remote_global, remote_local, hybrid"
+    },
+    "atsEntityId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "position_id in the ats system"
+    },
+    "hiringManager": {
+      "nullable": true,
+      "description": "Hiring Manager",
+      "allOf": [
+        {
+          "$ref": "#/$defs/PersonSchema"
+        }
+      ]
+    },
+    "internalPostingUrl": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "internal posting url"
+    },
+    "evergreen": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "is evergreen"
+    },
+    "skills": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "skills",
+      "items": {
+        "type": "string"
+      }
+    },
+    "company": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "company"
+    },
+    "locationCity": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "City of the location"
+    },
+    "lastUpdated": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "int32",
+      "description": "last modified date time in epoch format"
+    },
+    "displayJobId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "display job id"
+    },
+    "openings": {
+      "nullable": true,
+      "description": "Openings",
+      "allOf": [
+        {
+          "$ref": "#/$defs/AtsOpenings"
+        }
+      ]
+    },
+    "hiringTeam": {
+      "readOnly": true,
+      "description": "Unified hiring team array. Each entry: {role, roleKey, name, email}. Includes primary/secondary HMs, primary/secondary recruiters, and custom roles.",
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/$defs/HiringTeamMemberSchema"
+      }
+    },
+    "followers": {
+      "description": "all the followers of the positions as hiring managers etc.",
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/$defs/PersonSchema"
+      }
+    },
+    "startDate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "start date of the position in ISO 8601 format (e.g. 2024-05-01)"
+    },
+    "requisitionType": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Requisition Type"
+    },
+    "systemId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "system id"
+    },
+    "activities": {
+      "description": "all the activities related to this positions",
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/$defs/PositionActivitiesSchema"
+      }
+    },
+    "postedFor": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "internal for internal jobs, external for external jobs, or all for both. Can be omitted for unposted positions.Input values must be one of these: internal, external, all, None"
+    },
+    "questionnaires": {
+      "description": "questionnaires",
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/$defs/QuestionnaireSchema"
+      }
+    },
+    "restrictAccess": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "restrict access"
+    },
+    "title": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "job title"
+    },
+    "templateId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "int32",
+      "description": "Template id of the template used to create the position"
+    },
+    "recruiter": {
+      "nullable": true,
+      "description": "recruiter",
+      "allOf": [
+        {
+          "$ref": "#/$defs/PersonSchema"
+        }
+      ]
+    },
+    "jobPosts": {
+      "description": "job postings",
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/$defs/JobPostSchema"
+      }
+    },
+    "hiringBand": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "hiring band"
+    },
+    "postingTitle": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "posting title"
+    },
+    "employmentType": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Employment Type"
+    },
+    "posted": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "status of the position posted or not"
+    },
+    "locationFlexibility": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Indicates the flexibility on location e.g. not_flexible, flexible_within_country, flexible_global"
+    },
+    "orgUnits": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Org units of the position"
+    },
+    "companyDescription": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Company description"
+    },
+    "customFields": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "custom fields"
+    },
+    "sourcers": {
+      "description": "all the recruiters/sourcers related to this positions",
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/$defs/PersonSchema"
+      }
+    },
+    "workflowTemplateId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Indicates which workflow this position belongs to"
+    },
+    "status": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "status"
+    },
+    "jobCode": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "ATS attribute which identifies the job this jobrequestion is mapped to"
+    },
+    "open": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Whether the requisition is open for hiring per the source ATS - derived from its status or open headcount at ingestion, and updated on close/fill/reopen. Distinct from the top-level open field, which only reports that the record is not archived or deleted."
+    },
+    "postingUrl": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "posting url"
+    },
+    "atsUserGroups": {
+      "description": "ATS user groups",
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/$defs/AtsUserGroupsSchema"
+      }
+    },
+    "createdBy": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Email of the user who created this position"
+    },
+    "function": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "job function"
+    },
+    "jobStages": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "job_stages",
+      "items": {
+        "type": "string"
+      }
+    },
+    "requiredSkills": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "required skills",
+      "items": {
+        "type": "string"
+      }
+    },
+    "questions": {
+      "description": "questions",
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/$defs/QuestionsSchema"
+      }
+    },
+    "locationState": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "State of the location"
+    },
+    "locations": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "location",
+      "items": {
+        "type": "string"
+      }
+    },
+    "positionId": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "int32",
+      "readOnly": true,
+      "description": "EF Position ID"
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "job description"
+    }
+  },
+  "required": [
+    "atsEntityId",
+    "company",
+    "createdAt",
+    "lastUpdated",
+    "open",
+    "posted",
+    "recruiter",
+    "status",
+    "title"
+  ],
+  "$defs": {
+    "AtsOpeningDetail": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Status of the opening"
+        },
+        "closedAt": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int32",
+          "description": "Closing timestamp in epoch format"
+        },
+        "openingId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Opening ID"
+        },
+        "openedAt": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int32",
+          "description": "Opening timestamp in epoch format"
+        },
+        "closeReason": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Reason for closing the opening"
+        },
+        "candidateId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "List of candidate ID"
+        },
+        "applicationId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "List of application ID"
+        }
+      }
+    },
+    "AtsOpenings": {
+      "type": "object",
+      "properties": {
+        "closedAt": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int32",
+          "description": "Closing timestamp in epoch format"
+        },
+        "openingDetails": {
+          "description": "Details of the openings",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/AtsOpeningDetail"
+          }
+        },
+        "numOpenings": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int32",
+          "description": "Number of openings. Set to -1 for unlimited openings"
+        },
+        "openedAt": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int32",
+          "description": "Opening timestamp in epoch format"
+        },
+        "numOpeningsFilled": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int32",
+          "description": "Number of openings filled"
+        }
+      }
+    },
+    "AtsUserGroupsSchema": {
+      "type": "object",
+      "properties": {
+        "userGroupId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Ats Group of a user"
+        }
+      }
+    },
+    "ChangeLog": {
+      "type": "object",
+      "properties": {
+        "newValue": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "new value"
+        },
+        "fieldName": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "field name"
+        },
+        "prevValue": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "previous value"
+        }
+      },
+      "required": [
+        "fieldName",
+        "newValue",
+        "prevValue"
+      ]
+    },
+    "HiringTeamMemberSchema": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Role label (e.g. Hiring Manager, HRBP)"
+        },
+        "email": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Email of the team member"
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Name of the team member"
+        },
+        "roleKey": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Storage key for the role (e.g. hiring_manager, secondary_hiring_managers, cust_hrbp)"
+        }
+      }
+    },
+    "JobPostSchema": {
+      "type": "object",
+      "properties": {
+        "publishedTime": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int32",
+          "description": "published time in epoch format"
+        },
+        "expirationTime": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int32",
+          "description": "expiration time in epoch format"
+        },
+        "postingTitle": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "posting title"
+        },
+        "postingId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "posting id"
+        },
+        "locale": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "locale of the ats job post"
+        },
+        "primaryPost": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "is primary post"
+        },
+        "jobDescription": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "job description"
+        },
+        "postedFor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "internal for internal jobs, external for external jobs, or all for both."
+        }
+      },
+      "required": [
+        "postedFor",
+        "postingId",
+        "postingTitle",
+        "publishedTime"
+      ]
+    },
+    "LangMapping": {
+      "type": "object",
+      "properties": {
+        "locale": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "locale"
+        },
+        "label": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "label"
+        }
+      }
+    },
+    "PersonSchema": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "email"
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Name"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "PositionActivitiesSchema": {
+      "type": "object",
+      "properties": {
+        "activityTime": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "int32",
+          "description": "activity time in epoch format"
+        },
+        "activityType": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "activity type"
+        },
+        "changeLogs": {
+          "description": "all the change logs for the activity",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/ChangeLog"
+          }
+        },
+        "message": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "message for the activity"
+        }
+      },
+      "required": [
+        "activityTime",
+        "activityType",
+        "message"
+      ]
+    },
+    "QuestionChoice": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "label"
+        },
+        "value": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "value"
+        }
+      }
+    },
+    "QuestionDependencies": {
+      "type": "object",
+      "properties": {
+        "questionId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "question id"
+        },
+        "questionSource": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "question source"
+        },
+        "choiceValue": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "choice value"
+        },
+        "dependencyType": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "dependency type"
+        },
+        "childQuestionIds": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "child question ids",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "choiceValue",
+        "questionId"
+      ]
+    },
+    "QuestionLabel": {
+      "type": "object",
+      "properties": {
+        "langMappingList": {
+          "description": "lang_mapping_list",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/LangMapping"
+          }
+        },
+        "label": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "label"
+        },
+        "value": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "value"
+        }
+      }
+    },
+    "QuestionnaireSchema": {
+      "type": "object",
+      "properties": {
+        "questionDependencies": {
+          "description": "question dependencies",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/QuestionDependencies"
+          }
+        },
+        "questionnaireId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "questionnaire id"
+        }
+      },
+      "required": [
+        "questionnaireId"
+      ]
+    },
+    "QuestionsSchema": {
+      "type": "object",
+      "properties": {
+        "choices": {
+          "description": "Question choices",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/QuestionChoice"
+          }
+        },
+        "choicesV2": {
+          "description": "Question choices V2. It supports language mapping.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/QuestionLabel"
+          }
+        },
+        "questionId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "question_id"
+        },
+        "help": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "help"
+        },
+        "type": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "type of the question. e.g.-choice, numeric or text"
+        },
+        "question": {
+          "nullable": true,
+          "description": "question. It supports language mapping.",
+          "allOf": [
+            {
+              "$ref": "#/$defs/QuestionLabel"
+            }
+          ]
+        },
+        "required": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "required"
+        }
+      },
+      "required": [
+        "questionId"
+      ]
+    }
+  }
+}
