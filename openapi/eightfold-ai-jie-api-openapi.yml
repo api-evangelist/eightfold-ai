@@ -1,0 +1,840 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service JIE API
+  version: 1.0.0
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: JIE
+paths:
+  /api/v2/JIE/insights:
+    get:
+      description: This endpoint returns succession plan information for group id of a current user.
+      operationId: list_JIE_insights
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/JIEInsightsSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: Get Succession Plan
+      tags:
+      - JIE
+  /api/v2/JIE/roles:
+    post:
+      description: Create a role in Eightfold
+      operationId: create_JIE_roles
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExternalJIERoleSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalJIERoleSchema'
+          description: OK
+      summary: Create JIE Role
+      tags:
+      - JIE
+    get:
+      description: This endpoint returns a list of roles. If a new role is created, it takes some time to show up in the list call, you can fetch that role using get endpoints right after the creation of role
+      operationId: list_JIE_roles
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Filter query using predefined filter arguments documented [here](https://apidocs.eightfold.ai/v2.0/docs#the-filterquery-parameter)
+        in: query
+        name: filterQuery
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/ExternalJIERoleSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List JIE Roles
+      tags:
+      - JIE
+  /api/v2/JIE/roles/{roleId}:
+    get:
+      description: Given an Id of a role, it returns the JIE role for the same
+      operationId: get_JIE_roles_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ID of a role
+        in: path
+        name: roleId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalJIERoleSchema'
+          description: OK
+      summary: Get JIE Role
+      tags:
+      - JIE
+    put:
+      description: Update a role in Eightfold
+      operationId: update_JIE_roles
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ID of a role
+        in: path
+        name: roleId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExternalJIERoleSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalJIERoleSchema'
+          description: OK
+      summary: Update JIE Role
+      tags:
+      - JIE
+    delete:
+      description: Deletes a specific role given a role id
+      operationId: delete_JIE_roles
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: ID of a role
+        in: path
+        name: roleId
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalJIERoleSchema'
+          description: OK
+      summary: Delete JIE Role
+      tags:
+      - JIE
+components:
+  schemas:
+    Preference:
+      type: object
+      properties:
+        preferenceType:
+          type:
+          - string
+          - 'null'
+          description: preference Type for value, can only be one of ['Preferred', 'Required', 'Excluded']
+        value:
+          type:
+          - string
+          - 'null'
+          description: Value/Name of the attribute
+    RmUserGroup:
+      type: object
+      properties:
+        userGroupId:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier for the user group
+    ExternalJIERoleSchema:
+      type: object
+      properties:
+        externalId:
+          type:
+          - string
+          - 'null'
+          description: external role id for a role
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: id of the role
+        skillProficiencies:
+          description: skill proficiencies of the role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SkillProficiency'
+        experience:
+          description: preferred experience for the role
+          allOf:
+          - $ref: '#/components/schemas/PreferredExperience'
+        idealCandidateUrls:
+          type:
+          - array
+          - 'null'
+          description: LinkedIN URL's of preferred/ideal candidates for the role
+          items:
+            type: string
+        education:
+          description: preferred education for the role
+          allOf:
+          - $ref: '#/components/schemas/PreferredEducation'
+        calibrationNotes:
+          type:
+          - string
+          - 'null'
+          description: calibration Notes for a role
+        roleDescription:
+          type:
+          - string
+          - 'null'
+          description: description of the role
+        rmUserGroups:
+          readOnly: true
+          description: RM user groups associated with the role.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RmUserGroup'
+        idealCandidates:
+          type:
+          - array
+          - 'null'
+          description: EF profile ids of preferred/ideal candidates for the role
+          items:
+            type: string
+        associatedTags:
+          description: associated tags with the role, these tags are specific to a role and are generally filled in with a unique tag value. Only pre-configured tags in role_library_config:integration_config:configuration_tags are allowed
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RoleTagSchema'
+        approvalStatus:
+          type:
+          - string
+          - 'null'
+          description: approval status of role, can be one of ['approved', 'unapproved']
+        locations:
+          type:
+          - array
+          - 'null'
+          description: preferred locations for the role
+          items:
+            type: string
+        archivalStatus:
+          type:
+          - boolean
+          - 'null'
+          description: is archival of role
+        title:
+          type: string
+          description: title of the role
+        displayTags:
+          description: display tags of the role. They may or may not be unique to a role. Only pre-configured tags in role_library_config:integration_config:display_tags are allowed
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RoleTagSchema'
+      required:
+      - title
+    RoleTagSchema:
+      type: object
+      properties:
+        tagValues:
+          type:
+          - array
+          - 'null'
+          description: value of the tag
+          items:
+            type: string
+        tagName:
+          type:
+          - string
+          - 'null'
+          description: name of the tag
+    SkillProficiency:
+      type: object
+      properties:
+        proficiency:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: proficiency of the role
+        skillGroupList:
+          description: skill group list of a role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SkillGroupList'
+        level:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: level of the role
+        name:
+          type:
+          - string
+          - 'null'
+          description: name of the role
+    GraduationYear:
+      type: object
+      properties:
+        graduationEndYear:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: end year of graduation
+        graduationStartYear:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Start year of graduation
+    SuccessionPlanMetricsSchema:
+      type: object
+      properties:
+        superstar:
+          readOnly: true
+          description: Metrics of superstars
+          allOf:
+          - $ref: '#/components/schemas/BinaryDistribution'
+        rolesWithSuccessorsReady:
+          readOnly: true
+          description: Metrics of roles ready with successors
+          allOf:
+          - $ref: '#/components/schemas/BinaryDistribution'
+        pipelinesWithWomen:
+          readOnly: true
+          description: Metrics of Pipeline with women
+          allOf:
+          - $ref: '#/components/schemas/BinaryDistribution'
+        pipelinesWithDiverseEthnicity:
+          readOnly: true
+          description: Metrics of Pipeline with diverse ethenicity
+          allOf:
+          - $ref: '#/components/schemas/BinaryDistribution'
+        pipelinesWithLeaders:
+          readOnly: true
+          description: Metrics of Pipeline with leaders
+          allOf:
+          - $ref: '#/components/schemas/BinaryDistribution'
+    SkillGroupList:
+      type: object
+      properties:
+        proficiency:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: group proficiency of the skill group
+        groupName:
+          type:
+          - string
+          - 'null'
+          description: name of the skill group
+        level:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: level of the role
+        skillCategory:
+          type:
+          - string
+          - 'null'
+          description: skill category of the skill group
+    PreferredYearsOfExperience:
+      type: object
+      properties:
+        typeOfExperience:
+          type:
+          - string
+          - 'null'
+          description: Type of experience, can only be one of 'total', 'relevant'
+        maxExperience:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: preferred maximum experience titles for a role
+        minExperience:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: preferred minimum experience titles for a role
+    JIEInsightsSchema:
+      type: object
+      properties:
+        successionPlan:
+          readOnly: true
+          description: Metrics of Pipeline with leaders
+          allOf:
+          - $ref: '#/components/schemas/SuccessionPlanMetricsSchema'
+    PreferredEducation:
+      type: object
+      properties:
+        graduationYear:
+          description: preferred gradulation year for a role
+          allOf:
+          - $ref: '#/components/schemas/GraduationYear'
+        schools:
+          description: preferred schools for a role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Preference'
+        degreeMajors:
+          type:
+          - array
+          - 'null'
+          description: degree majors for a role. Values for degree majors can only be the external_id of the degree major.
+          items:
+            type: string
+        certifications:
+          type:
+          - array
+          - 'null'
+          description: certifications for a role. Values for certifications can only be the external_id of the certification.
+          items:
+            type: string
+        degrees:
+          type:
+          - array
+          - 'null'
+          description: preferred degrees for a role. Values for degrees can only be one of 'display' values of education_levels in calibration config in admin console.
+          items:
+            type: string
+    PreferredExperience:
+      type: object
+      properties:
+        preferredYearsOfExperience:
+          description: preferred years of experience for a role
+          allOf:
+          - $ref: '#/components/schemas/PreferredYearsOfExperience'
+        companies:
+          description: preferred companies for a role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Preference'
+        seniorities:
+          type:
+          - array
+          - 'null'
+          description: preferred seniorities for a role. Values for seniorities can only be one of 'display' values of seniority_levels in calibration config in admin console.
+          items:
+            type: string
+        jobTitles:
+          description: preferred job titles for a role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Preference'
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+    BinaryDistribution:
+      type: object
+      properties:
+        noCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: False/Negative value of metric
+        yesCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: True/Positive value of metric
+x-provenance:
+  method: searched
+  source: https://apidocs.eightfold.ai/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://apidocs.eightfold.ai/reference/booking_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/comments_entity__batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/comments_ext_entity__batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/create_approval_workflow.md
+  - https://apidocs.eightfold.ai/reference/create_ats_candidate.md
+  - https://apidocs.eightfold.ai/reference/create_ats_position.md
+  - https://apidocs.eightfold.ai/reference/create_ats_position_attachments.md
+  - https://apidocs.eightfold.ai/reference/create_booking.md
+  - https://apidocs.eightfold.ai/reference/create_careerhub_provide.md
+  - https://apidocs.eightfold.ai/reference/create_careerhub_request.md
+  - https://apidocs.eightfold.ai/reference/create_careerhub_upskill_plan_assignment.md
+  - https://apidocs.eightfold.ai/reference/create_comments_entity_comments.md
+  - https://apidocs.eightfold.ai/reference/create_comments_ext_entity_comments.md
+  - https://apidocs.eightfold.ai/reference/create_course.md
+  - https://apidocs.eightfold.ai/reference/create_demand.md
+  - https://apidocs.eightfold.ai/reference/create_employee.md
+  - https://apidocs.eightfold.ai/reference/create_employee_role.md
+  - https://apidocs.eightfold.ai/reference/create_ext_ai_interview_schedule_interview.md
+  - https://apidocs.eightfold.ai/reference/create_external_booking_ext_bookings.md
+  - https://apidocs.eightfold.ai/reference/create_external_demand_employee_create_or_advance_application_stage.md
+  - https://apidocs.eightfold.ai/reference/create_external_demand_ext_demands.md
+  - https://apidocs.eightfold.ai/reference/create_external_demand_org_unit_ext_demand_org_units.md
+  - https://apidocs.eightfold.ai/reference/create_foundational_data.md
+  - https://apidocs.eightfold.ai/reference/create_holiday.md
+  - https://apidocs.eightfold.ai/reference/create_insights_talent_traits.md
+  - https://apidocs.eightfold.ai/reference/create_jie_roles.md
+  - https://apidocs.eightfold.ai/reference/create_offer.md
+  - https://apidocs.eightfold.ai/reference/create_position.md
+  - https://apidocs.eightfold.ai/reference/create_profile.md
+  - https://apidocs.eightfold.ai/reference/create_profile_cancel_scheduled_rejection.md
+  - https://apidocs.eightfold.ai/reference/create_profile_note.md
+  - https://apidocs.eightfold.ai/reference/create_profile_stages.md
+  - https://apidocs.eightfold.ai/reference/create_profile_tag.md
+  - https://apidocs.eightfold.ai/reference/create_profile_unsubscribe.md
+  - https://apidocs.eightfold.ai/reference/create_succession_plan.md
+  - https://apidocs.eightfold.ai/reference/create_succession_plan_caretakers.md
+  - https://apidocs.eightfold.ai/reference/create_succession_plan_successors.md
+  - https://apidocs.eightfold.ai/reference/create_talent_pool.md
+  - https://apidocs.eightfold.ai/reference/create_upskill_plan_template.md
+  - https://apidocs.eightfold.ai/reference/create_user_group.md
+  - https://apidocs.eightfold.ai/reference/create_user_group_users.md
+  - https://apidocs.eightfold.ai/reference/create_user_login_users.md
+  - https://apidocs.eightfold.ai/reference/delete_booking.md
+  - https://apidocs.eightfold.ai/reference/delete_careerhub_ext.md
+  - https://apidocs.eightfold.ai/reference/delete_careerhub_upskill_plan_assignment.md
+  - https://apidocs.eightfold.ai/reference/delete_comments_entity_comments.md
+  - https://apidocs.eightfold.ai/reference/delete_course.md
+  - https://apidocs.eightfold.ai/reference/delete_demand.md
+  - https://apidocs.eightfold.ai/reference/delete_external_booking_ext_bookings.md
+  - https://apidocs.eightfold.ai/reference/delete_external_demand_ext_demands.md
+  - https://apidocs.eightfold.ai/reference/delete_holiday.md
+  - https://apidocs.eightfold.ai/reference/delete_jie_roles.md
+  - https://apidocs.eightfold.ai/reference/delete_offer.md
+  - https://apidocs.eightfold.ai/reference/delete_profile.md
+  - https://apidocs.eightfold.ai/reference/delete_succession_plan.md
+  - https://apidocs.eightfold.ai/reference/delete_succession_plan_caretakers.md
+  - https://apidocs.eightfold.ai/reference/delete_succession_plan_successors.md
+  - https://apidocs.eightfold.ai/reference/delete_upskill_plan_template.md
+  - https://apidocs.eightfold.ai/reference/delete_upskill_plan_template_ext.md
+  - https://apidocs.eightfold.ai/reference/delete_user_group.md
+  - https://apidocs.eightfold.ai/reference/delete_user_group_users.md
+  - https://apidocs.eightfold.ai/reference/delete_user_login_users.md
+  - https://apidocs.eightfold.ai/reference/demand_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/email_delivery_feedback_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/employee_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/entity_profile_application_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/event_candidate_activity_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/events_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/get_approval_workflow_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_async_api_status_transactions_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_ats_candidate_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_ats_position_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_booking_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_career_navigator_recommended_paths_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_careerhub_ext_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_careerhub_performance_feedback_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_careerhub_suggest_skills_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_careerhub_upskill_plan_assignment_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_comments_comments_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_course_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_demand_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_email_delivery_feedback_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_employee_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_employee_role_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_entity_profile_application_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_event_candidate_activity_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_events_planned_events_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_external_booking_ext_bookings_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_external_demand_ext_demands_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_external_demand_org_unit_ext_demand_org_units_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_foundational_data_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_holiday_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_hris_employee_hris_employees_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_jie_roles_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_offer_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_position_apply_form_questions_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_position_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_application_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_attachments_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_feedback_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_note_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_tag_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_question_template_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_succession_plan_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_upskill_plan_template_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_upskill_plan_template_ext_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_user_calendar_event_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_user_campaign_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_user_group_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_user_login_users_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_user_message_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_workforce_exchange_hiring_company_hiring_company_by_id.md
+  - https://apidocs.eightfold.ai/reference/holiday_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/list_ats_candidate.md
+  - https://apidocs.eightfold.ai/reference/list_ats_position.md
+  - https://apidocs.eightfold.ai/reference/list_booking.md
+  - https://apidocs.eightfold.ai/reference/list_career_navigator_recommended_courses.md
+  - https://apidocs.eightfold.ai/reference/list_careerhub_performance_feedback.md
+  - https://apidocs.eightfold.ai/reference/list_careerhub_recommended_courses.md
+  - https://apidocs.eightfold.ai/reference/list_careerhub_roles.md
+  - https://apidocs.eightfold.ai/reference/list_careerhub_skill_gap_analysis.md
+  - https://apidocs.eightfold.ai/reference/list_careerhub_upskill_plan_assignment.md
+  - https://apidocs.eightfold.ai/reference/list_comments_comments.md
+  - https://apidocs.eightfold.ai/reference/list_comments_entity_comments.md
+  - https://apidocs.eightfold.ai/reference/list_comments_ext_entity_comments.md
+  - https://apidocs.eightfold.ai/reference/list_course.md
+  - https://apidocs.eightfold.ai/reference/list_demand.md
+  - https://apidocs.eightfold.ai/reference/list_email_delivery_feedback.md
+  - https://apidocs.eightfold.ai/reference/list_employee.md
+  - https://apidocs.eightfold.ai/reference/list_employee_matched_demands.md
+  - https://apidocs.eightfold.ai/reference/list_employee_matched_positions.md
+  - https://apidocs.eightfold.ai/reference/list_employee_recommended_mentors.md
+  - https://apidocs.eightfold.ai/reference/list_employee_role_match_score.md
+  - https://apidocs.eightfold.ai/reference/list_entity_changelog_changelog.md
+  - https://apidocs.eightfold.ai/reference/list_entity_profile_application.md
+  - https://apidocs.eightfold.ai/reference/list_event_candidate_activity.md
+  - https://apidocs.eightfold.ai/reference/list_events_planned_events.md
+  - https://apidocs.eightfold.ai/reference/list_ext_ai_interview_guides.md
+  - https://apidocs.eightfold.ai/reference/list_ext_ai_interview_interview_feedback_link.md
+  - https://apidocs.eightfold.ai/reference/list_external_demand_ext_demands.md
+  - https://apidocs.eightfold.ai/reference/list_foundational_data.md
+  - https://apidocs.eightfold.ai/reference/list_holiday.md
+  - https://apidocs.eightfold.ai/reference/list_hris_employee_hris_employees.md
+  - https://apidocs.eightfold.ai/reference/list_insights_employees.md
+  - https://apidocs.eightfold.ai/reference/list_insights_profile_insights.md
+  - https://apidocs.eightfold.ai/reference/list_jie_insights.md
+  - https://apidocs.eightfold.ai/reference/list_jie_roles.md
+  - https://apidocs.eightfold.ai/reference/list_offer.md
+  - https://apidocs.eightfold.ai/reference/list_org_unit.md
+  - https://apidocs.eightfold.ai/reference/list_position.md
+  - https://apidocs.eightfold.ai/reference/list_position_matched.md
+  - https://apidocs.eightfold.ai/reference/list_profile.md
+  - https://apidocs.eightfold.ai/reference/list_profile_applicants.md
+  - https://apidocs.eightfold.ai/reference/list_profile_application.md
+  - https://apidocs.eightfold.ai/reference/list_profile_feedback.md
+  - https://apidocs.eightfold.ai/reference/list_profile_matched_candidates.md
+  - https://apidocs.eightfold.ai/reference/list_profile_note.md
+  - https://apidocs.eightfold.ai/reference/list_profile_tag.md
+  - https://apidocs.eightfold.ai/reference/list_question_options.md
+  - https://apidocs.eightfold.ai/reference/list_succession_plan.md
+  - https://apidocs.eightfold.ai/reference/list_succession_plan_incumbents.md
+  - https://apidocs.eightfold.ai/reference/list_succession_plan_recommended_successors.md
+  - https://apidocs.eightfold.ai/reference/list_upskill_plan_template.md
+  - https://apidocs.eightfold.ai/reference/list_user_calendar_event.md
+  - https://apidocs.eightfold.ai/reference/list_user_campaign.md
+  - https://apidocs.eightfold.ai/reference/list_user_group.md
+  - https://apidocs.eightfold.ai/reference/list_user_group_users.md
+  - https://apidocs.eightfold.ai/reference/list_user_login_users.md
+  - https://apidocs.eightfold.ai/reference/list_user_message.md
+  - https://apidocs.eightfold.ai/reference/patch_ats_candidate.md
+  - https://apidocs.eightfold.ai/reference/patch_ats_position.md
+  - https://apidocs.eightfold.ai/reference/patch_booking.md
+  - https://apidocs.eightfold.ai/reference/patch_careerhub_.md
+  - https://apidocs.eightfold.ai/reference/patch_careerhub_ext.md
+  - https://apidocs.eightfold.ai/reference/patch_careerhub_upskill_plan_assignment.md
+  - https://apidocs.eightfold.ai/reference/patch_course.md
+  - https://apidocs.eightfold.ai/reference/patch_demand.md
+  - https://apidocs.eightfold.ai/reference/patch_employee.md
+  - https://apidocs.eightfold.ai/reference/patch_external_booking_ext_bookings.md
+  - https://apidocs.eightfold.ai/reference/patch_external_demand_ext_demands.md
+  - https://apidocs.eightfold.ai/reference/patch_external_demand_org_unit_ext_demand_org_units.md
+  - https://apidocs.eightfold.ai/reference/patch_foundational_data.md
+  - https://apidocs.eightfold.ai/reference/patch_holiday.md
+  - https://apidocs.eightfold.ai/reference/patch_hris_employee_ext_employees.md
+  - https://apidocs.eightfold.ai/reference/patch_offer.md
+  - https://apidocs.eightfold.ai/reference/patch_offer_ats_positions.md
+  - https://apidocs.eightfold.ai/reference/patch_position.md
+  - https://apidocs.eightfold.ai/reference/patch_profile.md
+  - https://apidocs.eightfold.ai/reference/patch_succession_plan.md
+  - https://apidocs.eightfold.ai/reference/patch_succession_plan_successors.md
+  - https://apidocs.eightfold.ai/reference/patch_upskill_plan_template.md
+  - https://apidocs.eightfold.ai/reference/patch_upskill_plan_template_ext.md
+  - https://apidocs.eightfold.ai/reference/patch_user_group.md
+  - https://apidocs.eightfold.ai/reference/patch_user_login_users.md
+  - https://apidocs.eightfold.ai/reference/patch_workforce_exchange_hiring_company_hiring_company.md
+  - https://apidocs.eightfold.ai/reference/position_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/profile_application_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/profile_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/profile_feedback_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/profile_note_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/profile_tag_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/update_ats_candidate.md
+  - https://apidocs.eightfold.ai/reference/update_ats_position.md
+  - https://apidocs.eightfold.ai/reference/update_booking.md
+  - https://apidocs.eightfold.ai/reference/update_demand.md
+  - https://apidocs.eightfold.ai/reference/update_employee.md
+  - https://apidocs.eightfold.ai/reference/update_external_booking_ext_bookings.md
+  - https://apidocs.eightfold.ai/reference/update_external_demand_ext_demands.md
+  - https://apidocs.eightfold.ai/reference/update_holiday.md
+  - https://apidocs.eightfold.ai/reference/update_hris_employee_ext_employees.md
+  - https://apidocs.eightfold.ai/reference/update_jie_roles.md
+  - https://apidocs.eightfold.ai/reference/update_position.md
+  - https://apidocs.eightfold.ai/reference/update_profile.md
+  - https://apidocs.eightfold.ai/reference/user_calendar_event_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/user_campaign_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/user_login_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/user_message_batch_fetch.md
+  merge:
+    pages: 218
+    deduped: 2038
+    conflicts_kept_first: 0

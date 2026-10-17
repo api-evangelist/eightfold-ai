@@ -1,0 +1,2175 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Profile Application API
+  version: 1.0.0
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Profile Application
+paths:
+  /api/v2/core/profile-applications:
+    get:
+      description: Search profile applications using specific filter parameters and get all attributes of profile applications
+      operationId: list_profile_application
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Limit on the total number of search results, defaults to 100
+        in: query
+        name: queryLimit
+        schema:
+          type: string
+      - description: Filter on application id
+        in: query
+        name: applicationId
+        schema:
+          type: string
+      - description: Filter on profile id of the candidate. Accepts the numeric or encoded profile id.
+        in: query
+        name: profileId
+        schema:
+          type: string
+      - description: Filter on position id associated with the application
+        in: query
+        name: positionId
+        schema:
+          type: string
+      - description: Filter on ats job id
+        in: query
+        name: atsJobId
+        schema:
+          type: string
+      - description: Filter on status of the application
+        in: query
+        name: applicationStatus
+        schema:
+          type: string
+      - description: Filter on application stage
+        in: query
+        name: stage
+        schema:
+          type: string
+      - description: Comma-separated list of application ids to fetch. Can be combined with the other filters to narrow within the set.
+        in: query
+        name: entityIds
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are customInfo
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/ProfileApplicationSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List Profile Applications
+      tags:
+      - Profile Application
+  /api/v2/core/profile-applications/batch-fetch:
+    post:
+      description: Batch fetch profile applications for a given list of applications ids (limit 100)
+      operationId: profile_application_batch_fetch
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are customInfo
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchFetchEntityRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/ProfileApplicationSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/BatchFetchMetaSchema'
+                type: object
+          description: OK
+      summary: Batch Fetch Profile Applications
+      tags:
+      - Profile Application
+  /api/v2/core/profile-applications/{profileApplicationId}:
+    get:
+      description: Given a profile application id, it returns all attributes of the profile application
+      operationId: get_profile_application_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: profile application id of application in Eightfold
+        in: path
+        name: profileApplicationId
+        required: true
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are customInfo
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileApplicationSchema'
+          description: OK
+      summary: Get Profile Application
+      tags:
+      - Profile Application
+components:
+  schemas:
+    ProfileFeedbackQuestionAnswer:
+      type: object
+      properties:
+        answer:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Answer
+        label:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Label
+        questionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Question ID
+        comment:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Comment
+    ApplicationMatchScore:
+      type: object
+      properties:
+        topMatches:
+          type:
+          - array
+          - 'null'
+          description: The top few items driving this score (e.g. the matched skills or title terms), up to 3
+          items:
+            type: string
+        indeterminable:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: 1 when there wasn't enough data to compute this score (score will be -1), otherwise 0
+        score:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Match strength for this aspect on a 0-5 scale (higher is a better match); -1 when it could not be determined
+        relevantScoreTypeVal:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: 'A supporting count eg: matching skills (skill) or relevant years of experience (experience). Null when not applicable'
+        scoreRaw:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: The underlying un-rounded score behind the 0-5 rating (e.g. raw overall stars); may be null when not applicable
+        scoreType:
+          type:
+          - string
+          - 'null'
+          description: Which aspect of the match this score describes eg- overall fit, skill, title, or experience
+    AtsOpenings:
+      type: object
+      properties:
+        closedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Closing timestamp in epoch format
+        openingDetails:
+          description: Details of the openings
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsOpeningDetail'
+        numOpenings:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of openings. Set to -1 for unlimited openings
+        openedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Opening timestamp in epoch format
+        numOpeningsFilled:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of openings filled
+    ATSPositionData:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: creation timestamp in epoch format
+        locationCountry:
+          type:
+          - string
+          - 'null'
+          description: Country of the location
+        coordinators:
+          description: all the coordinators related to this position
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Person'
+        businessUnit:
+          type:
+          - string
+          - 'null'
+          description: business unit
+        isPrivate:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if a position is a private posting
+        workLocationOption:
+          type:
+          - string
+          - 'null'
+          description: Indicates the option for working location e.g. onsite, remote_global, remote_local, hybrid
+        atsEntityId:
+          type:
+          - string
+          - 'null'
+          description: position_id in the ats system
+        hiringManager:
+          description: Hiring Manager
+          allOf:
+          - $ref: '#/components/schemas/Person'
+        internalPostingUrl:
+          type:
+          - string
+          - 'null'
+          description: internal posting url
+        evergreen:
+          type:
+          - boolean
+          - 'null'
+          description: is evergreen
+        skills:
+          type:
+          - array
+          - 'null'
+          description: skills
+          items:
+            type: string
+        company:
+          type:
+          - string
+          - 'null'
+          description: company
+        locationCity:
+          type:
+          - string
+          - 'null'
+          description: City of the location
+        lastUpdated:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: last modified date time in epoch format
+        displayJobId:
+          type:
+          - string
+          - 'null'
+          description: display job id
+        openings:
+          description: Openings
+          allOf:
+          - $ref: '#/components/schemas/AtsOpenings'
+        hiringTeam:
+          readOnly: true
+          description: 'Unified hiring team array. Each entry: {role, roleKey, name, email}. Includes primary/secondary HMs, primary/secondary recruiters, and custom roles.'
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/HiringTeamMember'
+        followers:
+          description: all the followers of the positions as hiring managers etc.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Person'
+        startDate:
+          type:
+          - string
+          - 'null'
+          description: start date of the position in ISO 8601 format (e.g. 2024-05-01)
+        requisitionType:
+          type:
+          - string
+          - 'null'
+          description: Requisition Type
+        systemId:
+          type:
+          - string
+          - 'null'
+          description: system id
+        activities:
+          description: all the activities related to this positions
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PositionActivities'
+        postedFor:
+          type:
+          - string
+          - 'null'
+          description: 'internal for internal jobs, external for external jobs, or all for both. Can be omitted for unposted positions.Input values must be one of these: internal, external, all, None'
+        questionnaires:
+          description: questionnaires
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Questionnaire'
+        restrictAccess:
+          type:
+          - boolean
+          - 'null'
+          description: restrict access
+        title:
+          type:
+          - string
+          - 'null'
+          description: job title
+        templateId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Template id of the template used to create the position
+        recruiter:
+          description: recruiter
+          allOf:
+          - $ref: '#/components/schemas/Person'
+        jobPosts:
+          description: job postings
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/JobPost'
+        hiringBand:
+          type:
+          - string
+          - 'null'
+          description: hiring band
+        postingTitle:
+          type:
+          - string
+          - 'null'
+          description: posting title
+        employmentType:
+          type:
+          - string
+          - 'null'
+          description: Employment Type
+        posted:
+          type:
+          - boolean
+          - 'null'
+          description: status of the position posted or not
+        locationFlexibility:
+          type:
+          - string
+          - 'null'
+          description: Indicates the flexibility on location e.g. not_flexible, flexible_within_country, flexible_global
+        orgUnits:
+          type:
+          - object
+          - 'null'
+          description: Org units of the position
+        companyDescription:
+          type:
+          - string
+          - 'null'
+          description: Company description
+        customFields:
+          type:
+          - object
+          - 'null'
+          description: custom fields
+        sourcers:
+          description: all the recruiters/sourcers related to this positions
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Person'
+        workflowTemplateId:
+          type:
+          - string
+          - 'null'
+          description: Indicates which workflow this position belongs to
+        status:
+          type:
+          - string
+          - 'null'
+          description: status
+        jobCode:
+          type:
+          - string
+          - 'null'
+          description: ATS attribute which identifies the job this jobrequestion is mapped to
+        open:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the requisition is open for hiring per the source ATS - derived from its status or open headcount at ingestion, and updated on close/fill/reopen. Distinct from the top-level open field, which only reports that the record is not archived or deleted.
+        postingUrl:
+          type:
+          - string
+          - 'null'
+          description: posting url
+        atsUserGroups:
+          description: ATS user groups
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AtsUserGroups'
+        createdBy:
+          type:
+          - string
+          - 'null'
+          description: Email of the user who created this position
+        function:
+          type:
+          - string
+          - 'null'
+          description: job function
+        jobStages:
+          type:
+          - array
+          - 'null'
+          description: job_stages
+          items:
+            type: string
+        requiredSkills:
+          type:
+          - array
+          - 'null'
+          description: required skills
+          items:
+            type: string
+        questions:
+          description: questions
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Questions'
+        locationState:
+          type:
+          - string
+          - 'null'
+          description: State of the location
+        locations:
+          type:
+          - array
+          - 'null'
+          description: location
+          items:
+            type: string
+        positionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: EF Position ID
+        description:
+          type:
+          - string
+          - 'null'
+          description: job description
+      required:
+      - atsEntityId
+      - company
+      - createdAt
+      - lastUpdated
+      - open
+      - posted
+      - recruiter
+      - status
+      - title
+    HiringTeamMember:
+      type: object
+      properties:
+        role:
+          type:
+          - string
+          - 'null'
+          description: Role label (e.g. Hiring Manager, HRBP)
+        email:
+          type:
+          - string
+          - 'null'
+          description: Email of the team member
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the team member
+        roleKey:
+          type:
+          - string
+          - 'null'
+          description: Storage key for the role (e.g. hiring_manager, secondary_hiring_managers, cust_hrbp)
+    QuestionLabel:
+      type: object
+      properties:
+        langMappingList:
+          description: lang_mapping_list
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/LangMapping'
+        label:
+          type:
+          - string
+          - 'null'
+          description: label
+        value:
+          type:
+          - string
+          - 'null'
+          description: value
+    QuestionDependencies:
+      type: object
+      properties:
+        questionId:
+          type:
+          - string
+          - 'null'
+          description: question id
+        questionSource:
+          type:
+          - string
+          - 'null'
+          description: question source
+        choiceValue:
+          type:
+          - string
+          - 'null'
+          description: choice value
+        dependencyType:
+          type:
+          - string
+          - 'null'
+          description: dependency type
+        childQuestionIds:
+          type:
+          - array
+          - 'null'
+          description: child question ids
+          items:
+            type: string
+      required:
+      - choiceValue
+      - questionId
+    UserLogin:
+      type: object
+      properties:
+        fullName:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Full name of User
+        redirectEmail:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Redirect Email
+        domain:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Domain name for User
+        email:
+          type:
+          - string
+          - 'null'
+          description: Email of User
+    BatchFetchEntityRequestSchema:
+      type: object
+      properties:
+        entityIds:
+          type: array
+          description: list of entity ids to fetch the entity objects
+          items:
+            type: string
+      required:
+      - entityIds
+    Questions:
+      type: object
+      properties:
+        choices:
+          description: Question choices
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/QuestionChoice'
+        choicesV2:
+          description: Question choices V2. It supports language mapping.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/QuestionLabel'
+        questionId:
+          type:
+          - string
+          - 'null'
+          description: question_id
+        help:
+          type:
+          - string
+          - 'null'
+          description: help
+        type:
+          type:
+          - string
+          - 'null'
+          description: type of the question. e.g.-choice, numeric or text
+        question:
+          description: question. It supports language mapping.
+          allOf:
+          - $ref: '#/components/schemas/QuestionLabel'
+        required:
+          type:
+          - boolean
+          - 'null'
+          description: required
+      required:
+      - questionId
+    RegisterButton:
+      type: object
+      properties:
+        textColor:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: text color for registration button
+        backgroundColor:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: background color of registration button
+        text:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Text of registration button
+    LangMapping:
+      type: object
+      properties:
+        locale:
+          type:
+          - string
+          - 'null'
+          description: locale
+        label:
+          type:
+          - string
+          - 'null'
+          description: label
+    ApplicationQuestionAnswers:
+      type: object
+      properties:
+        answer:
+          type:
+          - string
+          - 'null'
+          description: Answer of candidate Application question answers
+        questionId:
+          type:
+          - string
+          - 'null'
+          description: question ID of candidate Application question answers
+        displayOrder:
+          type:
+          - string
+          - 'null'
+          writeOnly: true
+          description: Display order of the question on the ATS questionnaire; required by Workday to match the answer
+        question:
+          type:
+          - string
+          - 'null'
+          description: question of candidate Application question answers
+      required:
+      - question
+      - questionId
+    CalibrationTemplate:
+      type: object
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: id of the calibration template
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the calibration template
+    ProfileApplicationSchema:
+      type: object
+      properties:
+        stage:
+          type:
+          - string
+          - 'null'
+          description: ''
+        lastModifiedTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Last Modified time stamp of candidate application
+        applicationAnswers:
+          readOnly: true
+          description: application answers of candidate application
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ApplicationQuestionAnswers'
+        refereeEmail:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: referee email for referred candidate application
+        profileId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: profile id of candidate application
+        utm_source:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: utm source for the application
+        feedback:
+          readOnly: true
+          description: Latest feedback of candidate application
+          allOf:
+          - $ref: '#/components/schemas/ProfileFeedback'
+        groupId:
+          type:
+          - string
+          - 'null'
+          description: ''
+        applicationStatus:
+          type:
+          - string
+          - 'null'
+          description: application status of candidate application
+        isInternal:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Is application internal one
+        isReferral:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Is application a referral one
+        customInfo:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: custom info for the application
+        candidateId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: candidate id of candidate application
+        visaStatus:
+          type:
+          - string
+          - 'null'
+          description: visa status of candidate application
+        comment:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Comment added during stage advance
+        positionTitle:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Position title of candidate application
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: object id of the profile application
+        position:
+          readOnly: true
+          description: ''
+          allOf:
+          - $ref: '#/components/schemas/Position'
+        applicationTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: application time of candidate application
+        sourceName:
+          type:
+          - string
+          - 'null'
+          description: source name of candidate application
+        utm_campaign:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: utm campaign for the application
+        matchingData:
+          readOnly: true
+          description: ''
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ApplicationMatchScore'
+        currentStage:
+          type:
+          - string
+          - 'null'
+          description: Current stage of candidate application
+        sourceType:
+          type:
+          - string
+          - 'null'
+          description: source type of candidate application
+        isInTalentNetwork:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Is candidate in talent network
+        isCareerSite:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Is application from career site
+        actionUser:
+          readOnly: true
+          description: User who advanced the stage
+          allOf:
+          - $ref: '#/components/schemas/Person'
+        atsJobId:
+          type:
+          - string
+          - 'null'
+          description: name of candidate application
+        positionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Position id of candidate application
+        applicationId:
+          type: string
+          description: application id of candidate application
+      required:
+      - applicationId
+      - applicationStatus
+      - applicationTime
+      - atsJobId
+      - candidateId
+      - groupId
+      - lastModifiedTime
+      - positionId
+      - positionTitle
+    Position:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Creation timestamp in epoch format
+        jobDescriptionUpdatedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Epoch timestamp (seconds) of the last job description write in Eightfold. Null when the job description has only ever come from the ATS. 0 when Eightfold edit was superseded by an inbound ATS job description change, on tenants where the ATS job description takes precedence.
+        confidential:
+          type:
+          - boolean
+          - 'null'
+          description: if the position is confidential or not
+        hiringManager:
+          readOnly: true
+          description: Hiring Manager
+          allOf:
+          - $ref: '#/components/schemas/Person'
+        groupId:
+          type:
+          - string
+          - 'null'
+          description: group id
+        name:
+          type:
+          - string
+          - 'null'
+          description: Title of the Position
+        followers:
+          type:
+          - array
+          - 'null'
+          description: all the followers of the position
+          items:
+            type: string
+        jobDescription:
+          type:
+          - string
+          - 'null'
+          description: Detailed Job Description in a text format
+        systemId:
+          type:
+          - string
+          - 'null'
+          description: system id
+        positionDisplayId:
+          type:
+          - string
+          - 'null'
+          description: display job id
+        recruiter:
+          readOnly: true
+          description: Recruiter
+          allOf:
+          - $ref: '#/components/schemas/Person'
+        calibrationConfirmedBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User who confirmed the calibration
+        open:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: True while the position record exists (not archived or deleted). Not the recruiting status - use atsData.status for the open/closed hiring lifecycle.
+        createdBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: source of the job
+        calibrationConfirmedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Confirmed timestamp for the calibration
+        atsData:
+          readOnly: true
+          description: ats data of the job
+          allOf:
+          - $ref: '#/components/schemas/ATSPositionData'
+        calibrationData:
+          description: calibration data of the job
+          allOf:
+          - $ref: '#/components/schemas/CalibrationData'
+        role:
+          readOnly: true
+          description: role associated with the position
+          allOf:
+          - $ref: '#/components/schemas/Role'
+        positionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: job id
+      required:
+      - name
+    ProfileFeedback:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          readOnly: true
+          description: Datetime when this feedback was created
+        plannedEventId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Planned event id for candidate source
+        feedbackResponse:
+          readOnly: true
+          description: Received feedback's details
+          allOf:
+          - $ref: '#/components/schemas/ProfileFeedbackResponse'
+        followUpEnabled:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Denotes if the feedback follow up is enabled or not
+        profileId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Profile ID associated with the profile feedback
+        communityId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Community Id for candidate source
+        sharedFeedbackMessageId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Message Id for shared feedback
+        viewFeedbackUrl:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: URL to view feedback
+        requestedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when the feedback was requested
+        reminderCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Number of reminders sent
+        requester:
+          readOnly: true
+          description: Requester of the ProfileFeedback
+          allOf:
+          - $ref: '#/components/schemas/UserLogin'
+        submittedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when the feedback was first submitted
+        reviewerEmail:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Email of reviewer of the ProfileFeedback
+        feedbackType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: type of the feedback
+        feedbackTemplateId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Feedback template ID
+        feedbackEncId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Encoded ID of the ProfileFeedback
+        requesterEmail:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Email of requester of the ProfileFeedback
+        archiveFlag:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Denotes if the feedback is archived or not
+        position:
+          readOnly: true
+          description: Position for which feedback was given
+          allOf:
+          - $ref: '#/components/schemas/Position'
+        userCalendarEventId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: User calendar event id
+        feedbackId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ID of the ProfileFeedback
+        feedbackTemplateName:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Feedback template name
+        reviewer:
+          readOnly: true
+          description: Reviewer of the ProfileFeedback
+          allOf:
+          - $ref: '#/components/schemas/UserLogin'
+        plannedEvent:
+          readOnly: true
+          description: Planned event for candidate source
+          allOf:
+          - $ref: '#/components/schemas/PlannedEvent'
+        matchingData:
+          readOnly: true
+          description: Application matching information
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ApplicationMatchScore'
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: status of the feedback
+        feedbackJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Feedback JSON
+        feedbackUrl:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: URL to provide feedback
+        positionId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Position ID for which feedback was given
+    BatchFetchMetaSchema:
+      type: object
+      properties:
+        missingEntityIds:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of entity ids for which no result was found
+          items:
+            type: string
+    SkillProficiency:
+      type: object
+      properties:
+        proficiency:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: proficiency of the role
+        skillGroupList:
+          description: skill group list of a role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SkillGroupList'
+        level:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: level of the role
+        name:
+          type:
+          - string
+          - 'null'
+          description: name of the role
+    PlannedEvent:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when this event was created
+        isCancelled:
+          type:
+          - boolean
+          - 'null'
+          description: ''
+        eventSpeakers:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of speakers
+          items:
+            type: string
+        activeRegistrations:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: active registrations
+        registerButton:
+          readOnly: true
+          description: Registration button information
+          allOf:
+          - $ref: '#/components/schemas/RegisterButton'
+        eventTeamDataJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Event team data
+        eventBucket:
+          type:
+          - string
+          - 'null'
+          description: Bucket of the event
+        address:
+          type:
+          - string
+          - 'null'
+          description: Address of venue
+        eventCustomFieldsJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Event custom fields
+        eventType:
+          type:
+          - string
+          - 'null'
+          description: ''
+        institution:
+          type:
+          - string
+          - 'null'
+          description: Institution related to event
+        selectedTimezone:
+          type:
+          - string
+          - 'null'
+          description: Selected time zome
+        name:
+          type: string
+          description: Name of the event
+        homePageBanner:
+          readOnly: true
+          description: Home page banner information
+          allOf:
+          - $ref: '#/components/schemas/HomePageBanner'
+        eventLocationType:
+          type:
+          - string
+          - 'null'
+          description: ''
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: id
+        plannedEventEncId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Encoded event id
+        parentId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Parent id of the event
+        venue:
+          type:
+          - string
+          - 'null'
+          description: Venue of the event
+        endTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Ending timestamp of event
+        isPublished:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: ''
+        eventLandingPage:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Event landing page
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+        createdBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User id which created this event
+        eventCategory:
+          type:
+          - string
+          - 'null'
+          description: Category of the event
+        startTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Starting time stamp of event
+        when:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: When tag of the event
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of event
+      required:
+      - endTimestamp
+      - name
+      - startTimestamp
+    HomePageBanner:
+      type: object
+      properties:
+        useImage:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: boolean value for using image
+        image:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: image of home page banner
+        title:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: title for home page
+    ChangeLog:
+      type: object
+      properties:
+        newValue:
+          type:
+          - string
+          - 'null'
+          description: new value
+        fieldName:
+          type:
+          - string
+          - 'null'
+          description: field name
+        prevValue:
+          type:
+          - string
+          - 'null'
+          description: previous value
+      required:
+      - fieldName
+      - newValue
+      - prevValue
+    CalibrationData:
+      type: object
+      properties:
+        flags:
+          type:
+          - array
+          - 'null'
+          description: flags
+          items:
+            type: string
+        graduationYear:
+          type:
+          - string
+          - 'null'
+          description: graduationYear
+        workCategories:
+          type:
+          - array
+          - 'null'
+          description: workCategories
+          items:
+            type: string
+        skills:
+          type:
+          - array
+          - 'null'
+          description: skills
+          items:
+            type: string
+        diversity:
+          type:
+          - array
+          - 'null'
+          description: diversity
+          items:
+            type: string
+        idealCandidates:
+          type:
+          - array
+          - 'null'
+          description: ideal_candidates
+          items:
+            type: string
+        companies:
+          type:
+          - array
+          - 'null'
+          description: companies
+          items:
+            type: string
+        titles:
+          type:
+          - array
+          - 'null'
+          description: titles
+          items:
+            type: string
+        educationLevel:
+          type:
+          - array
+          - 'null'
+          description: different education levels
+          items:
+            type: string
+        relocation:
+          type:
+          - array
+          - 'null'
+          description: relocation
+          items:
+            type: string
+        seniorities:
+          type:
+          - array
+          - 'null'
+          description: seniorities
+          items:
+            type: string
+        maxExperience:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: maxExperience
+        schools:
+          type:
+          - array
+          - 'null'
+          description: schools
+          items:
+            type: string
+        skillProficiencies:
+          writeOnly: true
+          description: skill proficiencies of the role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SkillProficiency'
+        idealCandidateUrls:
+          type:
+          - array
+          - 'null'
+          description: idealCandidatesUrls
+          items:
+            type: string
+        minExperience:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: minExperience
+        notes:
+          type:
+          - string
+          - 'null'
+          description: notes
+        locations:
+          type:
+          - array
+          - 'null'
+          description: locations
+          items:
+            type: string
+    Questionnaire:
+      type: object
+      properties:
+        questionDependencies:
+          description: question dependencies
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/QuestionDependencies'
+        questionnaireId:
+          type:
+          - string
+          - 'null'
+          description: questionnaire id
+      required:
+      - questionnaireId
+    QuestionChoice:
+      type: object
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+          description: label
+        value:
+          type:
+          - string
+          - 'null'
+          description: value
+    JobPost:
+      type: object
+      properties:
+        publishedTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: published time in epoch format
+        expirationTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: expiration time in epoch format
+        postingTitle:
+          type:
+          - string
+          - 'null'
+          description: posting title
+        postingId:
+          type:
+          - string
+          - 'null'
+          description: posting id
+        locale:
+          type:
+          - string
+          - 'null'
+          description: locale of the ats job post
+        primaryPost:
+          type:
+          - boolean
+          - 'null'
+          description: is primary post
+        jobDescription:
+          type:
+          - string
+          - 'null'
+          description: job description
+        postedFor:
+          type:
+          - string
+          - 'null'
+          description: internal for internal jobs, external for external jobs, or all for both.
+      required:
+      - postedFor
+      - postingId
+      - postingTitle
+      - publishedTime
+    AtsUserGroups:
+      type: object
+      properties:
+        userGroupId:
+          type:
+          - string
+          - 'null'
+          description: Ats Group of a user
+    PositionActivities:
+      type: object
+      properties:
+        activityTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: activity time in epoch format
+        activityType:
+          type:
+          - string
+          - 'null'
+          description: activity type
+        changeLogs:
+          description: all the change logs for the activity
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChangeLog'
+        message:
+          type:
+          - string
+          - 'null'
+          description: message for the activity
+      required:
+      - activityTime
+      - activityType
+      - message
+    SkillGroupList:
+      type: object
+      properties:
+        proficiency:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: group proficiency of the skill group
+        groupName:
+          type:
+          - string
+          - 'null'
+          description: name of the skill group
+        level:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: level of the role
+        skillCategory:
+          type:
+          - string
+          - 'null'
+          description: skill category of the skill group
+    ProfileFeedbackResponse:
+      type: object
+      properties:
+        overallFeedback:
+          readOnly: true
+          description: Overall Feedback (based on first boolean type question)
+          allOf:
+          - $ref: '#/components/schemas/ProfileFeedbackQuestionAnswer'
+        feedback:
+          readOnly: true
+          description: Ordered list of answers in the feedback (one per question on the form). Frontend should drive form rendering off this typed list rather than parsing the raw `feedbackJson` string.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProfileFeedbackQuestionAnswer'
+    AtsOpeningDetail:
+      type: object
+      properties:
+        status:
+          type:
+          - string
+          - 'null'
+          description: Status of the opening
+        closedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Closing timestamp in epoch format
+        openingId:
+          type:
+          - string
+          - 'null'
+          description: Opening ID
+        openedAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Opening timestamp in epoch format
+        closeReason:
+          type:
+          - string
+          - 'null'
+          description: Reason for closing the opening
+        candidateId:
+          type:
+          - string
+          - 'null'
+          description: List of candidate ID
+        applicationId:
+          type:
+          - string
+          - 'null'
+          description: List of application ID
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+    Role:
+      type: object
+      properties:
+        templates:
+          readOnly: true
+          description: all calibration templates associated with the role
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CalibrationTemplate'
+        name:
+          type:
+          - string
+          - 'null'
+          description: name of the role
+    Person:
+      type: object
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+          description: email
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name
+      required:
+      - name
+x-provenance:
+  method: searched
+  source: https://apidocs.eightfold.ai/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://apidocs.eightfold.ai/reference/booking_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/comments_entity__batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/comments_ext_entity__batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/create_approval_workflow.md
+  - https://apidocs.eightfold.ai/reference/create_ats_candidate.md
+  - https://apidocs.eightfold.ai/reference/create_ats_position.md
+  - https://apidocs.eightfold.ai/reference/create_ats_position_attachments.md
+  - https://apidocs.eightfold.ai/reference/create_booking.md
+  - https://apidocs.eightfold.ai/reference/create_careerhub_provide.md
+  - https://apidocs.eightfold.ai/reference/create_careerhub_request.md
+  - https://apidocs.eightfold.ai/reference/create_careerhub_upskill_plan_assignment.md
+  - https://apidocs.eightfold.ai/reference/create_comments_entity_comments.md
+  - https://apidocs.eightfold.ai/reference/create_comments_ext_entity_comments.md
+  - https://apidocs.eightfold.ai/reference/create_course.md
+  - https://apidocs.eightfold.ai/reference/create_demand.md
+  - https://apidocs.eightfold.ai/reference/create_employee.md
+  - https://apidocs.eightfold.ai/reference/create_employee_role.md
+  - https://apidocs.eightfold.ai/reference/create_ext_ai_interview_schedule_interview.md
+  - https://apidocs.eightfold.ai/reference/create_external_booking_ext_bookings.md
+  - https://apidocs.eightfold.ai/reference/create_external_demand_employee_create_or_advance_application_stage.md
+  - https://apidocs.eightfold.ai/reference/create_external_demand_ext_demands.md
+  - https://apidocs.eightfold.ai/reference/create_external_demand_org_unit_ext_demand_org_units.md
+  - https://apidocs.eightfold.ai/reference/create_foundational_data.md
+  - https://apidocs.eightfold.ai/reference/create_holiday.md
+  - https://apidocs.eightfold.ai/reference/create_insights_talent_traits.md
+  - https://apidocs.eightfold.ai/reference/create_jie_roles.md
+  - https://apidocs.eightfold.ai/reference/create_offer.md
+  - https://apidocs.eightfold.ai/reference/create_position.md
+  - https://apidocs.eightfold.ai/reference/create_profile.md
+  - https://apidocs.eightfold.ai/reference/create_profile_cancel_scheduled_rejection.md
+  - https://apidocs.eightfold.ai/reference/create_profile_note.md
+  - https://apidocs.eightfold.ai/reference/create_profile_stages.md
+  - https://apidocs.eightfold.ai/reference/create_profile_tag.md
+  - https://apidocs.eightfold.ai/reference/create_profile_unsubscribe.md
+  - https://apidocs.eightfold.ai/reference/create_succession_plan.md
+  - https://apidocs.eightfold.ai/reference/create_succession_plan_caretakers.md
+  - https://apidocs.eightfold.ai/reference/create_succession_plan_successors.md
+  - https://apidocs.eightfold.ai/reference/create_talent_pool.md
+  - https://apidocs.eightfold.ai/reference/create_upskill_plan_template.md
+  - https://apidocs.eightfold.ai/reference/create_user_group.md
+  - https://apidocs.eightfold.ai/reference/create_user_group_users.md
+  - https://apidocs.eightfold.ai/reference/create_user_login_users.md
+  - https://apidocs.eightfold.ai/reference/delete_booking.md
+  - https://apidocs.eightfold.ai/reference/delete_careerhub_ext.md
+  - https://apidocs.eightfold.ai/reference/delete_careerhub_upskill_plan_assignment.md
+  - https://apidocs.eightfold.ai/reference/delete_comments_entity_comments.md
+  - https://apidocs.eightfold.ai/reference/delete_course.md
+  - https://apidocs.eightfold.ai/reference/delete_demand.md
+  - https://apidocs.eightfold.ai/reference/delete_external_booking_ext_bookings.md
+  - https://apidocs.eightfold.ai/reference/delete_external_demand_ext_demands.md
+  - https://apidocs.eightfold.ai/reference/delete_holiday.md
+  - https://apidocs.eightfold.ai/reference/delete_jie_roles.md
+  - https://apidocs.eightfold.ai/reference/delete_offer.md
+  - https://apidocs.eightfold.ai/reference/delete_profile.md
+  - https://apidocs.eightfold.ai/reference/delete_succession_plan.md
+  - https://apidocs.eightfold.ai/reference/delete_succession_plan_caretakers.md
+  - https://apidocs.eightfold.ai/reference/delete_succession_plan_successors.md
+  - https://apidocs.eightfold.ai/reference/delete_upskill_plan_template.md
+  - https://apidocs.eightfold.ai/reference/delete_upskill_plan_template_ext.md
+  - https://apidocs.eightfold.ai/reference/delete_user_group.md
+  - https://apidocs.eightfold.ai/reference/delete_user_group_users.md
+  - https://apidocs.eightfold.ai/reference/delete_user_login_users.md
+  - https://apidocs.eightfold.ai/reference/demand_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/email_delivery_feedback_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/employee_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/entity_profile_application_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/event_candidate_activity_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/events_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/get_approval_workflow_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_async_api_status_transactions_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_ats_candidate_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_ats_position_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_booking_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_career_navigator_recommended_paths_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_careerhub_ext_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_careerhub_performance_feedback_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_careerhub_suggest_skills_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_careerhub_upskill_plan_assignment_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_comments_comments_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_course_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_demand_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_email_delivery_feedback_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_employee_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_employee_role_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_entity_profile_application_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_event_candidate_activity_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_events_planned_events_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_external_booking_ext_bookings_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_external_demand_ext_demands_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_external_demand_org_unit_ext_demand_org_units_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_foundational_data_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_holiday_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_hris_employee_hris_employees_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_jie_roles_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_offer_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_position_apply_form_questions_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_position_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_application_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_attachments_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_feedback_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_note_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_tag_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_question_template_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_succession_plan_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_upskill_plan_template_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_upskill_plan_template_ext_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_user_calendar_event_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_user_campaign_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_user_group_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_user_login_users_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_user_message_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_workforce_exchange_hiring_company_hiring_company_by_id.md
+  - https://apidocs.eightfold.ai/reference/holiday_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/list_ats_candidate.md
+  - https://apidocs.eightfold.ai/reference/list_ats_position.md
+  - https://apidocs.eightfold.ai/reference/list_booking.md
+  - https://apidocs.eightfold.ai/reference/list_career_navigator_recommended_courses.md
+  - https://apidocs.eightfold.ai/reference/list_careerhub_performance_feedback.md
+  - https://apidocs.eightfold.ai/reference/list_careerhub_recommended_courses.md
+  - https://apidocs.eightfold.ai/reference/list_careerhub_roles.md
+  - https://apidocs.eightfold.ai/reference/list_careerhub_skill_gap_analysis.md
+  - https://apidocs.eightfold.ai/reference/list_careerhub_upskill_plan_assignment.md
+  - https://apidocs.eightfold.ai/reference/list_comments_comments.md
+  - https://apidocs.eightfold.ai/reference/list_comments_entity_comments.md
+  - https://apidocs.eightfold.ai/reference/list_comments_ext_entity_comments.md
+  - https://apidocs.eightfold.ai/reference/list_course.md
+  - https://apidocs.eightfold.ai/reference/list_demand.md
+  - https://apidocs.eightfold.ai/reference/list_email_delivery_feedback.md
+  - https://apidocs.eightfold.ai/reference/list_employee.md
+  - https://apidocs.eightfold.ai/reference/list_employee_matched_demands.md
+  - https://apidocs.eightfold.ai/reference/list_employee_matched_positions.md
+  - https://apidocs.eightfold.ai/reference/list_employee_recommended_mentors.md
+  - https://apidocs.eightfold.ai/reference/list_employee_role_match_score.md
+  - https://apidocs.eightfold.ai/reference/list_entity_changelog_changelog.md
+  - https://apidocs.eightfold.ai/reference/list_entity_profile_application.md
+  - https://apidocs.eightfold.ai/reference/list_event_candidate_activity.md
+  - https://apidocs.eightfold.ai/reference/list_events_planned_events.md
+  - https://apidocs.eightfold.ai/reference/list_ext_ai_interview_guides.md
+  - https://apidocs.eightfold.ai/reference/list_ext_ai_interview_interview_feedback_link.md
+  - https://apidocs.eightfold.ai/reference/list_external_demand_ext_demands.md
+  - https://apidocs.eightfold.ai/reference/list_foundational_data.md
+  - https://apidocs.eightfold.ai/reference/list_holiday.md
+  - https://apidocs.eightfold.ai/reference/list_hris_employee_hris_employees.md
+  - https://apidocs.eightfold.ai/reference/list_insights_employees.md
+  - https://apidocs.eightfold.ai/reference/list_insights_profile_insights.md
+  - https://apidocs.eightfold.ai/reference/list_jie_insights.md
+  - https://apidocs.eightfold.ai/reference/list_jie_roles.md
+  - https://apidocs.eightfold.ai/reference/list_offer.md
+  - https://apidocs.eightfold.ai/reference/list_org_unit.md
+  - https://apidocs.eightfold.ai/reference/list_position.md
+  - https://apidocs.eightfold.ai/reference/list_position_matched.md
+  - https://apidocs.eightfold.ai/reference/list_profile.md
+  - https://apidocs.eightfold.ai/reference/list_profile_applicants.md
+  - https://apidocs.eightfold.ai/reference/list_profile_application.md
+  - https://apidocs.eightfold.ai/reference/list_profile_feedback.md
+  - https://apidocs.eightfold.ai/reference/list_profile_matched_candidates.md
+  - https://apidocs.eightfold.ai/reference/list_profile_note.md
+  - https://apidocs.eightfold.ai/reference/list_profile_tag.md
+  - https://apidocs.eightfold.ai/reference/list_question_options.md
+  - https://apidocs.eightfold.ai/reference/list_succession_plan.md
+  - https://apidocs.eightfold.ai/reference/list_succession_plan_incumbents.md
+  - https://apidocs.eightfold.ai/reference/list_succession_plan_recommended_successors.md
+  - https://apidocs.eightfold.ai/reference/list_upskill_plan_template.md
+  - https://apidocs.eightfold.ai/reference/list_user_calendar_event.md
+  - https://apidocs.eightfold.ai/reference/list_user_campaign.md
+  - https://apidocs.eightfold.ai/reference/list_user_group.md
+  - https://apidocs.eightfold.ai/reference/list_user_group_users.md
+  - https://apidocs.eightfold.ai/reference/list_user_login_users.md
+  - https://apidocs.eightfold.ai/reference/list_user_message.md
+  - https://apidocs.eightfold.ai/reference/patch_ats_candidate.md
+  - https://apidocs.eightfold.ai/reference/patch_ats_position.md
+  - https://apidocs.eightfold.ai/reference/patch_booking.md
+  - https://apidocs.eightfold.ai/reference/patch_careerhub_.md
+  - https://apidocs.eightfold.ai/reference/patch_careerhub_ext.md
+  - https://apidocs.eightfold.ai/reference/patch_careerhub_upskill_plan_assignment.md
+  - https://apidocs.eightfold.ai/reference/patch_course.md
+  - https://apidocs.eightfold.ai/reference/patch_demand.md
+  - https://apidocs.eightfold.ai/reference/patch_employee.md
+  - https://apidocs.eightfold.ai/reference/patch_external_booking_ext_bookings.md
+  - https://apidocs.eightfold.ai/reference/patch_external_demand_ext_demands.md
+  - https://apidocs.eightfold.ai/reference/patch_external_demand_org_unit_ext_demand_org_units.md
+  - https://apidocs.eightfold.ai/reference/patch_foundational_data.md
+  - https://apidocs.eightfold.ai/reference/patch_holiday.md
+  - https://apidocs.eightfold.ai/reference/patch_hris_employee_ext_employees.md
+  - https://apidocs.eightfold.ai/reference/patch_offer.md
+  - https://apidocs.eightfold.ai/reference/patch_offer_ats_positions.md
+  - https://apidocs.eightfold.ai/reference/patch_position.md
+  - https://apidocs.eightfold.ai/reference/patch_profile.md
+  - https://apidocs.eightfold.ai/reference/patch_succession_plan.md
+  - https://apidocs.eightfold.ai/reference/patch_succession_plan_successors.md
+  - https://apidocs.eightfold.ai/reference/patch_upskill_plan_template.md
+  - https://apidocs.eightfold.ai/reference/patch_upskill_plan_template_ext.md
+  - https://apidocs.eightfold.ai/reference/patch_user_group.md
+  - https://apidocs.eightfold.ai/reference/patch_user_login_users.md
+  - https://apidocs.eightfold.ai/reference/patch_workforce_exchange_hiring_company_hiring_company.md
+  - https://apidocs.eightfold.ai/reference/position_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/profile_application_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/profile_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/profile_feedback_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/profile_note_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/profile_tag_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/update_ats_candidate.md
+  - https://apidocs.eightfold.ai/reference/update_ats_position.md
+  - https://apidocs.eightfold.ai/reference/update_booking.md
+  - https://apidocs.eightfold.ai/reference/update_demand.md
+  - https://apidocs.eightfold.ai/reference/update_employee.md
+  - https://apidocs.eightfold.ai/reference/update_external_booking_ext_bookings.md
+  - https://apidocs.eightfold.ai/reference/update_external_demand_ext_demands.md
+  - https://apidocs.eightfold.ai/reference/update_holiday.md
+  - https://apidocs.eightfold.ai/reference/update_hris_employee_ext_employees.md
+  - https://apidocs.eightfold.ai/reference/update_jie_roles.md
+  - https://apidocs.eightfold.ai/reference/update_position.md
+  - https://apidocs.eightfold.ai/reference/update_profile.md
+  - https://apidocs.eightfold.ai/reference/user_calendar_event_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/user_campaign_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/user_login_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/user_message_batch_fetch.md
+  merge:
+    pages: 218
+    deduped: 2038
+    conflicts_kept_first: 0

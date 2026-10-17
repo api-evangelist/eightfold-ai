@@ -1,0 +1,565 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service Insights API
+  version: 1.0.0
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: Insights
+paths:
+  /api/v2/insights/diversity/employees:
+    get:
+      description: Returns Diversity insights of employees of an organization
+      operationId: list_insights_employees
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeDiversityInsightsSchema'
+          description: OK
+      summary: Get Employee Diversity Insights
+      tags:
+      - Insights
+  /api/v2/insights/profile-insights:
+    get:
+      description: Returns profile insights
+      operationId: list_insights_profile_insights
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Specifies the count of top <distributionFieldsLimit> values of a particular field
+        in: query
+        name: distributionFieldsLimit
+        schema:
+          type: integer
+      - description: Eightfold position ID for candidates to match
+        in: query
+        name: positionMatchedFor
+        schema:
+          type: string
+      - description: filter query using predefined candidate field query parameters documented [here](https://apidocs.eightfold.ai/v2.0/docs#the-filterquery-parameter)
+        in: query
+        name: filterQuery
+        schema:
+          type: string
+      - description: any wildcard text to search in candidate data
+        in: query
+        name: query
+        schema:
+          type: string
+      - description: comma separated list of fields to get distributions for
+        in: query
+        name: fields
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsightsSchema'
+          description: OK
+      summary: List Profile Insights
+      tags:
+      - Insights
+  /api/v2/insights/talent-traits:
+    post:
+      description: Post a query with different filters for talent traits. All the values in the same filter is treated as an OR operation, while all the values in a different filter is treated as an AND operation.
+      operationId: create_insights_talent_traits
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TalentTraitsRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TalentTraitSchema'
+          description: OK
+      summary: Create Talent Traits
+      tags:
+      - Insights
+components:
+  schemas:
+    fieldInsight:
+      type: object
+      properties:
+        field:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: field name for insight
+        values:
+          readOnly: true
+          description: value dictionary for insight.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CountValue'
+    CountValue:
+      type: object
+      properties:
+        count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Count of fields for a value
+        value:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: value of field.
+    InsightsSchema:
+      type: object
+      properties:
+        resultCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Number of Results
+        fieldInsights:
+          readOnly: true
+          description: List of field insights
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/fieldInsight'
+    TalentTraitSchema:
+      type: object
+      properties:
+        correctedQuery:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: corrected query for given query
+        query:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: query for traits
+        workCategories:
+          readOnly: true
+          description: work categories traits
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TalentField'
+        work:
+          readOnly: true
+          description: work distribution
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TalentField'
+        count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: total count
+        school:
+          readOnly: true
+          description: school distribution
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TalentField'
+        title:
+          readOnly: true
+          description: title for talent traits
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TalentField'
+        skill:
+          readOnly: true
+          description: skills traits
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TalentField'
+    TalentTraitsRequestSchema:
+      type: object
+      properties:
+        includeModels:
+          type:
+          - array
+          - 'null'
+          writeOnly: true
+          description: models that should be included
+          items:
+            type: string
+        query:
+          type:
+          - string
+          - 'null'
+          writeOnly: true
+          description: query to be provided, can not be null
+        filterLocation:
+          type:
+          - string
+          - 'null'
+          writeOnly: true
+          description: To be provided to filter by Location
+        filterSeniority:
+          type:
+          - array
+          - 'null'
+          writeOnly: true
+          description: To be provided to filter by Seniority
+          items:
+            type: string
+        filterTitle:
+          type:
+          - array
+          - 'null'
+          writeOnly: true
+          description: To be provided to filter by Title
+          items:
+            type: string
+        filterCompany:
+          type:
+          - array
+          - 'null'
+          writeOnly: true
+          description: To be provided to filter by Company
+          items:
+            type: string
+    TalentField:
+      type: object
+      properties:
+        score:
+          type:
+          - number
+          - 'null'
+          format: float
+          readOnly: true
+          description: score of the parameter
+        name:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: name for param
+        logo:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: logo name for parent param
+    EmployeeDiversityInsightsSchema:
+      type: object
+      properties:
+        genderDiversity:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Gender diversity of employees in an organization. Gender inferred by eightfold if not declared
+        ethnicDiversity:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: ethenic diversity of employees in an organization. Ethnicity inferred by Eightfold if not declared
+x-provenance:
+  method: searched
+  source: https://apidocs.eightfold.ai/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://apidocs.eightfold.ai/reference/booking_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/comments_entity__batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/comments_ext_entity__batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/create_approval_workflow.md
+  - https://apidocs.eightfold.ai/reference/create_ats_candidate.md
+  - https://apidocs.eightfold.ai/reference/create_ats_position.md
+  - https://apidocs.eightfold.ai/reference/create_ats_position_attachments.md
+  - https://apidocs.eightfold.ai/reference/create_booking.md
+  - https://apidocs.eightfold.ai/reference/create_careerhub_provide.md
+  - https://apidocs.eightfold.ai/reference/create_careerhub_request.md
+  - https://apidocs.eightfold.ai/reference/create_careerhub_upskill_plan_assignment.md
+  - https://apidocs.eightfold.ai/reference/create_comments_entity_comments.md
+  - https://apidocs.eightfold.ai/reference/create_comments_ext_entity_comments.md
+  - https://apidocs.eightfold.ai/reference/create_course.md
+  - https://apidocs.eightfold.ai/reference/create_demand.md
+  - https://apidocs.eightfold.ai/reference/create_employee.md
+  - https://apidocs.eightfold.ai/reference/create_employee_role.md
+  - https://apidocs.eightfold.ai/reference/create_ext_ai_interview_schedule_interview.md
+  - https://apidocs.eightfold.ai/reference/create_external_booking_ext_bookings.md
+  - https://apidocs.eightfold.ai/reference/create_external_demand_employee_create_or_advance_application_stage.md
+  - https://apidocs.eightfold.ai/reference/create_external_demand_ext_demands.md
+  - https://apidocs.eightfold.ai/reference/create_external_demand_org_unit_ext_demand_org_units.md
+  - https://apidocs.eightfold.ai/reference/create_foundational_data.md
+  - https://apidocs.eightfold.ai/reference/create_holiday.md
+  - https://apidocs.eightfold.ai/reference/create_insights_talent_traits.md
+  - https://apidocs.eightfold.ai/reference/create_jie_roles.md
+  - https://apidocs.eightfold.ai/reference/create_offer.md
+  - https://apidocs.eightfold.ai/reference/create_position.md
+  - https://apidocs.eightfold.ai/reference/create_profile.md
+  - https://apidocs.eightfold.ai/reference/create_profile_cancel_scheduled_rejection.md
+  - https://apidocs.eightfold.ai/reference/create_profile_note.md
+  - https://apidocs.eightfold.ai/reference/create_profile_stages.md
+  - https://apidocs.eightfold.ai/reference/create_profile_tag.md
+  - https://apidocs.eightfold.ai/reference/create_profile_unsubscribe.md
+  - https://apidocs.eightfold.ai/reference/create_succession_plan.md
+  - https://apidocs.eightfold.ai/reference/create_succession_plan_caretakers.md
+  - https://apidocs.eightfold.ai/reference/create_succession_plan_successors.md
+  - https://apidocs.eightfold.ai/reference/create_talent_pool.md
+  - https://apidocs.eightfold.ai/reference/create_upskill_plan_template.md
+  - https://apidocs.eightfold.ai/reference/create_user_group.md
+  - https://apidocs.eightfold.ai/reference/create_user_group_users.md
+  - https://apidocs.eightfold.ai/reference/create_user_login_users.md
+  - https://apidocs.eightfold.ai/reference/delete_booking.md
+  - https://apidocs.eightfold.ai/reference/delete_careerhub_ext.md
+  - https://apidocs.eightfold.ai/reference/delete_careerhub_upskill_plan_assignment.md
+  - https://apidocs.eightfold.ai/reference/delete_comments_entity_comments.md
+  - https://apidocs.eightfold.ai/reference/delete_course.md
+  - https://apidocs.eightfold.ai/reference/delete_demand.md
+  - https://apidocs.eightfold.ai/reference/delete_external_booking_ext_bookings.md
+  - https://apidocs.eightfold.ai/reference/delete_external_demand_ext_demands.md
+  - https://apidocs.eightfold.ai/reference/delete_holiday.md
+  - https://apidocs.eightfold.ai/reference/delete_jie_roles.md
+  - https://apidocs.eightfold.ai/reference/delete_offer.md
+  - https://apidocs.eightfold.ai/reference/delete_profile.md
+  - https://apidocs.eightfold.ai/reference/delete_succession_plan.md
+  - https://apidocs.eightfold.ai/reference/delete_succession_plan_caretakers.md
+  - https://apidocs.eightfold.ai/reference/delete_succession_plan_successors.md
+  - https://apidocs.eightfold.ai/reference/delete_upskill_plan_template.md
+  - https://apidocs.eightfold.ai/reference/delete_upskill_plan_template_ext.md
+  - https://apidocs.eightfold.ai/reference/delete_user_group.md
+  - https://apidocs.eightfold.ai/reference/delete_user_group_users.md
+  - https://apidocs.eightfold.ai/reference/delete_user_login_users.md
+  - https://apidocs.eightfold.ai/reference/demand_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/email_delivery_feedback_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/employee_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/entity_profile_application_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/event_candidate_activity_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/events_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/get_approval_workflow_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_async_api_status_transactions_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_ats_candidate_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_ats_position_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_booking_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_career_navigator_recommended_paths_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_careerhub_ext_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_careerhub_performance_feedback_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_careerhub_suggest_skills_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_careerhub_upskill_plan_assignment_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_comments_comments_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_course_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_demand_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_email_delivery_feedback_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_employee_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_employee_role_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_entity_profile_application_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_event_candidate_activity_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_events_planned_events_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_external_booking_ext_bookings_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_external_demand_ext_demands_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_external_demand_org_unit_ext_demand_org_units_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_foundational_data_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_holiday_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_hris_employee_hris_employees_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_jie_roles_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_offer_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_position_apply_form_questions_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_position_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_application_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_attachments_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_feedback_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_note_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_tag_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_question_template_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_succession_plan_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_upskill_plan_template_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_upskill_plan_template_ext_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_user_calendar_event_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_user_campaign_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_user_group_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_user_login_users_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_user_message_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_workforce_exchange_hiring_company_hiring_company_by_id.md
+  - https://apidocs.eightfold.ai/reference/holiday_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/list_ats_candidate.md
+  - https://apidocs.eightfold.ai/reference/list_ats_position.md
+  - https://apidocs.eightfold.ai/reference/list_booking.md
+  - https://apidocs.eightfold.ai/reference/list_career_navigator_recommended_courses.md
+  - https://apidocs.eightfold.ai/reference/list_careerhub_performance_feedback.md
+  - https://apidocs.eightfold.ai/reference/list_careerhub_recommended_courses.md
+  - https://apidocs.eightfold.ai/reference/list_careerhub_roles.md
+  - https://apidocs.eightfold.ai/reference/list_careerhub_skill_gap_analysis.md
+  - https://apidocs.eightfold.ai/reference/list_careerhub_upskill_plan_assignment.md
+  - https://apidocs.eightfold.ai/reference/list_comments_comments.md
+  - https://apidocs.eightfold.ai/reference/list_comments_entity_comments.md
+  - https://apidocs.eightfold.ai/reference/list_comments_ext_entity_comments.md
+  - https://apidocs.eightfold.ai/reference/list_course.md
+  - https://apidocs.eightfold.ai/reference/list_demand.md
+  - https://apidocs.eightfold.ai/reference/list_email_delivery_feedback.md
+  - https://apidocs.eightfold.ai/reference/list_employee.md
+  - https://apidocs.eightfold.ai/reference/list_employee_matched_demands.md
+  - https://apidocs.eightfold.ai/reference/list_employee_matched_positions.md
+  - https://apidocs.eightfold.ai/reference/list_employee_recommended_mentors.md
+  - https://apidocs.eightfold.ai/reference/list_employee_role_match_score.md
+  - https://apidocs.eightfold.ai/reference/list_entity_changelog_changelog.md
+  - https://apidocs.eightfold.ai/reference/list_entity_profile_application.md
+  - https://apidocs.eightfold.ai/reference/list_event_candidate_activity.md
+  - https://apidocs.eightfold.ai/reference/list_events_planned_events.md
+  - https://apidocs.eightfold.ai/reference/list_ext_ai_interview_guides.md
+  - https://apidocs.eightfold.ai/reference/list_ext_ai_interview_interview_feedback_link.md
+  - https://apidocs.eightfold.ai/reference/list_external_demand_ext_demands.md
+  - https://apidocs.eightfold.ai/reference/list_foundational_data.md
+  - https://apidocs.eightfold.ai/reference/list_holiday.md
+  - https://apidocs.eightfold.ai/reference/list_hris_employee_hris_employees.md
+  - https://apidocs.eightfold.ai/reference/list_insights_employees.md
+  - https://apidocs.eightfold.ai/reference/list_insights_profile_insights.md
+  - https://apidocs.eightfold.ai/reference/list_jie_insights.md
+  - https://apidocs.eightfold.ai/reference/list_jie_roles.md
+  - https://apidocs.eightfold.ai/reference/list_offer.md
+  - https://apidocs.eightfold.ai/reference/list_org_unit.md
+  - https://apidocs.eightfold.ai/reference/list_position.md
+  - https://apidocs.eightfold.ai/reference/list_position_matched.md
+  - https://apidocs.eightfold.ai/reference/list_profile.md
+  - https://apidocs.eightfold.ai/reference/list_profile_applicants.md
+  - https://apidocs.eightfold.ai/reference/list_profile_application.md
+  - https://apidocs.eightfold.ai/reference/list_profile_feedback.md
+  - https://apidocs.eightfold.ai/reference/list_profile_matched_candidates.md
+  - https://apidocs.eightfold.ai/reference/list_profile_note.md
+  - https://apidocs.eightfold.ai/reference/list_profile_tag.md
+  - https://apidocs.eightfold.ai/reference/list_question_options.md
+  - https://apidocs.eightfold.ai/reference/list_succession_plan.md
+  - https://apidocs.eightfold.ai/reference/list_succession_plan_incumbents.md
+  - https://apidocs.eightfold.ai/reference/list_succession_plan_recommended_successors.md
+  - https://apidocs.eightfold.ai/reference/list_upskill_plan_template.md
+  - https://apidocs.eightfold.ai/reference/list_user_calendar_event.md
+  - https://apidocs.eightfold.ai/reference/list_user_campaign.md
+  - https://apidocs.eightfold.ai/reference/list_user_group.md
+  - https://apidocs.eightfold.ai/reference/list_user_group_users.md
+  - https://apidocs.eightfold.ai/reference/list_user_login_users.md
+  - https://apidocs.eightfold.ai/reference/list_user_message.md
+  - https://apidocs.eightfold.ai/reference/patch_ats_candidate.md
+  - https://apidocs.eightfold.ai/reference/patch_ats_position.md
+  - https://apidocs.eightfold.ai/reference/patch_booking.md
+  - https://apidocs.eightfold.ai/reference/patch_careerhub_.md
+  - https://apidocs.eightfold.ai/reference/patch_careerhub_ext.md
+  - https://apidocs.eightfold.ai/reference/patch_careerhub_upskill_plan_assignment.md
+  - https://apidocs.eightfold.ai/reference/patch_course.md
+  - https://apidocs.eightfold.ai/reference/patch_demand.md
+  - https://apidocs.eightfold.ai/reference/patch_employee.md
+  - https://apidocs.eightfold.ai/reference/patch_external_booking_ext_bookings.md
+  - https://apidocs.eightfold.ai/reference/patch_external_demand_ext_demands.md
+  - https://apidocs.eightfold.ai/reference/patch_external_demand_org_unit_ext_demand_org_units.md
+  - https://apidocs.eightfold.ai/reference/patch_foundational_data.md
+  - https://apidocs.eightfold.ai/reference/patch_holiday.md
+  - https://apidocs.eightfold.ai/reference/patch_hris_employee_ext_employees.md
+  - https://apidocs.eightfold.ai/reference/patch_offer.md
+  - https://apidocs.eightfold.ai/reference/patch_offer_ats_positions.md
+  - https://apidocs.eightfold.ai/reference/patch_position.md
+  - https://apidocs.eightfold.ai/reference/patch_profile.md
+  - https://apidocs.eightfold.ai/reference/patch_succession_plan.md
+  - https://apidocs.eightfold.ai/reference/patch_succession_plan_successors.md
+  - https://apidocs.eightfold.ai/reference/patch_upskill_plan_template.md
+  - https://apidocs.eightfold.ai/reference/patch_upskill_plan_template_ext.md
+  - https://apidocs.eightfold.ai/reference/patch_user_group.md
+  - https://apidocs.eightfold.ai/reference/patch_user_login_users.md
+  - https://apidocs.eightfold.ai/reference/patch_workforce_exchange_hiring_company_hiring_company.md
+  - https://apidocs.eightfold.ai/reference/position_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/profile_application_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/profile_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/profile_feedback_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/profile_note_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/profile_tag_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/update_ats_candidate.md
+  - https://apidocs.eightfold.ai/reference/update_ats_position.md
+  - https://apidocs.eightfold.ai/reference/update_booking.md
+  - https://apidocs.eightfold.ai/reference/update_demand.md
+  - https://apidocs.eightfold.ai/reference/update_employee.md
+  - https://apidocs.eightfold.ai/reference/update_external_booking_ext_bookings.md
+  - https://apidocs.eightfold.ai/reference/update_external_demand_ext_demands.md
+  - https://apidocs.eightfold.ai/reference/update_holiday.md
+  - https://apidocs.eightfold.ai/reference/update_hris_employee_ext_employees.md
+  - https://apidocs.eightfold.ai/reference/update_jie_roles.md
+  - https://apidocs.eightfold.ai/reference/update_position.md
+  - https://apidocs.eightfold.ai/reference/update_profile.md
+  - https://apidocs.eightfold.ai/reference/user_calendar_event_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/user_campaign_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/user_login_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/user_message_batch_fetch.md
+  merge:
+    pages: 218
+    deduped: 2038
+    conflicts_kept_first: 0

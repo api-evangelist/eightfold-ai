@@ -1,3 +1,5 @@
+# x-archived-from: eightfold-ai-api-server-v2-service-service-openapi.yml
+# x-archived-on: 2026-10-16
 servers:
 - url: https://apiv2.{domain}.ai
   variables:

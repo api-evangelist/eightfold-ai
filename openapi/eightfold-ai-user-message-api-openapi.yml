@@ -1,0 +1,954 @@
+openapi: 3.2.0
+info:
+  title: Api_server_v2_service Service User Message API
+  version: 1.0.0
+servers:
+- url: https://apiv2.{domain}.ai
+  variables:
+    domain:
+      default: eightfold
+      enum:
+      - eightfold
+      - eightfold-eu
+      - eightfold-gov
+      - eightfold-ca
+      - eightfold-wu
+      - eightfold-ap
+tags:
+- name: User Message
+paths:
+  /api/v2/core/user-messages:
+    get:
+      description: Search user messages using specific filter parameters and get all attributes of entities
+      operationId: list_user_message
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Specifies the offset value to start for the page
+        in: query
+        name: start
+        schema:
+          type: integer
+      - description: Specifies the number of entries to be returned for the page
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Limit on the total number of search results, defaults to 100
+        in: query
+        name: queryLimit
+        schema:
+          type: string
+      - description: Filter on user id of the message
+        in: query
+        name: userId
+        schema:
+          type: string
+      - description: Filter on profile id of the candidate
+        in: query
+        name: profileId
+        schema:
+          type: string
+      - description: Filter on position id associated with the message
+        in: query
+        name: positionId
+        schema:
+          type: string
+      - description: Filter on conversation id of the message
+        in: query
+        name: conversationId
+        schema:
+          type: string
+      - description: Filter on email address to which email message was addressed
+        in: query
+        name: emailTo
+        schema:
+          type: string
+      - description: Filter on email address from which email message was sent
+        in: query
+        name: emailFrom
+        schema:
+          type: string
+      - description: Filter on campaign id of the user message
+        in: query
+        name: userCampaignId
+        schema:
+          type: string
+      - description: Filter on template id of the user message
+        in: query
+        name: templateId
+        schema:
+          type: string
+      - description: Filter on create timestamp of user message
+        in: query
+        name: createdAt
+        schema:
+          type: string
+      - description: Filter on reply time of user message
+        in: query
+        name: replyTime
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are emailContent, messageContent
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/UserMessageSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/MetaSchema'
+                type: object
+          description: OK
+      summary: List User Messages
+      tags:
+      - User Message
+  /api/v2/core/user-messages/batch-fetch:
+    post:
+      description: Batch fetch user messages for a given list of user message ids (limit 100)
+      operationId: user_message_batch_fetch
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are emailContent, messageContent
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchFetchEntityRequestSchema'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/UserMessageSchema'
+                    type: array
+                  meta:
+                    $ref: '#/components/schemas/BatchFetchMetaSchema'
+                type: object
+          description: OK
+      summary: Batch Fetch User Messages
+      tags:
+      - User Message
+  /api/v2/core/user-messages/{userMessageId}:
+    get:
+      description: Given a user message id, it returns all attributes of the user message
+      operationId: get_user_message_by_id
+      parameters:
+      - description: The secret key to access the api. It starts with the bearer token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Id of user message in Eightfold
+        in: path
+        name: userMessageId
+        required: true
+        schema:
+          type: string
+      - description: Include additional fields in the response. Possible values are emailContent, messageContent
+        in: query
+        name: include
+        schema:
+          type: string
+      - description: Exclude specific fields in the response. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: exclude
+        schema:
+          type: string
+      - description: Allows selective control over the fields returned in the API response. If the keyList is empty, all fields will be returned. Possible values are the names of the top level fields present in corresponding API schema. To check API schema, expand the response section below.
+        in: query
+        name: keyList
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserMessageSchema'
+          description: OK
+      summary: Get User Message
+      tags:
+      - User Message
+components:
+  schemas:
+    MessageAttachment:
+      type: object
+      properties:
+        contentType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Mime type of the attachment
+        fileName:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: File name of the attachment
+        content:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Content of the attachment
+        isBased64Encoded:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: Flag to indicate if the content is base64 encoded
+    UserMessageContent:
+      type: object
+      properties:
+        attachments:
+          readOnly: true
+          description: List of attachments of the user message
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/MessageAttachment'
+        body:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Message body of the user message
+    BatchFetchMetaSchema:
+      type: object
+      properties:
+        missingEntityIds:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of entity ids for which no result was found
+          items:
+            type: string
+    RegisterButton:
+      type: object
+      properties:
+        textColor:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: text color for registration button
+        backgroundColor:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: background color of registration button
+        text:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Text of registration button
+    HomePageBanner:
+      type: object
+      properties:
+        useImage:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: boolean value for using image
+        image:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: image of home page banner
+        title:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: title for home page
+    UserMessageSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Creation timestamp for the user message
+        plannedEventId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Decrypted Event ID
+        parentMessageId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Parent message id of the user message
+        emailTo:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Recipient of the user message with type email
+        profileId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Profile Id associated with the user message
+        failureReason:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Reason of failure of the user message
+        messageTo:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Recipient of the user message
+        company:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Company name associated with user message
+        userId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User who initiated sending this user message
+        userCampaignId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: User Campaign Id associated with the user message
+        conversationId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Conversation Id associated with the user message
+        workflowRecipeId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Workflow recipe id associated with user message
+        conversationType:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Conversation Type associated with the user message e.g. email, sms
+        emailBcc:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Email blind carbon copy addresses in comma separated format
+        templateId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Template Id associated with the user message
+        readTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Read timestamp for the user message
+        replyTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Reply timestamp for the user message
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Object id of the user message
+        emailCc:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Email carbon copy addresses in comma separated format
+        failureTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Time of failure of the user message
+        plannedEvent:
+          readOnly: true
+          description: Planned event associated with the user message
+          allOf:
+          - $ref: '#/components/schemas/PlannedEventSchema'
+        emailContent:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Email file content of the message. This is an email content with Internet Message Format specification (RFC 5322)
+        deliveryTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Delivery timestamp for the user message
+        messageFrom:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Sender of the user message
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Status of the user message
+        subject:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Subject of the user message with type email
+        emailReplyTo:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Reply-To as set in the email envelope of the user message with type email
+        readCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Read count for the user message
+        emailFrom:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Sent-on-behalf-of if different from user_id of the user message with type email
+        messageContent:
+          readOnly: true
+          description: JSON data for message content of the user message
+          allOf:
+          - $ref: '#/components/schemas/UserMessageContent'
+        clickTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Click timestamp for the user message
+        clickCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Click count for the user message
+        positionId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Position Id associated with the user message
+    MetaSchema:
+      type: object
+      properties:
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageTotalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+        pageStartIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: ''
+    BatchFetchEntityRequestSchema:
+      type: object
+      properties:
+        entityIds:
+          type: array
+          description: list of entity ids to fetch the entity objects
+          items:
+            type: string
+      required:
+      - entityIds
+    PlannedEventSchema:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+          description: Timestamp when this event was created
+        isCancelled:
+          type:
+          - boolean
+          - 'null'
+          description: ''
+        eventSpeakers:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          description: List of speakers
+          items:
+            type: string
+        activeRegistrations:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: active registrations
+        registerButton:
+          readOnly: true
+          description: Registration button information
+          allOf:
+          - $ref: '#/components/schemas/RegisterButton'
+        eventTeamDataJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Event team data
+        eventBucket:
+          type:
+          - string
+          - 'null'
+          description: Bucket of the event
+        address:
+          type:
+          - string
+          - 'null'
+          description: Address of venue
+        eventCustomFieldsJson:
+          type:
+          - object
+          - 'null'
+          readOnly: true
+          description: Event custom fields
+        eventType:
+          type:
+          - string
+          - 'null'
+          description: ''
+        institution:
+          type:
+          - string
+          - 'null'
+          description: Institution related to event
+        selectedTimezone:
+          type:
+          - string
+          - 'null'
+          description: Selected time zome
+        name:
+          type: string
+          description: Name of the event
+        homePageBanner:
+          readOnly: true
+          description: Home page banner information
+          allOf:
+          - $ref: '#/components/schemas/HomePageBanner'
+        eventLocationType:
+          type:
+          - string
+          - 'null'
+          description: ''
+        id:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: id
+        plannedEventEncId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Encoded event id
+        parentId:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Parent id of the event
+        venue:
+          type:
+          - string
+          - 'null'
+          description: Venue of the event
+        endTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Ending timestamp of event
+        isPublished:
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+          description: ''
+        eventLandingPage:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: Event landing page
+        status:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: ''
+        createdBy:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: User id which created this event
+        eventCategory:
+          type:
+          - string
+          - 'null'
+          description: Category of the event
+        startTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Starting time stamp of event
+        when:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: When tag of the event
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of event
+      required:
+      - endTimestamp
+      - name
+      - startTimestamp
+x-provenance:
+  method: searched
+  source: https://apidocs.eightfold.ai/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://apidocs.eightfold.ai/reference/booking_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/comments_entity__batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/comments_ext_entity__batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/create_approval_workflow.md
+  - https://apidocs.eightfold.ai/reference/create_ats_candidate.md
+  - https://apidocs.eightfold.ai/reference/create_ats_position.md
+  - https://apidocs.eightfold.ai/reference/create_ats_position_attachments.md
+  - https://apidocs.eightfold.ai/reference/create_booking.md
+  - https://apidocs.eightfold.ai/reference/create_careerhub_provide.md
+  - https://apidocs.eightfold.ai/reference/create_careerhub_request.md
+  - https://apidocs.eightfold.ai/reference/create_careerhub_upskill_plan_assignment.md
+  - https://apidocs.eightfold.ai/reference/create_comments_entity_comments.md
+  - https://apidocs.eightfold.ai/reference/create_comments_ext_entity_comments.md
+  - https://apidocs.eightfold.ai/reference/create_course.md
+  - https://apidocs.eightfold.ai/reference/create_demand.md
+  - https://apidocs.eightfold.ai/reference/create_employee.md
+  - https://apidocs.eightfold.ai/reference/create_employee_role.md
+  - https://apidocs.eightfold.ai/reference/create_ext_ai_interview_schedule_interview.md
+  - https://apidocs.eightfold.ai/reference/create_external_booking_ext_bookings.md
+  - https://apidocs.eightfold.ai/reference/create_external_demand_employee_create_or_advance_application_stage.md
+  - https://apidocs.eightfold.ai/reference/create_external_demand_ext_demands.md
+  - https://apidocs.eightfold.ai/reference/create_external_demand_org_unit_ext_demand_org_units.md
+  - https://apidocs.eightfold.ai/reference/create_foundational_data.md
+  - https://apidocs.eightfold.ai/reference/create_holiday.md
+  - https://apidocs.eightfold.ai/reference/create_insights_talent_traits.md
+  - https://apidocs.eightfold.ai/reference/create_jie_roles.md
+  - https://apidocs.eightfold.ai/reference/create_offer.md
+  - https://apidocs.eightfold.ai/reference/create_position.md
+  - https://apidocs.eightfold.ai/reference/create_profile.md
+  - https://apidocs.eightfold.ai/reference/create_profile_cancel_scheduled_rejection.md
+  - https://apidocs.eightfold.ai/reference/create_profile_note.md
+  - https://apidocs.eightfold.ai/reference/create_profile_stages.md
+  - https://apidocs.eightfold.ai/reference/create_profile_tag.md
+  - https://apidocs.eightfold.ai/reference/create_profile_unsubscribe.md
+  - https://apidocs.eightfold.ai/reference/create_succession_plan.md
+  - https://apidocs.eightfold.ai/reference/create_succession_plan_caretakers.md
+  - https://apidocs.eightfold.ai/reference/create_succession_plan_successors.md
+  - https://apidocs.eightfold.ai/reference/create_talent_pool.md
+  - https://apidocs.eightfold.ai/reference/create_upskill_plan_template.md
+  - https://apidocs.eightfold.ai/reference/create_user_group.md
+  - https://apidocs.eightfold.ai/reference/create_user_group_users.md
+  - https://apidocs.eightfold.ai/reference/create_user_login_users.md
+  - https://apidocs.eightfold.ai/reference/delete_booking.md
+  - https://apidocs.eightfold.ai/reference/delete_careerhub_ext.md
+  - https://apidocs.eightfold.ai/reference/delete_careerhub_upskill_plan_assignment.md
+  - https://apidocs.eightfold.ai/reference/delete_comments_entity_comments.md
+  - https://apidocs.eightfold.ai/reference/delete_course.md
+  - https://apidocs.eightfold.ai/reference/delete_demand.md
+  - https://apidocs.eightfold.ai/reference/delete_external_booking_ext_bookings.md
+  - https://apidocs.eightfold.ai/reference/delete_external_demand_ext_demands.md
+  - https://apidocs.eightfold.ai/reference/delete_holiday.md
+  - https://apidocs.eightfold.ai/reference/delete_jie_roles.md
+  - https://apidocs.eightfold.ai/reference/delete_offer.md
+  - https://apidocs.eightfold.ai/reference/delete_profile.md
+  - https://apidocs.eightfold.ai/reference/delete_succession_plan.md
+  - https://apidocs.eightfold.ai/reference/delete_succession_plan_caretakers.md
+  - https://apidocs.eightfold.ai/reference/delete_succession_plan_successors.md
+  - https://apidocs.eightfold.ai/reference/delete_upskill_plan_template.md
+  - https://apidocs.eightfold.ai/reference/delete_upskill_plan_template_ext.md
+  - https://apidocs.eightfold.ai/reference/delete_user_group.md
+  - https://apidocs.eightfold.ai/reference/delete_user_group_users.md
+  - https://apidocs.eightfold.ai/reference/delete_user_login_users.md
+  - https://apidocs.eightfold.ai/reference/demand_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/email_delivery_feedback_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/employee_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/entity_profile_application_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/event_candidate_activity_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/events_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/get_approval_workflow_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_async_api_status_transactions_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_ats_candidate_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_ats_position_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_booking_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_career_navigator_recommended_paths_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_careerhub_ext_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_careerhub_performance_feedback_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_careerhub_suggest_skills_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_careerhub_upskill_plan_assignment_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_comments_comments_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_course_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_demand_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_email_delivery_feedback_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_employee_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_employee_role_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_entity_profile_application_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_event_candidate_activity_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_events_planned_events_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_external_booking_ext_bookings_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_external_demand_ext_demands_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_external_demand_org_unit_ext_demand_org_units_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_foundational_data_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_holiday_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_hris_employee_hris_employees_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_jie_roles_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_offer_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_position_apply_form_questions_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_position_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_application_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_attachments_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_feedback_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_note_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_profile_tag_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_question_template_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_succession_plan_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_upskill_plan_template_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_upskill_plan_template_ext_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_user_calendar_event_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_user_campaign_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_user_group_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_user_login_users_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_user_message_by_id.md
+  - https://apidocs.eightfold.ai/reference/get_workforce_exchange_hiring_company_hiring_company_by_id.md
+  - https://apidocs.eightfold.ai/reference/holiday_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/list_ats_candidate.md
+  - https://apidocs.eightfold.ai/reference/list_ats_position.md
+  - https://apidocs.eightfold.ai/reference/list_booking.md
+  - https://apidocs.eightfold.ai/reference/list_career_navigator_recommended_courses.md
+  - https://apidocs.eightfold.ai/reference/list_careerhub_performance_feedback.md
+  - https://apidocs.eightfold.ai/reference/list_careerhub_recommended_courses.md
+  - https://apidocs.eightfold.ai/reference/list_careerhub_roles.md
+  - https://apidocs.eightfold.ai/reference/list_careerhub_skill_gap_analysis.md
+  - https://apidocs.eightfold.ai/reference/list_careerhub_upskill_plan_assignment.md
+  - https://apidocs.eightfold.ai/reference/list_comments_comments.md
+  - https://apidocs.eightfold.ai/reference/list_comments_entity_comments.md
+  - https://apidocs.eightfold.ai/reference/list_comments_ext_entity_comments.md
+  - https://apidocs.eightfold.ai/reference/list_course.md
+  - https://apidocs.eightfold.ai/reference/list_demand.md
+  - https://apidocs.eightfold.ai/reference/list_email_delivery_feedback.md
+  - https://apidocs.eightfold.ai/reference/list_employee.md
+  - https://apidocs.eightfold.ai/reference/list_employee_matched_demands.md
+  - https://apidocs.eightfold.ai/reference/list_employee_matched_positions.md
+  - https://apidocs.eightfold.ai/reference/list_employee_recommended_mentors.md
+  - https://apidocs.eightfold.ai/reference/list_employee_role_match_score.md
+  - https://apidocs.eightfold.ai/reference/list_entity_changelog_changelog.md
+  - https://apidocs.eightfold.ai/reference/list_entity_profile_application.md
+  - https://apidocs.eightfold.ai/reference/list_event_candidate_activity.md
+  - https://apidocs.eightfold.ai/reference/list_events_planned_events.md
+  - https://apidocs.eightfold.ai/reference/list_ext_ai_interview_guides.md
+  - https://apidocs.eightfold.ai/reference/list_ext_ai_interview_interview_feedback_link.md
+  - https://apidocs.eightfold.ai/reference/list_external_demand_ext_demands.md
+  - https://apidocs.eightfold.ai/reference/list_foundational_data.md
+  - https://apidocs.eightfold.ai/reference/list_holiday.md
+  - https://apidocs.eightfold.ai/reference/list_hris_employee_hris_employees.md
+  - https://apidocs.eightfold.ai/reference/list_insights_employees.md
+  - https://apidocs.eightfold.ai/reference/list_insights_profile_insights.md
+  - https://apidocs.eightfold.ai/reference/list_jie_insights.md
+  - https://apidocs.eightfold.ai/reference/list_jie_roles.md
+  - https://apidocs.eightfold.ai/reference/list_offer.md
+  - https://apidocs.eightfold.ai/reference/list_org_unit.md
+  - https://apidocs.eightfold.ai/reference/list_position.md
+  - https://apidocs.eightfold.ai/reference/list_position_matched.md
+  - https://apidocs.eightfold.ai/reference/list_profile.md
+  - https://apidocs.eightfold.ai/reference/list_profile_applicants.md
+  - https://apidocs.eightfold.ai/reference/list_profile_application.md
+  - https://apidocs.eightfold.ai/reference/list_profile_feedback.md
+  - https://apidocs.eightfold.ai/reference/list_profile_matched_candidates.md
+  - https://apidocs.eightfold.ai/reference/list_profile_note.md
+  - https://apidocs.eightfold.ai/reference/list_profile_tag.md
+  - https://apidocs.eightfold.ai/reference/list_question_options.md
+  - https://apidocs.eightfold.ai/reference/list_succession_plan.md
+  - https://apidocs.eightfold.ai/reference/list_succession_plan_incumbents.md
+  - https://apidocs.eightfold.ai/reference/list_succession_plan_recommended_successors.md
+  - https://apidocs.eightfold.ai/reference/list_upskill_plan_template.md
+  - https://apidocs.eightfold.ai/reference/list_user_calendar_event.md
+  - https://apidocs.eightfold.ai/reference/list_user_campaign.md
+  - https://apidocs.eightfold.ai/reference/list_user_group.md
+  - https://apidocs.eightfold.ai/reference/list_user_group_users.md
+  - https://apidocs.eightfold.ai/reference/list_user_login_users.md
+  - https://apidocs.eightfold.ai/reference/list_user_message.md
+  - https://apidocs.eightfold.ai/reference/patch_ats_candidate.md
+  - https://apidocs.eightfold.ai/reference/patch_ats_position.md
+  - https://apidocs.eightfold.ai/reference/patch_booking.md
+  - https://apidocs.eightfold.ai/reference/patch_careerhub_.md
+  - https://apidocs.eightfold.ai/reference/patch_careerhub_ext.md
+  - https://apidocs.eightfold.ai/reference/patch_careerhub_upskill_plan_assignment.md
+  - https://apidocs.eightfold.ai/reference/patch_course.md
+  - https://apidocs.eightfold.ai/reference/patch_demand.md
+  - https://apidocs.eightfold.ai/reference/patch_employee.md
+  - https://apidocs.eightfold.ai/reference/patch_external_booking_ext_bookings.md
+  - https://apidocs.eightfold.ai/reference/patch_external_demand_ext_demands.md
+  - https://apidocs.eightfold.ai/reference/patch_external_demand_org_unit_ext_demand_org_units.md
+  - https://apidocs.eightfold.ai/reference/patch_foundational_data.md
+  - https://apidocs.eightfold.ai/reference/patch_holiday.md
+  - https://apidocs.eightfold.ai/reference/patch_hris_employee_ext_employees.md
+  - https://apidocs.eightfold.ai/reference/patch_offer.md
+  - https://apidocs.eightfold.ai/reference/patch_offer_ats_positions.md
+  - https://apidocs.eightfold.ai/reference/patch_position.md
+  - https://apidocs.eightfold.ai/reference/patch_profile.md
+  - https://apidocs.eightfold.ai/reference/patch_succession_plan.md
+  - https://apidocs.eightfold.ai/reference/patch_succession_plan_successors.md
+  - https://apidocs.eightfold.ai/reference/patch_upskill_plan_template.md
+  - https://apidocs.eightfold.ai/reference/patch_upskill_plan_template_ext.md
+  - https://apidocs.eightfold.ai/reference/patch_user_group.md
+  - https://apidocs.eightfold.ai/reference/patch_user_login_users.md
+  - https://apidocs.eightfold.ai/reference/patch_workforce_exchange_hiring_company_hiring_company.md
+  - https://apidocs.eightfold.ai/reference/position_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/profile_application_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/profile_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/profile_feedback_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/profile_note_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/profile_tag_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/update_ats_candidate.md
+  - https://apidocs.eightfold.ai/reference/update_ats_position.md
+  - https://apidocs.eightfold.ai/reference/update_booking.md
+  - https://apidocs.eightfold.ai/reference/update_demand.md
+  - https://apidocs.eightfold.ai/reference/update_employee.md
+  - https://apidocs.eightfold.ai/reference/update_external_booking_ext_bookings.md
+  - https://apidocs.eightfold.ai/reference/update_external_demand_ext_demands.md
+  - https://apidocs.eightfold.ai/reference/update_holiday.md
+  - https://apidocs.eightfold.ai/reference/update_hris_employee_ext_employees.md
+  - https://apidocs.eightfold.ai/reference/update_jie_roles.md
+  - https://apidocs.eightfold.ai/reference/update_position.md
+  - https://apidocs.eightfold.ai/reference/update_profile.md
+  - https://apidocs.eightfold.ai/reference/user_calendar_event_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/user_campaign_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/user_login_batch_fetch.md
+  - https://apidocs.eightfold.ai/reference/user_message_batch_fetch.md
+  merge:
+    pages: 218
+    deduped: 2038
+    conflicts_kept_first: 0
