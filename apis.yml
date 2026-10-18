@@ -670,6 +670,8 @@ apis:
   humanURL: https://eightfold.ai/products/
   baseURL: https://app.eightfold.ai
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -956,6 +958,8 @@ apis:
   humanURL: https://eightfold.ai/products/
   baseURL: https://app.eightfold.ai
   tags:
+  - Org unit
+  tags_raw:
   - Org Unit
   properties:
   - type: OpenAPI
@@ -1023,6 +1027,8 @@ apis:
   humanURL: https://eightfold.ai/products/
   baseURL: https://app.eightfold.ai
   tags:
+  - Profiles
+  tags_raw:
   - Profile
   properties:
   - type: OpenAPI
@@ -1311,6 +1317,8 @@ apis:
   humanURL: https://eightfold.ai/products/
   baseURL: https://app.eightfold.ai
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
